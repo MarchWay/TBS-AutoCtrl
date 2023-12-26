@@ -73,8 +73,8 @@ namespace AutoCtrl.CommonForm {
             p1040cmd.p1040_para_st.cmbCmdType = cmbCmdType;
             p1040cmd.p1040_para_st.cmbAutoTestItem = cmbAutoTestItem_1040;
             p1040cmd.p1040_para_st.cmbAtbTable = cmbAtbSel_1040;
-            p1040cmd.p1040_para_st.cmbFastCmd = cmbFastCmd;
-            p1040cmd.p1040_para_st.cmbOscDivCmd = cmbOscDivCmd;
+            p1040cmd.p1040_para_st.cmbFastCmd = cmbFastCmd_1040;
+            p1040cmd.p1040_para_st.cmbOscDivCmd = cmbOscDivCmd_1040;
             p1040cmd.p1040_para_st.tbP1040_RegAddr = tbP1040RegAddr;
             p1040cmd.p1040_para_st.tbP1040_ValueCfg = tbP1040RegValue;
             p1040cmd.p1040_para_st.nudGccCode = nudGccTrim_1040;
@@ -371,9 +371,23 @@ namespace AutoCtrl.CommonForm {
         }
         private void cbLoadTable_CheckedChanged(object sender, EventArgs e) {
             if (cbLoadTable.Checked) {
+                rtbLogPrint.Clear();
                 cbLoadTable.Enabled = false;
                 cbLoadTable.BackColor = Color.Gold;
-                p1040cmd.loadTable();
+                switch (cmbProjectSel.Text) {
+                    case "P1040":
+                    case "P3268":
+                        if (cmbProjectSel.Text == "P1040") p1040cmd.loadTable();
+                        if (cmbProjectSel.Text == "P3268") p1040cmd.loadTable();
+                        rtbLogPrint.ForeColor = Color.Green;
+                        rtbLogPrint.AppendText(cmbProjectSel.Text + "_项目配置：加载-成功\n");
+                        break;
+                    default:
+                        comFunLib.DelayTimeMs(50);
+                        rtbLogPrint.ForeColor = Color.Red;
+                        rtbLogPrint.AppendText("项目名称有错误!!!\n");
+                        break;
+                }
                 cbLoadTable.BackColor = SystemColors.Control;
                 cbLoadTable.Enabled = true;
                 cbLoadTable.Checked = false;
@@ -416,11 +430,11 @@ namespace AutoCtrl.CommonForm {
         }
         private void cmbFastCmd_SelectedIndexChanged(object sender, EventArgs e) {
             ParaTransfer();
-            p1040cmd.FastCmdCfg(serPortLib, cmbFastCmd.SelectedIndex);
+            p1040cmd.FastCmdCfg(serPortLib, cmbFastCmd_1040.SelectedIndex);
         }
         private void cmbOscDiv_SelectedIndexChanged(object sender, EventArgs e) {
             ParaTransfer();
-            p1040cmd.OscDivCfg(serPortLib, cmbOscDivCmd.SelectedIndex);
+            p1040cmd.OscDivCfg(serPortLib, cmbOscDivCmd_1040.SelectedIndex);
         }
         private void btnOneKeyLed_Click(object sender, EventArgs e) {
             ParaTransfer();

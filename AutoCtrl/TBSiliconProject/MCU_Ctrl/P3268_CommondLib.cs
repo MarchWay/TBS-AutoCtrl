@@ -12,29 +12,14 @@ using AutoCtrl.CommunicationProtocol;
 namespace AutoCtrl.TBSiliconProject.MCU_Ctrl {
     public class P3268_CommondLib {
 
-        public string cfgStrHead = "55 AA A2 01 FF 05 ";  //{头1 头2 指令类型A2(写REG) 填充位 锁定标记(FF每帧发送/其他值为总发次数) 延时周期}
-        public string cfgRegAddr = "C9";                  //Reg地址
-        public string chipNum = " 03";                    //芯片级联个数 & 写入数据长度  默认都是1片，每次配置一个地址的值
-        public string regNum = " 01 ";                    //芯片级联个数 & 写入数据长度  默认都是1片，每次配置一个地址的值
-        public string cfgRegValue = "04 2C";              //按照48bit十六进制写入
-        public string cfgStrEnd = " 01 FE";               //结束符
-        public string cfgTrimCommon = "A3 B2 C6 D8 ";     //C9地址Trim公共格式
-        public string cfgEfuseCommon = "00 00 00 00 ";
         //级联个数、排序包
-        public string linkCntCfg = "55 AA AE 00 00 FF 00 03 00 01 FE"; //03代表当前的级联芯片数，其他所有命令的级联芯片位失效不使用
-        public string sortCfg = "55 AA A4 00 01 00 00 03 00 01 FE";    //排序包命令
-        public string vbgGccTrim = "55 AA A2 01 FF 05 C9 01 01 A3 B2 C6 D8 04 20 01 FE";  //GCC_VBG 04 20(0100-0010-1100)
-        public string cfgEfuseDo = "55 AA A2 01 FF 05 C8 01 01 00 00 00 00 84 20 01 FE";  //GCC_VBG 04 20(0100-0010-1100)
-        public double vbgCode = 0x2C;
-        public double vbgGccCode = 0x420;
-        public int delayTimeMs = 1000;
         public bool stop3268;
         public List<string> list = new List<string>();
         public P3268_ST p3268_st = new P3268_ST();
         public CommonFunctionLib comFunLib = new CommonFunctionLib();
         public InstCommandLib instCmdLib = new InstCommandLib();
         public InstCommonCtrlLib instCtrlLib = new InstCommonCtrlLib();
-        public SerialPortLib serPortLib = new SerialPortLib();
+
         public struct P3268_ST {
             public string cfgReg;
             public string testMess;
@@ -327,32 +312,16 @@ namespace AutoCtrl.TBSiliconProject.MCU_Ctrl {
             list.Clear();
         }
 
-        public void ReadDefaultVbgVolt(ref double vbgDefault) {
-            for (int cfgIndex = 0; cfgIndex < vbgTrimAtbCfg.Length; cfgIndex++) {
-                serPortLib.SerialPort_DataSend(vbgTrimAtbCfg[cfgIndex]);
-                comFunLib.DelayTimeMs(p3268_st.delayTimeMs);
-            }
             //instCmdLib.ReadMulti(instCtrlLib.mbsMulti0, ref vbgDefault);  //读取VBG default电压
-        }
         public void VbgTrimTest() {
             string value = "04 20";
-            int CHOP_ON = 0;
-            int CHOP_OFF = 1;
             string chopState = "";
             double vbgDefault = 0;
             double vbgTrim = 0;
             string title = "ChipType\tChipNum\tVBG_Default(V)\tCHOP_State\tVBG_Trim(Code)\tVBG_Volt(V)";
             CreatFileAndWriteTitle(title);
             //配置顶层ATB, VBG使能, CHOP_ON/OFF
-            ReadDefaultVbgVolt(ref vbgDefault);
-            if (p3268_st.chopOnoff) {
-                serPortLib.SerialPort_DataSend(chopOnOff[CHOP_ON]);
-                chopState = "CHOP_ON";
-            }
-            else {
-                serPortLib.SerialPort_DataSend(chopOnOff[CHOP_OFF]);
-                chopState = "CHOP_OFF";
-            }
+
             //遍历VBG_Code, 读取VBG电压
             for (int vbgCode = 0; vbgCode <= 0x3f; vbgCode++) {
                 if (stop3268) {
@@ -360,8 +329,6 @@ namespace AutoCtrl.TBSiliconProject.MCU_Ctrl {
                 }
                 string cfg = vbgCode < 16 ? "0" + vbgCode.ToString("X") : vbgCode.ToString("X");
                 string cfg1 = value.Replace("20", cfg);
-                p3268_st.cfgReg = cfgStrHead + "C9" + " " + p3268_st.chipRegNum + " " + cfgTrimCommon + cfg1 + cfgStrEnd;
-                serPortLib.SerialPort_DataSend(p3268_st.cfgReg);
                 comFunLib.DelayTimeMs(p3268_st.delayTimeMs);
                 //instCmdLib.ReadMulti(instCtrlLib.mbsMulti0, ref vbgTrim);  //读取电压
                 RecordVoltResult(vbgDefault, vbgCode, vbgTrim, chopState);
@@ -380,7 +347,6 @@ namespace AutoCtrl.TBSiliconProject.MCU_Ctrl {
             CreatFileAndWriteTitle(title);
             //配置顶层ATB, VBG使能, 默认CHOP_ON下测试
             for (int code = 0; code < vbgTrimAtbCfg.Length; code++) {
-                serPortLib.SerialPort_DataSend(vbgTrimAtbCfg[code]);
                 comFunLib.DelayTimeMs(p3268_st.delayTimeMs);
             }
             instCmdLib.ReadMulti(instCtrlLib.mbsMulti0, ref vbgDefault);  //读取VBG default电压
@@ -389,7 +355,6 @@ namespace AutoCtrl.TBSiliconProject.MCU_Ctrl {
                 if (!p3268_st.ldoSysCpll) {
                     if (2 == cfgIndex) { cfgIndex++; }
                 }
-                serPortLib.SerialPort_DataSend(ldoRegulatorTrimCfg[cfgIndex]);
                 comFunLib.DelayTimeMs(p3268_st.delayTimeMs);
             }
             //遍历LDO_Code, 读取LDO电压
@@ -397,7 +362,6 @@ namespace AutoCtrl.TBSiliconProject.MCU_Ctrl {
                 if (stop3268) {
                     break;
                 }
-                serPortLib.SerialPort_DataSend(ldoCfg.Replace(valueReplace, ldoCodeTrim[ldoCode]));
                 comFunLib.DelayTimeMs(p3268_st.delayTimeMs);
                 instCmdLib.ReadMulti(instCtrlLib.mbsMulti0, ref ldoVolt);  //读取电压
                 RecordVoltResult(vbgDefault, ldoCode, ldoVolt, ldoType);
@@ -411,7 +375,6 @@ namespace AutoCtrl.TBSiliconProject.MCU_Ctrl {
             string title = "ChipType\tChipNum\tGCC_TOP_GAIN\tCURR_DATA\tGCC_GAIN\tPATH_KNEE_SEL\tGCC_Default(uA)\tGCC_Code\tGCC_Curr(uA)";
             CreatFileAndWriteTitle(title);
             for (int gccCfg = 0; gccCfg < gccIfixTrimCfg.Length; gccCfg++) {
-                serPortLib.SerialPort_DataSend(gccIfixTrimCfg[gccCfg]);
                 comFunLib.DelayTimeMs(p3268_st.delayTimeMs);
             }
             instCmdLib.ReadMulti(instCtrlLib.mbsMulti0, ref gccDefaultCurr);  //读取电流
@@ -423,8 +386,6 @@ namespace AutoCtrl.TBSiliconProject.MCU_Ctrl {
                 int value = (gccCode << 6) | 0x0020;
                 string cfg = (gccCode <= 3 ? "00" : "0") + value.ToString("X");
                 string cfg1 = cfg.Insert(2, " ");
-                p3268_st.cfgReg = cfgStrHead + "C9" + " " + p3268_st.chipRegNum + " " + cfgTrimCommon + cfg1 + cfgStrEnd;
-                serPortLib.SerialPort_DataSend(p3268_st.cfgReg);
                 comFunLib.DelayTimeMs(p3268_st.delayTimeMs);
 
                 instCmdLib.ReadMulti(instCtrlLib.mbsMulti0, ref gccTrimCurr);  //读取电流

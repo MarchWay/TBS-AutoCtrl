@@ -40,10 +40,8 @@ namespace AutoCtrl.CommonForm {
         public bool[] chEn;
         public double[] targetVolt;
         public double[] overShootVolt;
-        public double[] slewRateOn;
-        public double[] slewRateOff;
-        public double[] srOnStepVolt;
-        public double[] srOffStepVolt;
+        public double[] risingStep;
+        public double[] fallingStep;
 
         #region 0.0 Instrument-Debug: 句法|调用|实现
         public void InitialPara() {
@@ -269,44 +267,32 @@ namespace AutoCtrl.CommonForm {
         public void PowerSlewRateInit() {
             //************电源斜率控制变量*********************
             targetVolt = new double[] {
-                double.Parse(tbCh1TargetValue.Text.Trim()),
-                double.Parse(tbCh2TargetValue.Text.Trim()),
-                double.Parse(tbCh3TargetValue.Text.Trim()),
-                double.Parse(tbCh4TargetValue.Text.Trim())
+                double.Parse(tbCh1TargetValue.Text.Trim())*1000,
+                double.Parse(tbCh2TargetValue.Text.Trim())*1000,
+                double.Parse(tbCh3TargetValue.Text.Trim())*1000,
+                double.Parse(tbCh4TargetValue.Text.Trim())*1000
             };
             overShootVolt = new double[] {
-                double.Parse(tbCh1OverShoot.Text.Trim()),
-                double.Parse(tbCh2OverShoot.Text.Trim()),
-                double.Parse(tbCh3OverShoot.Text.Trim()),
-                double.Parse(tbCh4OverShoot.Text.Trim())
+                double.Parse(tbCh1OverShoot.Text.Trim())*1000,
+                double.Parse(tbCh2OverShoot.Text.Trim())*1000,
+                double.Parse(tbCh3OverShoot.Text.Trim())*1000,
+                double.Parse(tbCh4OverShoot.Text.Trim())*1000
             };
-            slewRateOn = new double[] {
-                double.Parse(tbCh1OnSR.Text.Trim()),
-                double.Parse(tbCh2OnSR.Text.Trim()),
-                double.Parse(tbCh3OnSR.Text.Trim()),
-                double.Parse(tbCh4OnSR.Text.Trim())
+            risingStep = new double[] {
+                double.Parse(tbCh1OnSR.Text.Trim())*1000,
+                double.Parse(tbCh2OnSR.Text.Trim())*1000,
+                double.Parse(tbCh3OnSR.Text.Trim())*1000,
+                double.Parse(tbCh4OnSR.Text.Trim())*1000
             };
-            slewRateOff = new double[] {
-                double.Parse(tbCh1OffSR.Text.Trim()),
-                double.Parse(tbCh2OffSR.Text.Trim()),
-                double.Parse(tbCh3OffSR.Text.Trim()),
-                double.Parse(tbCh4OffSR.Text.Trim())
-            };
-            srOnStepVolt = new double[] {
-               Math.Round(targetVolt[0]/slewRateOn[0]),
-               Math.Round(targetVolt[1]/slewRateOn[1]),
-               Math.Round(targetVolt[2]/slewRateOn[2]),
-               Math.Round(targetVolt[3]/slewRateOn[3])
-            };
-            srOffStepVolt = new double[] {
-               Math.Round(targetVolt[0]/slewRateOff[0]),
-               Math.Round(targetVolt[1]/slewRateOff[1]),
-               Math.Round(targetVolt[2]/slewRateOff[2]),
-               Math.Round(targetVolt[3]/slewRateOff[3])
+            fallingStep = new double[] {
+                double.Parse(tbCh1OffSR.Text.Trim())*1000,
+                double.Parse(tbCh2OffSR.Text.Trim())*1000,
+                double.Parse(tbCh3OffSR.Text.Trim())*1000,
+                double.Parse(tbCh4OffSR.Text.Trim())*1000
             };
             //**********************************************
         }
-        private void PowerParaInit() {
+        private bool PowerParaInit() {
             startVolt = double.Parse(tbStartVolt.Text);
             stopVolt = double.Parse(tbStopVolt.Text);
             stepVolt = double.Parse(tbStepVolt.Text);
@@ -336,6 +322,12 @@ namespace AutoCtrl.CommonForm {
             else {
                 stopEn = true;
                 rtbTestLogPrint.AppendText("1、由于没有任何通道选择，需要操作的电源型号不明确!!!\n2、请在对应型号的电源上勾选至少1个通道，来标识操作对象!!!\n3、勾选AllOnOff，电源上下电执行的效果类似 '按键AllOn/Off'!!!");
+            }
+            if (enKeyPower || enGppPower || enItechPower) {
+                return true;
+            }
+            else {
+                return false;
             }
         }
         private void PowerMultiOperation(int chIndex, double volt) {
@@ -368,7 +360,7 @@ namespace AutoCtrl.CommonForm {
             btnIVCurveTest.Enabled = false;
             btnClear.Enabled = false;
             btnIVCurveTest.BackColor = Color.Gold;
-            PowerParaInit();
+            if (PowerParaInit()) {
             int chEnCnt = 0;
             int chindex = 0;
             for (int ch = 0; ch < chEn.Length; ch++) {
@@ -423,6 +415,7 @@ namespace AutoCtrl.CommonForm {
                 }
                 else {
                     rtbTestLogPrint.AppendText("Checked CH_num = 0; Please Select 'only one' CH to fixed !!!\n");
+                    }
                 }
             }
             btnIVCurveTest.Enabled = true;
@@ -937,14 +930,14 @@ namespace AutoCtrl.CommonForm {
         private void PrintLogPwrMonitor(bool pwrOnoff, int cnt) {
             PowerOnOff(pwrOnoff, !cbPowerAllOnOff.Checked, cbPowerAllOnOff.Checked);
             if (pwrOnoff) {
-                for (int i = 0; i < nudPowerHoldTime.Value; i++) {
+                for (int i = 0; i <= nudPowerHoldTime.Value; i++) {
                     if (stopEn) { break; }
                     rtbTestLogPrint.Text = ("电源上电：第" + (cnt + 1) + "次，保持中...，倒计时 " + (nudPowerHoldTime.Value - i) + " S");
                     comFunLib.DelayTimeMs(1000);
                 }
             }
             else {
-                for (int j = 0; j < nudPowerWaitTime.Value; j++) {
+                for (int j = 0; j <= nudPowerWaitTime.Value; j++) {
                     if (stopEn) { break; }
                     rtbTestLogPrint.Text = ("电源下电：第" + (cnt + 1) + "次，等待中...，倒计时 " + (nudPowerWaitTime.Value - j) + " S");
                     comFunLib.DelayTimeMs(1000);
@@ -954,9 +947,9 @@ namespace AutoCtrl.CommonForm {
         private void btnPowerOnOffCycle_Click(object sender, EventArgs e) {
             stopEn = false;
             rtbTestLogPrint.Clear();
-            PowerParaInit();
             btnPowerOnOffCycle.Enabled = false;
             btnPowerOnOffCycle.BackColor = Color.Gold;
+            if (PowerParaInit()) {
             double[] curr = new double[4] { 0, 0, 0, 0 };
             double[] volt = new double[4] { 0, 0, 0, 0 };
             List<string> list = new List<string> { };
@@ -981,6 +974,7 @@ namespace AutoCtrl.CommonForm {
                 comFunLib.WriteDataToTxt(list, CommonFunctionLib.WRITE_DATA_METHORD.FILE_APPEND);
                 list.Clear();
                 PrintLogPwrMonitor(POWER_OFF, cnt);
+                }
             }
             btnPowerOnOffCycle.BackColor = SystemColors.Control;
             btnPowerOnOffCycle.Enabled = true;
@@ -1037,9 +1031,9 @@ namespace AutoCtrl.CommonForm {
             double step = double.Parse(tbStepSweep.Text.Trim()) * 1000;
             double interal = double.Parse(tbVoltInteral.Text.Trim());
             int CH = 0;
-            PowerParaInit();
             btnPwrSweep.Enabled = false;
             btnPwrSweep.BackColor = Color.Gold;
+            if (PowerParaInit()) {
             for (int i = 0; i < chEn.Length; i++) {
                 if (chEn[i]) CH = i + 1;
             }
@@ -1060,6 +1054,7 @@ namespace AutoCtrl.CommonForm {
                 for (double vL = lowLimt; vL <= highLimt; vL += step) {
                     if (stopEn) { break; }
                     SetPowerVolt(CH, vL / 1000.000, interal);
+                    }
                 }
             }
             btnPwrSweep.Enabled = true;

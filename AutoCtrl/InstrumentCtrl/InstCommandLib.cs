@@ -1103,8 +1103,8 @@ namespace AutoCtrl.InstCommandCtrl {
         /// <returns></returns>
         public bool GuWeiPowerOutputChEn(MessageBasedSession mbs, POWER_CH_EN ch, STATE_EN state) {
             try {
-                return instCmnlLib.Write(mbs, ":OUTP" + (int)ch + " " + state + "\n")
-                       & instCmnlLib.WaitOpc(mbs);
+                return instCmnlLib.Write(mbs, ":OUTP" + (int)ch + " " + state + "\n");
+                       //& instCmnlLib.WaitOpc(mbs);
             }
             catch {
                 instCmnlLib.inst_st.errorMessage = InstCommonCtrlLib.ERROR_EN.INST_OUTPUT_FAIL.ToString();
