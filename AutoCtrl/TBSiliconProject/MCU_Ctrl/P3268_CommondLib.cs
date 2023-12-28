@@ -13,35 +13,61 @@ namespace AutoCtrl.TBSiliconProject.MCU_Ctrl {
     public class P3268_CommondLib {
 
         //级联个数、排序包
-        public bool stop3268;
-        public List<string> list = new List<string>();
-        public P3268_ST p3268_st = new P3268_ST();
+        //*************** 串口基础协议 ****************************
+        //  Bit     Definition        Value       Function
+        // [7:0]      头1	          0xAA	       协议包头
+        // [7:0]      头2	          0x55	       协议包头
+        // [7:0]      CMD_TYPE	    0x00-0x0C	   命令类型
+        // [7:0]      填充位	        0x00-0x05	   填充位,每个周期都下发的指令需单独占一个填充位
+        // [7:0]      Vsync_ALL	    0x01-0xFF	   用于选择是否每个Vsync周期都发指令, 0xFF为每个周期都发, 0x01为只发一次, 其他数值为发送特定周期数
+        // [7:0]      芯片ID	        0x00-0x3E	   非广播模式下的芯片ID
+        // [7:0]      起始地址	    0x00-0x3F	   寄存器的起始地址
+        // [7:0]      数据长度	    0x00-0x3F	   写入数据的长度
+        // [15:0]     数据位         0x00-0xFF      数据位
+        public List<byte> writePackage = new List<byte>();
+        public SP3268_OPT_ST sp3268_opt_st = new SP3268_OPT_ST();
+        public P3268_PARA_ST p3268_para_st = new P3268_PARA_ST();
         public CommonFunctionLib comFunLib = new CommonFunctionLib();
         public InstCommandLib instCmdLib = new InstCommandLib();
         public InstCommonCtrlLib instCtrlLib = new InstCommonCtrlLib();
-
-        public struct P3268_ST {
-            public string cfgReg;
-            public string testMess;
-            public double readData;
-            public double[] vbgDefault;
-            public double vbgTrim;
-            public double[] chiSumDefault;
-            public double chCurrent;
-            public double chiSumTrim;
-            public double vbgTarget;
-            public double vbgAccuracy;
-            public double chiTarget;
-            public double chiAccuracy;
-            public double delayTimeMs;
-            public bool judjeStatus;
-            public bool chopOnoff;
-            public bool ldoSysCpll;
-            public string testMessage;
-            public string chipRegNum;
-            public string chipID;
-            public RichTextBox rtbChipSelOk;
+        public string dataStream = "";
+        public int cnt;
+        public List<string> dataList = new List<string>();
+        public struct P3268_PARA_ST {
+            public ComboBox cmbCmdType;
+            public ComboBox cmbAtbTable;
+            public ComboBox cmbFastCmd;
+            public ComboBox cmbOscDivCmd;
+            public ComboBox cmbAutoTestItem;
+            public TextBox tbP1040_RegAddr;
+            public TextBox tbP1040_ValueCfg;
+            public RadioButton rbKeyPwrEn;
+            public RadioButton rbGppPwrEn;
+            public RadioButton rbItechPwrEn;
+            public CheckBox cbPowerEn;
+            public CheckBox cbMulti0En;
+            public CheckBox cbMulti1En;
+            public NumericUpDown nudGccCode;
+            public NumericUpDown nudReadInstDelay;
+            public string chipCnt;
+            public double data;
+            public bool stop;
+            public bool[] pwrCh;
+            public int CH;
+            public int testCnt;
         }
+        public struct SP3268_OPT_ST {
+            public List<byte> headPke;         //包头2*8bit：AA、55
+            public List<byte> cmdType;         //命令类型：0x00~0x0C, 见上表
+            public List<byte> fillBit;         //填充位：0x00~0x05
+            public List<byte> vsAll;           //VS模式：用于选择是否每个Vsync周期都发指令, 0xFF为每个周期都发, 0x01为只发一次
+            public List<byte> chipID;          //芯片ID: 非广播模式下的芯片ID
+            public List<byte> regAddr;         //起始地址：0x00~0x3F, 寄存器起始地址
+            public List<byte> dataLength;      //数据长度：0x00~0x3F, 写入数据的长度
+            public List<byte> regValue;        //数据位：[15:0] 16bit为一数据
+            public List<byte> stopPke;         //包尾2*8bit：55、AA
+        }
+
 
         public string[] singleOneKeyLed = new string[]
         {
@@ -147,253 +173,51 @@ namespace AutoCtrl.TBSiliconProject.MCU_Ctrl {
             "55 AA A2 01 FF 05 06 01 01 00 00 00 06 D8 03 01 FE",   //GCC_GAIN_CTRL：GCC范围增益为1, bit[1:0]=2’b11
             "55 AA A2 01 FF 05 08 01 01 00 00 00 41 26 30 01 FE",   //Path_sel和LowKnee_sel配置为0x3, bit[10:9]=2’b11 & bit[6:4]=3’b011
         };
-        public void P3268_ParaInit() {
-            p3268_st.cfgReg = "";
-            p3268_st.readData = 0;
-            p3268_st.vbgDefault = new double[3] { 0, 0, 0 };
-            p3268_st.vbgTrim = 0;
-            p3268_st.chiSumDefault = new double[3] { 0, 0, 0 };
-            p3268_st.chiSumTrim = 0;
+        public void RegAddrDataGenerator(string regAddr, string data) {
+            //Step1: 转换寄存器地址模式
+            byte reg = Convert.ToByte(regAddr, 16);
+            sp3268_opt_st.regAddr.Add(reg);
+            int value = Convert.ToInt16(data, 16);
+            //Step2: 生成-寄存器配置值-数据流  (此处支持单一寄存器值&多地址序列值)
+            int dataLen = 6;
+            for (int i = 0; i < dataLen; i++) {
+                byte temp = (byte)((value >> (dataLen - 1 - i) * 8) & 0xff);
+                sp3268_opt_st.regValue.Add(temp);
+            }
         }
+        public void DataPackageInit(string regAddr, string data) {
+            writePackage.Clear();
+            sp3268_opt_st.headPke = new List<byte> { 0xAA, 0x55 };
+            sp3268_opt_st.cmdType = new List<byte> { (byte)p3268_para_st.cmbCmdType.SelectedIndex };
+            sp3268_opt_st.fillBit = new List<byte> { 0x00 };
+            sp3268_opt_st.vsAll = new List<byte> { 0x01 };
+            sp3268_opt_st.chipID = new List<byte> { 0x00 };
+            sp3268_opt_st.regAddr = new List<byte> { };
+            sp3268_opt_st.dataLength = new List<byte> { 0x00 };
+            sp3268_opt_st.regValue = new List<byte> { };
+            sp3268_opt_st.stopPke = new List<byte> { 0x55, 0xAA };
+            RegAddrDataGenerator(regAddr, data);
+            writePackage.AddRange(sp3268_opt_st.headPke);
+            writePackage.AddRange(sp3268_opt_st.cmdType);
+            writePackage.AddRange(sp3268_opt_st.fillBit);
+            writePackage.AddRange(sp3268_opt_st.vsAll);
+            writePackage.AddRange(sp3268_opt_st.chipID);
+            writePackage.AddRange(sp3268_opt_st.regAddr);
+            writePackage.AddRange(sp3268_opt_st.dataLength);
+            writePackage.AddRange(sp3268_opt_st.regValue);
+            writePackage.AddRange(sp3268_opt_st.stopPke);
+        }
+
         #region 3. 一键筛片
-        public void RecordTrimResults(string efuseCode) {
-            list.Add(p3268_st.testMessage.Split('_')[0]);  //chip type
-            list.Add(p3268_st.chipID.Trim());              //chip num
-            list.Add(p3268_st.vbgDefault[0].ToString("F3"));    //直接上电点屏读取的值
-            list.Add(p3268_st.vbgDefault[1].ToString("F3"));    //配置默认值0420后读取的值
-            list.Add(p3268_st.vbgTrim.ToString("F3"));          //Trim后读取的值
-            list.Add(p3268_st.chiSumDefault[0].ToString("F3")); //直接上电点屏读取的值
-            list.Add(p3268_st.chiSumDefault[1].ToString("F3")); //配置默认值0420后读取的值
-            list.Add(p3268_st.chiSumTrim.ToString("F4"));       //Trim后读取的值
-            list.Add(efuseCode);  //Efuse Code
-            list.Add(p3268_st.vbgDefault[2].ToString("F3"));    //再次上电点屏后VBG结果
-            list.Add(p3268_st.chiSumDefault[2].ToString("F3")); //再次上电点屏后CHI结果
-            list.Add(p3268_st.judjeStatus ? "PASS" : "FAIL");           //筛片状态
-            p3268_st.rtbChipSelOk.AppendText(
-                p3268_st.chipID.Trim() + ", "
-                + p3268_st.vbgDefault[1].ToString("F3") + ", "
-                + p3268_st.vbgDefault[2].ToString("F3") + ", "
-                + p3268_st.vbgTrim.ToString("F3") + ", "
-                + p3268_st.chiSumDefault[1].ToString("F3") + ", "
-                + p3268_st.chiSumDefault[2].ToString("F3") + ", "
-                + p3268_st.chiSumTrim.ToString("F3") + ", "
-                + efuseCode + ", "
-                + (p3268_st.judjeStatus ? "PASS" : "FAIL") + "\n");
-            p3268_st.rtbChipSelOk.ScrollToCaret();
-        }
-        public bool DefaultStateJudge() {
-            //1、直接读取默认值VBG、CHI_SUM的值，进行逻辑判断，若不满足直接FAIL
-            instCmdLib.ReadMulti(instCtrlLib.mbsMulti0, ref p3268_st.vbgDefault[0]);
-            comFunLib.DelayTimeMs(1000);   //电流稳定需要一定的时间
-            instCmdLib.ReadMulti(instCtrlLib.mbsMulti1, ref p3268_st.chiSumDefault[0]);
-            bool state = ((p3268_st.vbgDefault[0] > p3268_st.vbgTarget + 0.05 || p3268_st.vbgDefault[0] < p3268_st.vbgTarget - 0.05) || (p3268_st.chiSumDefault[0] < p3268_st.chiTarget - 10 || p3268_st.chiSumDefault[0] > p3268_st.chiTarget + 5));
-            return state;
-        }
-        public void TrimPwrUpStateJudge() {
-            //Trim，并烧写完成之后，再次上电读取默认值进行判断
-            instCmdLib.ReadMulti(instCtrlLib.mbsMulti0, ref p3268_st.vbgDefault[2]);
-            comFunLib.DelayTimeMs(1000);   //电流稳定需要一定的时间
-            instCmdLib.ReadMulti(instCtrlLib.mbsMulti1, ref p3268_st.chiSumDefault[2]);
-        }
 
-        public void AfterEfuseCheck(string efuseStr) {
-            TrimPwrUpStateJudge();
-            p3268_st.judjeStatus = ((p3268_st.vbgDefault[2] > (p3268_st.vbgTarget - p3268_st.vbgAccuracy * 2)) && (p3268_st.vbgDefault[2] < (p3268_st.vbgTarget + p3268_st.vbgAccuracy * 2))) || ((p3268_st.chiSumDefault[2] > (p3268_st.chiTarget - p3268_st.chiAccuracy * 2) && p3268_st.chiSumDefault[2] > (p3268_st.chiTarget + p3268_st.chiAccuracy * 2)));
-            RecordTrimResults(efuseStr.Replace(" ", ""));
-        }
-
-        public void VbgGccAdjust(bool isVbgEn, bool isGccEn, int delayMs, ref string trimCode, ref string efuseCode) {
-            int tempCode = 0x0420;
-            comFunLib.DelayTimeMs(delayMs);
-            instCmdLib.ReadMulti(instCtrlLib.mbsMulti0, ref p3268_st.vbgDefault[1]);  //读电压
-            if (isVbgEn) {
-                //2、首先配置默认值 0420读取VBG电压, 判断是否在精度区间 1.2375~1.2625V
-                if (p3268_st.vbgDefault[1] > (p3268_st.vbgTarget - p3268_st.vbgAccuracy) && p3268_st.vbgDefault[1] < (p3268_st.vbgTarget + p3268_st.vbgAccuracy)) {
-                    if (p3268_st.vbgDefault[1] > p3268_st.vbgTarget + 0.005 && p3268_st.vbgDefault[1] <= p3268_st.vbgTarget + 0.010) {
-                        tempCode += 2;
-                    }
-                    if (p3268_st.vbgDefault[1] > p3268_st.vbgTarget + 0.000 && p3268_st.vbgDefault[1] <= p3268_st.vbgTarget + 0.005) {
-                        tempCode += 1;
-                    }
-                    if (p3268_st.vbgDefault[1] > p3268_st.vbgTarget - 0.005 && p3268_st.vbgDefault[1] <= p3268_st.vbgTarget + 0.000) {
-                        tempCode -= 1;
-                    }
-                    if (p3268_st.vbgDefault[1] > p3268_st.vbgTarget - 0.010 && p3268_st.vbgDefault[1] <= p3268_st.vbgTarget - 0.005) {
-                        tempCode -= 2;
-                    }
-                }
-            }
-            if (isGccEn) {
-                //3、校准GCC_IFIX
-                instCmdLib.ReadMulti(instCtrlLib.mbsMulti1, ref p3268_st.chiSumDefault[1]);  //读取默认电流
-                if (p3268_st.chiSumDefault[1] > p3268_st.chiTarget + 8 && p3268_st.chiSumDefault[1] <= p3268_st.chiTarget + 12) {
-                    tempCode += 0xc0;    //增加3code 
-                }
-                if (p3268_st.chiSumDefault[1] > p3268_st.chiTarget + 4 && p3268_st.chiSumDefault[1] <= p3268_st.chiTarget + 8) {
-                    tempCode += 0x80;    //增加2code 
-                }
-                if (p3268_st.chiSumDefault[1] > p3268_st.chiTarget + 0 && p3268_st.chiSumDefault[1] <= p3268_st.chiTarget + 4) {
-                    tempCode += 0x40;    //增加1code
-                }
-                if (p3268_st.chiSumDefault[1] > p3268_st.chiTarget - 4 && p3268_st.chiSumDefault[1] <= p3268_st.chiTarget + 0) {
-                    tempCode -= 0x40;    //减小1code;
-                }
-                if (p3268_st.chiSumDefault[1] > p3268_st.chiTarget - 8 && p3268_st.chiSumDefault[1] <= p3268_st.chiTarget - 4) {
-                    tempCode -= 0x80;    //减小2code;
-                }
-                if (p3268_st.chiSumDefault[1] > p3268_st.chiTarget - 12 && p3268_st.chiSumDefault[1] <= p3268_st.chiTarget - 8) {
-                    tempCode -= 0xc0;    //减小3code;
-                }
-            }
-            //4、生成 Trim/Efuse Code
-            trimCode = ("0" + tempCode.ToString("X")).Insert(2, " ");
-            efuseCode = (tempCode | 0x8000).ToString("X").Insert(2, " ");
-        }
         #endregion
 
         #region 4. 通道电流PAM线性度结果 | VBG_TRIM结果 | GCC_IFIX结果
-        public void RecordCurrResults(string caseSel, int currCode, double curr) {
-            list.Add(p3268_st.testMessage.Split('_')[0]);  //chip type
-            list.Add(p3268_st.chipID.Trim());              //chip num
-            list.Add("x.xxx");                             //直接上电点屏读取的值
-            list.Add(caseSel);                                  //LowKnew Path Sel
-            list.Add(currCode.ToString());                      //电流code
-            list.Add(curr.ToString("F3"));                      //电流数据
-            list.Add(instCmdLib.var_st.dataUnit);            //电流单位
-            p3268_st.rtbChipSelOk.AppendText(
-                p3268_st.chipID.Trim() + ", "
-                + p3268_st.vbgDefault[0] + ", "
-                + caseSel + ", "
-                + currCode.ToString() + ", "
-                + curr.ToString("F3") + ", "
-                + instCmdLib.var_st.dataUnit + "\n");
-            p3268_st.rtbChipSelOk.ScrollToCaret();
-        }
-        public void RecordVoltResult(double defaultVolt, int code, double trimVolt, string state) {
-            list.Add(p3268_st.testMessage.Split('_')[0]);  //chip type
-            list.Add(p3268_st.chipID.Trim());              //chip num
-            list.Add(defaultVolt.ToString("F3"));          //读取电压默认值
-            list.Add(state);          //CHOP STATE
-            list.Add(code.ToString());                     //调节code
-            list.Add(trimVolt.ToString("F3"));             //读取电压
-            p3268_st.rtbChipSelOk.AppendText(
-                p3268_st.chipID.Trim() + ", "
-                + defaultVolt.ToString("F3") + ", "
-                + code.ToString() + ", "
-                + trimVolt.ToString("F3") + "\n");
-            p3268_st.rtbChipSelOk.ScrollToCaret();
-        }
-        public void RecordGccIfixResult(double defaultCurr, int code, double trimCurr, string gccTop, string currData, string gccGain, string pathKnee) {
-            list.Add(p3268_st.testMessage.Split('_')[0]);  //chip type
-            list.Add(p3268_st.chipID.Trim());              //chip num
-            list.Add(gccTop);
-            list.Add(currData);
-            list.Add(gccGain);
-            list.Add(pathKnee);
-            list.Add(defaultCurr.ToString("F3"));          //读取电流默认值
-            list.Add(code.ToString());                     //调节code
-            list.Add(trimCurr.ToString("F3"));             //读取电流
-            p3268_st.rtbChipSelOk.AppendText(
-                p3268_st.chipID.Trim() + ", "
-                + defaultCurr.ToString("F3") + ", "
-                + code.ToString() + ", "
-                + trimCurr.ToString("F3") + "\n");
-            p3268_st.rtbChipSelOk.ScrollToCaret();
-        }
+
         #endregion
 
-        #region 5. 创建结果路径并写入Title | 读取VBG | VBG_TRIM | LDO_TRIM | GCC_IFIX_TRIM
-        public void CreatFileAndWriteTitle(string title) {
-            stop3268 = false;   //初始化停止参数为 false
-            //创建结果路径和文件名称
-            list.Add(title);
-            comFunLib.CreatFilePath(p3268_st.testMessage.Split('_')[0]);
-            comFunLib.WriteResultsTitle(p3268_st.testMessage, list, CommonFunctionLib.WRITE_DATA_METHORD.FILE_APPEND);
-            list.Clear();
-        }
+        #region 5. VBG_TRIM | LDO_TRIM | GCC_IFIX_TRIM
 
-            //instCmdLib.ReadMulti(instCtrlLib.mbsMulti0, ref vbgDefault);  //读取VBG default电压
-        public void VbgTrimTest() {
-            string value = "04 20";
-            string chopState = "";
-            double vbgDefault = 0;
-            double vbgTrim = 0;
-            string title = "ChipType\tChipNum\tVBG_Default(V)\tCHOP_State\tVBG_Trim(Code)\tVBG_Volt(V)";
-            CreatFileAndWriteTitle(title);
-            //配置顶层ATB, VBG使能, CHOP_ON/OFF
-
-            //遍历VBG_Code, 读取VBG电压
-            for (int vbgCode = 0; vbgCode <= 0x3f; vbgCode++) {
-                if (stop3268) {
-                    break;
-                }
-                string cfg = vbgCode < 16 ? "0" + vbgCode.ToString("X") : vbgCode.ToString("X");
-                string cfg1 = value.Replace("20", cfg);
-                comFunLib.DelayTimeMs(p3268_st.delayTimeMs);
-                //instCmdLib.ReadMulti(instCtrlLib.mbsMulti0, ref vbgTrim);  //读取电压
-                RecordVoltResult(vbgDefault, vbgCode, vbgTrim, chopState);
-                comFunLib.WriteDataToTxt(list, CommonFunctionLib.WRITE_DATA_METHORD.FILE_APPEND);
-                list.Clear();
-            }
-        }
-        public void LdoRegulatorTest() {
-            string valueReplace = p3268_st.ldoSysCpll ? "80" : "20";   //"F8 03"~"00 3E"
-            string ldoType = p3268_st.ldoSysCpll ? "LDO_SYS" : "LDO_CPLL";
-            double vbgDefault = 0;
-            double ldoVolt = 0;
-            string[] ldoCodeTrim = p3268_st.ldoSysCpll ? ldoSysTrimCode : ldoCpllTrimCode;
-            string ldoCfg = p3268_st.ldoSysCpll ? "55 AA A2 01 FF 05 06 01 01 00 00 00 06 80 03 01 FE" : "55 AA A2 01 FF 05 17 01 01 00 00 00 00 00 20 01 FE";
-            string title = "ChipType\tChipNum\tVBG_Default(V)\tLDO_Type\tLDO_Trim(Code)\tLDO_Volt(V)";
-            CreatFileAndWriteTitle(title);
-            //配置顶层ATB, VBG使能, 默认CHOP_ON下测试
-            for (int code = 0; code < vbgTrimAtbCfg.Length; code++) {
-                comFunLib.DelayTimeMs(p3268_st.delayTimeMs);
-            }
-            instCmdLib.ReadMulti(instCtrlLib.mbsMulti0, ref vbgDefault);  //读取VBG default电压
-            int length = (p3268_st.ldoSysCpll ? ldoRegulatorTrimCfg.Length - 1 : ldoRegulatorTrimCfg.Length);
-            for (int cfgIndex = 0; cfgIndex < length; cfgIndex++) {
-                if (!p3268_st.ldoSysCpll) {
-                    if (2 == cfgIndex) { cfgIndex++; }
-                }
-                comFunLib.DelayTimeMs(p3268_st.delayTimeMs);
-            }
-            //遍历LDO_Code, 读取LDO电压
-            for (int ldoCode = 0; ldoCode <= 0xF; ldoCode++) {
-                if (stop3268) {
-                    break;
-                }
-                comFunLib.DelayTimeMs(p3268_st.delayTimeMs);
-                instCmdLib.ReadMulti(instCtrlLib.mbsMulti0, ref ldoVolt);  //读取电压
-                RecordVoltResult(vbgDefault, ldoCode, ldoVolt, ldoType);
-                comFunLib.WriteDataToTxt(list, CommonFunctionLib.WRITE_DATA_METHORD.FILE_APPEND);
-                list.Clear();
-            }
-        }
-        public void GccIfixText() {
-            double gccDefaultCurr = 0;
-            double gccTrimCurr = 0;
-            string title = "ChipType\tChipNum\tGCC_TOP_GAIN\tCURR_DATA\tGCC_GAIN\tPATH_KNEE_SEL\tGCC_Default(uA)\tGCC_Code\tGCC_Curr(uA)";
-            CreatFileAndWriteTitle(title);
-            for (int gccCfg = 0; gccCfg < gccIfixTrimCfg.Length; gccCfg++) {
-                comFunLib.DelayTimeMs(p3268_st.delayTimeMs);
-            }
-            instCmdLib.ReadMulti(instCtrlLib.mbsMulti0, ref gccDefaultCurr);  //读取电流
-            //遍历GCC_Code, 读取VBG电压
-            for (int gccCode = 0; gccCode <= 0x1f; gccCode++) {
-                if (stop3268) {
-                    break;
-                }
-                int value = (gccCode << 6) | 0x0020;
-                string cfg = (gccCode <= 3 ? "00" : "0") + value.ToString("X");
-                string cfg1 = cfg.Insert(2, " ");
-                comFunLib.DelayTimeMs(p3268_st.delayTimeMs);
-
-                instCmdLib.ReadMulti(instCtrlLib.mbsMulti0, ref gccTrimCurr);  //读取电流
-                RecordGccIfixResult(gccDefaultCurr, gccCode, gccTrimCurr, "0xFF", "0x07", "0x3", "0x3");
-                comFunLib.WriteDataToTxt(list, CommonFunctionLib.WRITE_DATA_METHORD.FILE_APPEND);
-                list.Clear();
-            }
-        }
         #endregion
     }
 }
