@@ -166,10 +166,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommonFunction\CommonFunctionLib.cs" />
+    <Compile Include="TBSiliconProject\DriverCommonTestItem\DriverChipCommonFunctionLib.cs" />
+    <Compile Include="TBSiliconProject\DriverCommonTestItem\DigitalItem_TestLib.cs" />
+    <Compile Include="TBSiliconProject\DriverCommonTestItem\TestItems_TestLib.cs" />
+    <Compile Include="TBSiliconProject\InterfaceCommonTestItem\InterChipCommLib.cs" />
+    <Compile Include="TBSiliconProject\InterfaceCommonTestItem\InterChip_TestLib.cs" />
     <Compile Include="TBSiliconProject\MCU_Ctrl\P1040_CommondLib.cs" />
-    <Compile Include="TBSiliconProject\ReceiverCard_Ctrl\DriverChipCommonFunctionLib.cs" />
-    <Compile Include="TBSiliconProject\ReceiverCard_Ctrl\DigitalItem_TestLib.cs" />
-    <Compile Include="TBSiliconProject\ReceiverCard_Ctrl\AnalogItem_TestLib.cs" />
     <Compile Include="TBSiliconProject\MCU_Ctrl\P3268_CommondLib.cs" />
     <Compile Include="TBSiliconProject\TCON_UART\UartCommonlib.cs" />
     <EmbeddedResource Include="CommonForm\InstrumentLinkForm.resx">

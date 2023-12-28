@@ -1146,6 +1146,8 @@ namespace AutoCtrl.CommonForm {
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "扫描设置";
             // 
+            // label34
+            // 
             this.label34.AutoSize = true;
             this.label34.Font = new System.Drawing.Font("楷体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label34.ForeColor = System.Drawing.Color.Gray;
@@ -1154,6 +1156,7 @@ namespace AutoCtrl.CommonForm {
             this.label34.Size = new System.Drawing.Size(101, 12);
             this.label34.TabIndex = 78;
             this.label34.Text = "上阈值    下阈值";
+            // 
             // label21
             // 
             this.label21.AutoSize = true;
@@ -1184,9 +1187,6 @@ namespace AutoCtrl.CommonForm {
             0,
             0,
             0});
-            // 
-            // label20
-            // 
             // 
             // label17
             // 
@@ -1264,6 +1264,8 @@ namespace AutoCtrl.CommonForm {
             this.tbLowVolt.TabIndex = 34;
             this.tbLowVolt.Text = "2.000";
             // 
+            // label20
+            // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("楷体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label20.Location = new System.Drawing.Point(9, 102);
@@ -1271,6 +1273,7 @@ namespace AutoCtrl.CommonForm {
             this.label20.Size = new System.Drawing.Size(323, 12);
             this.label20.TabIndex = 53;
             this.label20.Text = "给定电压范围+设置步进+时间间隔(注意：只能勾选1个通道)";
+            // 
             // tbpPwrSlewRate
             // 
             this.tbpPwrSlewRate.Controls.Add(this.label37);
@@ -1370,9 +1373,6 @@ namespace AutoCtrl.CommonForm {
             this.tbCh1OverShoot.Size = new System.Drawing.Size(50, 22);
             this.tbCh1OverShoot.TabIndex = 72;
             this.tbCh1OverShoot.Text = "0.500";
-            // 
-            // label32
-            // 
             // 
             // label31
             // 
@@ -3385,7 +3385,7 @@ namespace AutoCtrl.CommonForm {
             this.lbMultiAddr.TabIndex = 19;
             this.lbMultiAddr.Text = "M0 Addr:";
             // 
-            // label34
+            // label32
             // 
             this.label32.AutoSize = true;
             this.label32.Font = new System.Drawing.Font("楷体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -3395,6 +3395,9 @@ namespace AutoCtrl.CommonForm {
             this.label32.Size = new System.Drawing.Size(155, 12);
             this.label32.TabIndex = 78;
             this.label32.Text = "注意：所有的单位均为（V）";
+            // 
+            // label35
+            // 
             this.label35.AutoSize = true;
             this.label35.Font = new System.Drawing.Font("楷体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label35.ForeColor = System.Drawing.Color.Fuchsia;
@@ -3403,6 +3406,9 @@ namespace AutoCtrl.CommonForm {
             this.label35.Size = new System.Drawing.Size(155, 12);
             this.label35.TabIndex = 79;
             this.label35.Text = "填写举例：3.3/0.5/0.2/0.2";
+            // 
+            // label36
+            // 
             this.label36.AutoSize = true;
             this.label36.Font = new System.Drawing.Font("楷体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label36.ForeColor = System.Drawing.Color.Fuchsia;
@@ -3411,6 +3417,9 @@ namespace AutoCtrl.CommonForm {
             this.label36.Size = new System.Drawing.Size(119, 12);
             this.label36.TabIndex = 80;
             this.label36.Text = "R-Step: rising step";
+            // 
+            // label37
+            // 
             this.label37.AutoSize = true;
             this.label37.Font = new System.Drawing.Font("楷体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label37.ForeColor = System.Drawing.Color.Fuchsia;

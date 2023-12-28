@@ -374,19 +374,22 @@ namespace AutoCtrl.CommonForm {
                 rtbLogPrint.Clear();
                 cbLoadTable.Enabled = false;
                 cbLoadTable.BackColor = Color.Gold;
-                switch (cmbProjectSel.Text) {
-                    case "P1040":
-                    case "P3268":
-                        if (cmbProjectSel.Text == "P1040") p1040cmd.loadTable();
-                        if (cmbProjectSel.Text == "P3268") p1040cmd.loadTable();
-                        rtbLogPrint.ForeColor = Color.Green;
-                        rtbLogPrint.AppendText(cmbProjectSel.Text + "_项目配置：加载-成功\n");
-                        break;
-                    default:
-                        comFunLib.DelayTimeMs(50);
-                        rtbLogPrint.ForeColor = Color.Red;
-                        rtbLogPrint.AppendText("项目名称有错误!!!\n");
-                        break;
+                if (cmbProjectSel.SelectedIndex != -1) {
+                    switch (cmbProjectSel.Text) {
+                        case "P1040":
+                            p1040cmd.loadTable(); break;
+                        case "P3268":
+                            p1040cmd.loadTable(); break;
+                        default:
+                            break;
+                    }
+                    rtbLogPrint.ForeColor = Color.Green;
+                    rtbLogPrint.AppendText(cmbProjectSel.Text + "_项目配置：加载-成功\n");
+                }
+                else {
+                    comFunLib.DelayTimeMs(50);
+                    rtbLogPrint.ForeColor = Color.Red;
+                    rtbLogPrint.AppendText("项目名称有错误!!!\n");
                 }
                 cbLoadTable.BackColor = SystemColors.Control;
                 cbLoadTable.Enabled = true;
@@ -450,7 +453,12 @@ namespace AutoCtrl.CommonForm {
             btnRunTest_1040.Enabled = false;
             tpTestConfig.Enabled = false;
             btnRunTest_1040.BackColor = Color.Gold;
-            p1040cmd.RunTest(serPortLib, instCtrlLib.mbsMulti0, cmbAutoTestItem_1040.SelectedIndex);
+            if (cmbAutoTestItem_1040.SelectedIndex != -1) {  //-1代表：测试选择均是错误的
+                p1040cmd.RunTest(serPortLib, instCtrlLib.mbsMulti0, cmbAutoTestItem_1040.SelectedIndex);
+            }
+            else {
+                MessageBox.Show("error ：请下拉菜单选择测试项");
+            }
             btnRunTest_1040.BackColor = SystemColors.Control;
             tpTestConfig.Enabled = true;
             btnRunTest_1040.Enabled = true;

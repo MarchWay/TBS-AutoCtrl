@@ -22,6 +22,12 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem {
             public CheckBox cbBlueChip;
             public CheckBox cbPowerSelEn;
             public CheckBox cbMultiSelEn;
+            public CheckBox cbMultiSelEn1;
+            public CheckBox cbEnPwrCH1;
+            public CheckBox cbEnPwrCH2;
+            public CheckBox cbEnPwrCH3;
+            public CheckBox cbEnPwrCH4;
+            public CheckBox cbPwrType;
             public TextBox tbregOptLength;
             public TextBox tbDriverRegAddr;
             public TextBox tbDriverRegValue;
@@ -29,23 +35,26 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem {
             public TextBox tbTestMessage;
             public TextBox tbInstPowerAddr;
             public TextBox tbInstMultiAddr;
+            public TextBox tbInstMultiAddr1;
             public RichTextBox rtbUsbWriteData;
             public RichTextBox rtbUsbReadData;
-            public ComboBox cmbAtbNodeNane;
+            public ComboBox cmbAtbNodeName;
             public ComboBox cmbProjectName;
-            public Label lbView;
+            public ComboBox cbProjectItems;
+            public ComboBox cmbChipCorner;
             public string[,] atbScan;
             public string[,] VbgTrim;
+            public string[,] GccIfix;
             public string[,] preDrv;
+            public string[,] DrvPAM;
+            public string[,] GccGain;
+            public string[,] Regulator;
             public UInt32 addrActual;
             public UInt32 addrOfst;
             public string addr;
             public int rgbCheck;
-            public int nudLoopCnt;
             public double vbg;
             public bool stop;
-            public bool[] chEn;
-            public List<int> CH;
         }
         /// <summary>
         /// 不同的驱动芯片，寄存器位数：比如P2X18寄存器宽度为16bit(2 Byte);P3268的寄存器宽度为48bit(6 Byte)
@@ -159,6 +168,11 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem {
             return dataStream;
         }
 
+        public void WriteReg(USB_PortLib usbLib, string regAddr, string regValue)
+        {
+            string dataStream = DriverDataGen(6, regValue.ToString() + regValue.ToString() + regValue.ToString());
+            DriverChipWriteReg(usbLib, DriverChipRegAddrGen(regAddr), dataStream);
+        }
         public void CreatFileWriteTitle(string[] title) {
 
         }

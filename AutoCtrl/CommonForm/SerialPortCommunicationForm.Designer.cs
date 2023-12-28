@@ -88,50 +88,31 @@ namespace AutoCtrl.CommonForm {
             this.rtbLogPrint = new System.Windows.Forms.RichTextBox();
             this.tpTestConfig = new System.Windows.Forms.TabControl();
             this.tbpP1040Test = new System.Windows.Forms.TabPage();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.nudTestCnt = new System.Windows.Forms.NumericUpDown();
-            this.nudReadInstDelay = new System.Windows.Forms.NumericUpDown();
-            this.cbChipCnt = new System.Windows.Forms.CheckBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.nudChipCnt_1040 = new System.Windows.Forms.NumericUpDown();
-            this.btnOneKeyLed = new System.Windows.Forms.Button();
+            this.label34 = new System.Windows.Forms.Label();
             this.cbOscTrimEn = new System.Windows.Forms.CheckBox();
             this.cbGccTrimEn = new System.Windows.Forms.CheckBox();
+            this.cbChipCnt = new System.Windows.Forms.CheckBox();
             this.cbLdoTrimEn = new System.Windows.Forms.CheckBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.cbVbgTrimEn = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.nudChipCnt_1040 = new System.Windows.Forms.NumericUpDown();
             this.nudGccTrim_1040 = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.nudOscTrim_1040 = new System.Windows.Forms.NumericUpDown();
             this.label22 = new System.Windows.Forms.Label();
             this.cmbOscDivCmd_1040 = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
-            this.cmbFastCmd_1040 = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
             this.nudLdoCfg_1040 = new System.Windows.Forms.NumericUpDown();
-            this.cbLoadTable = new System.Windows.Forms.CheckBox();
+            this.cmbFastCmd_1040 = new System.Windows.Forms.ComboBox();
             this.label24 = new System.Windows.Forms.Label();
             this.cmbAtbSel_1040 = new System.Windows.Forms.ComboBox();
             this.label23 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.cmbCmdType = new System.Windows.Forms.ComboBox();
-            this.btnRunTest_1040 = new System.Windows.Forms.Button();
-            this.label13 = new System.Windows.Forms.Label();
-            this.cmbAutoTestItem_1040 = new System.Windows.Forms.ComboBox();
             this.nudVbgCfg_1040 = new System.Windows.Forms.NumericUpDown();
-            this.btnP1040RegCfg = new System.Windows.Forms.Button();
-            this.label17 = new System.Windows.Forms.Label();
-            this.tbP1040RegAddr = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.tbP1040RegValue = new System.Windows.Forms.TextBox();
             this.tbp3268Test = new System.Windows.Forms.TabPage();
-            this.label11 = new System.Windows.Forms.Label();
-            this.tbTestMessage = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.tbChipID = new System.Windows.Forms.TextBox();
-            this.btnStopEn = new System.Windows.Forms.Button();
-            this.gbProjectTest = new System.Windows.Forms.GroupBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
@@ -150,11 +131,30 @@ namespace AutoCtrl.CommonForm {
             this.cmbAtbSel_3268 = new System.Windows.Forms.ComboBox();
             this.label30 = new System.Windows.Forms.Label();
             this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
-            this.cmbProjectSel = new System.Windows.Forms.ComboBox();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.nudTestCnt = new System.Windows.Forms.NumericUpDown();
+            this.nudReadInstDelay = new System.Windows.Forms.NumericUpDown();
+            this.btnOneKeyLed = new System.Windows.Forms.Button();
+            this.cbLoadTable = new System.Windows.Forms.CheckBox();
+            this.btnRunTest_1040 = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.cmbAutoTestItem_1040 = new System.Windows.Forms.ComboBox();
+            this.btnP1040RegCfg = new System.Windows.Forms.Button();
+            this.label17 = new System.Windows.Forms.Label();
+            this.tbP1040RegAddr = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.tbP1040RegValue = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.tbTestMessage = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.tbChipID = new System.Windows.Forms.TextBox();
+            this.btnStopEn = new System.Windows.Forms.Button();
+            this.gbProjectTest = new System.Windows.Forms.GroupBox();
             this.label33 = new System.Windows.Forms.Label();
-            this.label34 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.cmbProjectSel = new System.Windows.Forms.ComboBox();
             this.palPortSetArea.SuspendLayout();
             this.gbSerialPortSet.SuspendLayout();
             this.palReciveArea.SuspendLayout();
@@ -169,19 +169,19 @@ namespace AutoCtrl.CommonForm {
             this.gbChipSelSet.SuspendLayout();
             this.tpTestConfig.SuspendLayout();
             this.tbpP1040Test.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudTestCnt)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudReadInstDelay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudChipCnt_1040)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGccTrim_1040)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOscTrim_1040)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLdoCfg_1040)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudVbgCfg_1040)).BeginInit();
             this.tbp3268Test.SuspendLayout();
-            this.gbProjectTest.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTestCnt)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudReadInstDelay)).BeginInit();
+            this.gbProjectTest.SuspendLayout();
             this.SuspendLayout();
             // 
             // palPortSetArea
@@ -902,73 +902,36 @@ namespace AutoCtrl.CommonForm {
             this.tbpP1040Test.Text = "P1040 Test";
             this.tbpP1040Test.UseVisualStyleBackColor = true;
             // 
-            // label15
+            // label34
             // 
-            this.label15.AutoSize = true;
-            this.label15.BackColor = System.Drawing.SystemColors.Control;
-            this.label15.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(21, 160);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(68, 20);
-            this.label15.TabIndex = 97;
-            this.label15.Text = "循环次数:";
+            this.label34.AutoSize = true;
+            this.label34.BackColor = System.Drawing.SystemColors.Window;
+            this.label34.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label34.Location = new System.Drawing.Point(388, 3);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(74, 17);
+            this.label34.TabIndex = 94;
+            this.label34.Text = "Trim 选择：";
             // 
-            // label14
+            // cbOscTrimEn
             // 
-            this.label14.AutoSize = true;
-            this.label14.BackColor = System.Drawing.SystemColors.Control;
-            this.label14.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(21, 135);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(69, 20);
-            this.label14.TabIndex = 95;
-            this.label14.Text = "延时(ms):";
+            this.cbOscTrimEn.AutoSize = true;
+            this.cbOscTrimEn.Location = new System.Drawing.Point(472, 101);
+            this.cbOscTrimEn.Name = "cbOscTrimEn";
+            this.cbOscTrimEn.Size = new System.Drawing.Size(15, 14);
+            this.cbOscTrimEn.TabIndex = 89;
+            this.cbOscTrimEn.UseVisualStyleBackColor = true;
+            this.cbOscTrimEn.CheckedChanged += new System.EventHandler(this.trimEn_CheckChanged);
             // 
-            // nudTestCnt
+            // cbGccTrimEn
             // 
-            this.nudTestCnt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.nudTestCnt.Location = new System.Drawing.Point(92, 158);
-            this.nudTestCnt.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.nudTestCnt.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudTestCnt.Name = "nudTestCnt";
-            this.nudTestCnt.Size = new System.Drawing.Size(57, 23);
-            this.nudTestCnt.TabIndex = 96;
-            this.nudTestCnt.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            // 
-            // nudReadInstDelay
-            // 
-            this.nudReadInstDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.nudReadInstDelay.Location = new System.Drawing.Point(92, 135);
-            this.nudReadInstDelay.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.nudReadInstDelay.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudReadInstDelay.Name = "nudReadInstDelay";
-            this.nudReadInstDelay.Size = new System.Drawing.Size(57, 23);
-            this.nudReadInstDelay.TabIndex = 94;
-            this.nudReadInstDelay.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
+            this.cbGccTrimEn.AutoSize = true;
+            this.cbGccTrimEn.Location = new System.Drawing.Point(472, 80);
+            this.cbGccTrimEn.Name = "cbGccTrimEn";
+            this.cbGccTrimEn.Size = new System.Drawing.Size(15, 14);
+            this.cbGccTrimEn.TabIndex = 88;
+            this.cbGccTrimEn.UseVisualStyleBackColor = true;
+            this.cbGccTrimEn.CheckedChanged += new System.EventHandler(this.trimEn_CheckChanged);
             // 
             // cbChipCnt
             // 
@@ -980,6 +943,16 @@ namespace AutoCtrl.CommonForm {
             this.cbChipCnt.UseVisualStyleBackColor = true;
             this.cbChipCnt.CheckedChanged += new System.EventHandler(this.trimEn_CheckChanged);
             // 
+            // cbLdoTrimEn
+            // 
+            this.cbLdoTrimEn.AutoSize = true;
+            this.cbLdoTrimEn.Location = new System.Drawing.Point(472, 56);
+            this.cbLdoTrimEn.Name = "cbLdoTrimEn";
+            this.cbLdoTrimEn.Size = new System.Drawing.Size(15, 14);
+            this.cbLdoTrimEn.TabIndex = 87;
+            this.cbLdoTrimEn.UseVisualStyleBackColor = true;
+            this.cbLdoTrimEn.CheckedChanged += new System.EventHandler(this.trimEn_CheckChanged);
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -990,6 +963,27 @@ namespace AutoCtrl.CommonForm {
             this.label10.Size = new System.Drawing.Size(68, 20);
             this.label10.TabIndex = 92;
             this.label10.Text = "级联个数:";
+            // 
+            // cbVbgTrimEn
+            // 
+            this.cbVbgTrimEn.AutoSize = true;
+            this.cbVbgTrimEn.Location = new System.Drawing.Point(472, 34);
+            this.cbVbgTrimEn.Name = "cbVbgTrimEn";
+            this.cbVbgTrimEn.Size = new System.Drawing.Size(15, 14);
+            this.cbVbgTrimEn.TabIndex = 86;
+            this.cbVbgTrimEn.UseVisualStyleBackColor = true;
+            this.cbVbgTrimEn.CheckedChanged += new System.EventHandler(this.trimEn_CheckChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.SystemColors.Window;
+            this.label9.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(368, 73);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(54, 20);
+            this.label9.TabIndex = 85;
+            this.label9.Text = "3-GCC:";
             // 
             // nudChipCnt_1040
             // 
@@ -1015,71 +1009,6 @@ namespace AutoCtrl.CommonForm {
             0,
             0,
             0});
-            // 
-            // btnOneKeyLed
-            // 
-            this.btnOneKeyLed.BackColor = System.Drawing.SystemColors.Control;
-            this.btnOneKeyLed.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnOneKeyLed.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.btnOneKeyLed.Location = new System.Drawing.Point(195, 136);
-            this.btnOneKeyLed.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnOneKeyLed.Name = "btnOneKeyLed";
-            this.btnOneKeyLed.Size = new System.Drawing.Size(61, 49);
-            this.btnOneKeyLed.TabIndex = 90;
-            this.btnOneKeyLed.Text = "一键 点屏";
-            this.btnOneKeyLed.UseVisualStyleBackColor = false;
-            this.btnOneKeyLed.Click += new System.EventHandler(this.btnOneKeyLed_Click);
-            // 
-            // cbOscTrimEn
-            // 
-            this.cbOscTrimEn.AutoSize = true;
-            this.cbOscTrimEn.Location = new System.Drawing.Point(472, 101);
-            this.cbOscTrimEn.Name = "cbOscTrimEn";
-            this.cbOscTrimEn.Size = new System.Drawing.Size(15, 14);
-            this.cbOscTrimEn.TabIndex = 89;
-            this.cbOscTrimEn.UseVisualStyleBackColor = true;
-            this.cbOscTrimEn.CheckedChanged += new System.EventHandler(this.trimEn_CheckChanged);
-            // 
-            // cbGccTrimEn
-            // 
-            this.cbGccTrimEn.AutoSize = true;
-            this.cbGccTrimEn.Location = new System.Drawing.Point(472, 80);
-            this.cbGccTrimEn.Name = "cbGccTrimEn";
-            this.cbGccTrimEn.Size = new System.Drawing.Size(15, 14);
-            this.cbGccTrimEn.TabIndex = 88;
-            this.cbGccTrimEn.UseVisualStyleBackColor = true;
-            this.cbGccTrimEn.CheckedChanged += new System.EventHandler(this.trimEn_CheckChanged);
-            // 
-            // cbLdoTrimEn
-            // 
-            this.cbLdoTrimEn.AutoSize = true;
-            this.cbLdoTrimEn.Location = new System.Drawing.Point(472, 56);
-            this.cbLdoTrimEn.Name = "cbLdoTrimEn";
-            this.cbLdoTrimEn.Size = new System.Drawing.Size(15, 14);
-            this.cbLdoTrimEn.TabIndex = 87;
-            this.cbLdoTrimEn.UseVisualStyleBackColor = true;
-            this.cbLdoTrimEn.CheckedChanged += new System.EventHandler(this.trimEn_CheckChanged);
-            // 
-            // cbVbgTrimEn
-            // 
-            this.cbVbgTrimEn.AutoSize = true;
-            this.cbVbgTrimEn.Location = new System.Drawing.Point(472, 34);
-            this.cbVbgTrimEn.Name = "cbVbgTrimEn";
-            this.cbVbgTrimEn.Size = new System.Drawing.Size(15, 14);
-            this.cbVbgTrimEn.TabIndex = 86;
-            this.cbVbgTrimEn.UseVisualStyleBackColor = true;
-            this.cbVbgTrimEn.CheckedChanged += new System.EventHandler(this.trimEn_CheckChanged);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.SystemColors.Window;
-            this.label9.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(368, 73);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(54, 20);
-            this.label9.TabIndex = 85;
-            this.label9.Text = "3-GCC:";
             // 
             // nudGccTrim_1040
             // 
@@ -1165,17 +1094,6 @@ namespace AutoCtrl.CommonForm {
             this.label19.TabIndex = 79;
             this.label19.Text = "快速指令:";
             // 
-            // cmbFastCmd_1040
-            // 
-            this.cmbFastCmd_1040.BackColor = System.Drawing.SystemColors.Control;
-            this.cmbFastCmd_1040.FormattingEnabled = true;
-            this.cmbFastCmd_1040.Location = new System.Drawing.Point(80, 64);
-            this.cmbFastCmd_1040.Name = "cmbFastCmd_1040";
-            this.cmbFastCmd_1040.Size = new System.Drawing.Size(168, 25);
-            this.cmbFastCmd_1040.TabIndex = 78;
-            this.cmbFastCmd_1040.Text = "下拉框选择：快速命令行";
-            this.cmbFastCmd_1040.SelectedIndexChanged += new System.EventHandler(this.cmbFastCmd_SelectedIndexChanged);
-            // 
             // label21
             // 
             this.label21.AutoSize = true;
@@ -1207,15 +1125,16 @@ namespace AutoCtrl.CommonForm {
             0});
             this.nudLdoCfg_1040.ValueChanged += new System.EventHandler(this.nudLdoCfg_1040_ValueChanged);
             // 
-            // cbLoadTable
+            // cmbFastCmd_1040
             // 
-            this.cbLoadTable.AutoSize = true;
-            this.cbLoadTable.Location = new System.Drawing.Point(92, 54);
-            this.cbLoadTable.Name = "cbLoadTable";
-            this.cbLoadTable.Size = new System.Drawing.Size(15, 14);
-            this.cbLoadTable.TabIndex = 75;
-            this.cbLoadTable.UseVisualStyleBackColor = true;
-            this.cbLoadTable.CheckedChanged += new System.EventHandler(this.cbLoadTable_CheckedChanged);
+            this.cmbFastCmd_1040.BackColor = System.Drawing.SystemColors.Control;
+            this.cmbFastCmd_1040.FormattingEnabled = true;
+            this.cmbFastCmd_1040.Location = new System.Drawing.Point(80, 64);
+            this.cmbFastCmd_1040.Name = "cmbFastCmd_1040";
+            this.cmbFastCmd_1040.Size = new System.Drawing.Size(168, 25);
+            this.cmbFastCmd_1040.TabIndex = 78;
+            this.cmbFastCmd_1040.Text = "下拉框选择：快速命令行";
+            this.cmbFastCmd_1040.SelectedIndexChanged += new System.EventHandler(this.cmbFastCmd_SelectedIndexChanged);
             // 
             // label24
             // 
@@ -1288,40 +1207,6 @@ namespace AutoCtrl.CommonForm {
             this.cmbCmdType.TabIndex = 47;
             this.cmbCmdType.Text = "广播写";
             // 
-            // btnRunTest_1040
-            // 
-            this.btnRunTest_1040.BackColor = System.Drawing.SystemColors.Control;
-            this.btnRunTest_1040.Font = new System.Drawing.Font("幼圆", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnRunTest_1040.ForeColor = System.Drawing.Color.Blue;
-            this.btnRunTest_1040.Location = new System.Drawing.Point(419, 77);
-            this.btnRunTest_1040.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnRunTest_1040.Name = "btnRunTest_1040";
-            this.btnRunTest_1040.Size = new System.Drawing.Size(82, 58);
-            this.btnRunTest_1040.TabIndex = 94;
-            this.btnRunTest_1040.Text = "Run";
-            this.btnRunTest_1040.UseVisualStyleBackColor = false;
-            this.btnRunTest_1040.Click += new System.EventHandler(this.btnRunTest_1040_Click);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(313, 22);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(68, 20);
-            this.label13.TabIndex = 94;
-            this.label13.Text = "测试选择:";
-            // 
-            // cmbAutoTestItem_1040
-            // 
-            this.cmbAutoTestItem_1040.BackColor = System.Drawing.SystemColors.Control;
-            this.cmbAutoTestItem_1040.FormattingEnabled = true;
-            this.cmbAutoTestItem_1040.Location = new System.Drawing.Point(317, 45);
-            this.cmbAutoTestItem_1040.Name = "cmbAutoTestItem_1040";
-            this.cmbAutoTestItem_1040.Size = new System.Drawing.Size(184, 25);
-            this.cmbAutoTestItem_1040.TabIndex = 81;
-            this.cmbAutoTestItem_1040.Text = "下拉框选择：电路级-测试项";
-            // 
             // nudVbgCfg_1040
             // 
             this.nudVbgCfg_1040.BackColor = System.Drawing.SystemColors.Control;
@@ -1341,61 +1226,6 @@ namespace AutoCtrl.CommonForm {
             0,
             0});
             this.nudVbgCfg_1040.ValueChanged += new System.EventHandler(this.nudVbgCfg_1040_ValueChanged);
-            // 
-            // btnP1040RegCfg
-            // 
-            this.btnP1040RegCfg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnP1040RegCfg.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnP1040RegCfg.Location = new System.Drawing.Point(195, 78);
-            this.btnP1040RegCfg.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnP1040RegCfg.Name = "btnP1040RegCfg";
-            this.btnP1040RegCfg.Size = new System.Drawing.Size(61, 49);
-            this.btnP1040RegCfg.TabIndex = 58;
-            this.btnP1040RegCfg.Text = "配置 寄存器";
-            this.btnP1040RegCfg.UseVisualStyleBackColor = false;
-            this.btnP1040RegCfg.Click += new System.EventHandler(this.btnP1040RegCfg_Click);
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.BackColor = System.Drawing.SystemColors.Control;
-            this.label17.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.ForeColor = System.Drawing.Color.Black;
-            this.label17.Location = new System.Drawing.Point(15, 82);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(76, 20);
-            this.label17.TabIndex = 55;
-            this.label17.Text = "地址(Hex):";
-            // 
-            // tbP1040RegAddr
-            // 
-            this.tbP1040RegAddr.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.tbP1040RegAddr.Location = new System.Drawing.Point(92, 80);
-            this.tbP1040RegAddr.Name = "tbP1040RegAddr";
-            this.tbP1040RegAddr.Size = new System.Drawing.Size(100, 23);
-            this.tbP1040RegAddr.TabIndex = 54;
-            this.tbP1040RegAddr.Text = "17";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.BackColor = System.Drawing.SystemColors.Control;
-            this.label18.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.Black;
-            this.label18.Location = new System.Drawing.Point(15, 103);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(76, 20);
-            this.label18.TabIndex = 53;
-            this.label18.Text = "配置(Hex):";
-            // 
-            // tbP1040RegValue
-            // 
-            this.tbP1040RegValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.tbP1040RegValue.Location = new System.Drawing.Point(92, 103);
-            this.tbP1040RegValue.Name = "tbP1040RegValue";
-            this.tbP1040RegValue.Size = new System.Drawing.Size(100, 23);
-            this.tbP1040RegValue.TabIndex = 52;
-            this.tbP1040RegValue.Text = "ABCD000F999D";
             // 
             // tbp3268Test
             // 
@@ -1420,93 +1250,10 @@ namespace AutoCtrl.CommonForm {
             this.tbp3268Test.Location = new System.Drawing.Point(4, 26);
             this.tbp3268Test.Name = "tbp3268Test";
             this.tbp3268Test.Padding = new System.Windows.Forms.Padding(3);
-            this.tbp3268Test.Size = new System.Drawing.Size(506, 123);
+            this.tbp3268Test.Size = new System.Drawing.Size(491, 122);
             this.tbp3268Test.TabIndex = 3;
             this.tbp3268Test.Text = "P3268 Test";
             this.tbp3268Test.UseVisualStyleBackColor = true;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(762, 169);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(59, 17);
-            this.label11.TabIndex = 55;
-            this.label11.Text = "测试信息:";
-            // 
-            // tbTestMessage
-            // 
-            this.tbTestMessage.BackColor = System.Drawing.SystemColors.Control;
-            this.tbTestMessage.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tbTestMessage.ForeColor = System.Drawing.Color.Black;
-            this.tbTestMessage.Location = new System.Drawing.Point(822, 166);
-            this.tbTestMessage.Name = "tbTestMessage";
-            this.tbTestMessage.Size = new System.Drawing.Size(203, 23);
-            this.tbTestMessage.TabIndex = 54;
-            this.tbTestMessage.Text = "P1040_CHNCurr@AVDD";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(1041, 169);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(59, 17);
-            this.label12.TabIndex = 56;
-            this.label12.Text = "芯片编号:";
-            // 
-            // tbChipID
-            // 
-            this.tbChipID.BackColor = System.Drawing.SystemColors.Control;
-            this.tbChipID.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tbChipID.ForeColor = System.Drawing.Color.Black;
-            this.tbChipID.Location = new System.Drawing.Point(1097, 167);
-            this.tbChipID.Name = "tbChipID";
-            this.tbChipID.Size = new System.Drawing.Size(62, 23);
-            this.tbChipID.TabIndex = 57;
-            this.tbChipID.Text = "#001";
-            // 
-            // btnStopEn
-            // 
-            this.btnStopEn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnStopEn.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnStopEn.Location = new System.Drawing.Point(221, 557);
-            this.btnStopEn.Name = "btnStopEn";
-            this.btnStopEn.Size = new System.Drawing.Size(91, 36);
-            this.btnStopEn.TabIndex = 58;
-            this.btnStopEn.Text = "STOP";
-            this.btnStopEn.UseVisualStyleBackColor = false;
-            this.btnStopEn.Click += new System.EventHandler(this.btnStopEn_Click);
-            // 
-            // gbProjectTest
-            // 
-            this.gbProjectTest.Controls.Add(this.label33);
-            this.gbProjectTest.Controls.Add(this.label32);
-            this.gbProjectTest.Controls.Add(this.btnRunTest_1040);
-            this.gbProjectTest.Controls.Add(this.label31);
-            this.gbProjectTest.Controls.Add(this.label13);
-            this.gbProjectTest.Controls.Add(this.cmbProjectSel);
-            this.gbProjectTest.Controls.Add(this.label15);
-            this.gbProjectTest.Controls.Add(this.cmbAutoTestItem_1040);
-            this.gbProjectTest.Controls.Add(this.tpTestConfig);
-            this.gbProjectTest.Controls.Add(this.label14);
-            this.gbProjectTest.Controls.Add(this.btnP1040RegCfg);
-            this.gbProjectTest.Controls.Add(this.nudTestCnt);
-            this.gbProjectTest.Controls.Add(this.tbP1040RegValue);
-            this.gbProjectTest.Controls.Add(this.nudReadInstDelay);
-            this.gbProjectTest.Controls.Add(this.label18);
-            this.gbProjectTest.Controls.Add(this.tbP1040RegAddr);
-            this.gbProjectTest.Controls.Add(this.label17);
-            this.gbProjectTest.Controls.Add(this.btnOneKeyLed);
-            this.gbProjectTest.Controls.Add(this.cbLoadTable);
-            this.gbProjectTest.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.gbProjectTest.Location = new System.Drawing.Point(756, 196);
-            this.gbProjectTest.Name = "gbProjectTest";
-            this.gbProjectTest.Size = new System.Drawing.Size(509, 356);
-            this.gbProjectTest.TabIndex = 59;
-            this.gbProjectTest.TabStop = false;
-            this.gbProjectTest.Text = "测试项目";
             // 
             // checkBox1
             // 
@@ -1727,40 +1474,269 @@ namespace AutoCtrl.CommonForm {
             0,
             0});
             // 
-            // cmbProjectSel
+            // label15
             // 
-            this.cmbProjectSel.BackColor = System.Drawing.SystemColors.Control;
-            this.cmbProjectSel.FormattingEnabled = true;
-            this.cmbProjectSel.Items.AddRange(new object[] {
-            "P1040",
-            "P3268"});
-            this.cmbProjectSel.Location = new System.Drawing.Point(92, 25);
-            this.cmbProjectSel.Name = "cmbProjectSel";
-            this.cmbProjectSel.Size = new System.Drawing.Size(164, 25);
-            this.cmbProjectSel.TabIndex = 98;
-            this.cmbProjectSel.Text = "下拉框选择：项目";
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.SystemColors.Control;
+            this.label15.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(21, 160);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(68, 20);
+            this.label15.TabIndex = 97;
+            this.label15.Text = "循环次数:";
             // 
-            // label31
+            // label14
             // 
-            this.label31.AutoSize = true;
-            this.label31.BackColor = System.Drawing.SystemColors.Control;
-            this.label31.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label31.Location = new System.Drawing.Point(16, 26);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(68, 20);
-            this.label31.TabIndex = 90;
-            this.label31.Text = "项目选择:";
+            this.label14.AutoSize = true;
+            this.label14.BackColor = System.Drawing.SystemColors.Control;
+            this.label14.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(21, 135);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(69, 20);
+            this.label14.TabIndex = 95;
+            this.label14.Text = "延时(ms):";
             // 
-            // label32
+            // nudTestCnt
             // 
-            this.label32.AutoSize = true;
-            this.label32.BackColor = System.Drawing.SystemColors.Control;
-            this.label32.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label32.Location = new System.Drawing.Point(16, 47);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(68, 20);
-            this.label32.TabIndex = 99;
-            this.label32.Text = "刷新配置:";
+            this.nudTestCnt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.nudTestCnt.Location = new System.Drawing.Point(92, 158);
+            this.nudTestCnt.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.nudTestCnt.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudTestCnt.Name = "nudTestCnt";
+            this.nudTestCnt.Size = new System.Drawing.Size(57, 23);
+            this.nudTestCnt.TabIndex = 96;
+            this.nudTestCnt.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
+            // nudReadInstDelay
+            // 
+            this.nudReadInstDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.nudReadInstDelay.Location = new System.Drawing.Point(92, 135);
+            this.nudReadInstDelay.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudReadInstDelay.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudReadInstDelay.Name = "nudReadInstDelay";
+            this.nudReadInstDelay.Size = new System.Drawing.Size(57, 23);
+            this.nudReadInstDelay.TabIndex = 94;
+            this.nudReadInstDelay.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
+            // btnOneKeyLed
+            // 
+            this.btnOneKeyLed.BackColor = System.Drawing.SystemColors.Control;
+            this.btnOneKeyLed.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnOneKeyLed.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnOneKeyLed.Location = new System.Drawing.Point(195, 136);
+            this.btnOneKeyLed.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnOneKeyLed.Name = "btnOneKeyLed";
+            this.btnOneKeyLed.Size = new System.Drawing.Size(61, 49);
+            this.btnOneKeyLed.TabIndex = 90;
+            this.btnOneKeyLed.Text = "一键 点屏";
+            this.btnOneKeyLed.UseVisualStyleBackColor = false;
+            this.btnOneKeyLed.Click += new System.EventHandler(this.btnOneKeyLed_Click);
+            // 
+            // cbLoadTable
+            // 
+            this.cbLoadTable.AutoSize = true;
+            this.cbLoadTable.Location = new System.Drawing.Point(92, 54);
+            this.cbLoadTable.Name = "cbLoadTable";
+            this.cbLoadTable.Size = new System.Drawing.Size(15, 14);
+            this.cbLoadTable.TabIndex = 75;
+            this.cbLoadTable.UseVisualStyleBackColor = true;
+            this.cbLoadTable.CheckedChanged += new System.EventHandler(this.cbLoadTable_CheckedChanged);
+            // 
+            // btnRunTest_1040
+            // 
+            this.btnRunTest_1040.BackColor = System.Drawing.SystemColors.Control;
+            this.btnRunTest_1040.Font = new System.Drawing.Font("幼圆", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnRunTest_1040.ForeColor = System.Drawing.Color.Blue;
+            this.btnRunTest_1040.Location = new System.Drawing.Point(419, 77);
+            this.btnRunTest_1040.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnRunTest_1040.Name = "btnRunTest_1040";
+            this.btnRunTest_1040.Size = new System.Drawing.Size(82, 58);
+            this.btnRunTest_1040.TabIndex = 94;
+            this.btnRunTest_1040.Text = "Run";
+            this.btnRunTest_1040.UseVisualStyleBackColor = false;
+            this.btnRunTest_1040.Click += new System.EventHandler(this.btnRunTest_1040_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(313, 22);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(68, 20);
+            this.label13.TabIndex = 94;
+            this.label13.Text = "测试选择:";
+            // 
+            // cmbAutoTestItem_1040
+            // 
+            this.cmbAutoTestItem_1040.BackColor = System.Drawing.SystemColors.Control;
+            this.cmbAutoTestItem_1040.FormattingEnabled = true;
+            this.cmbAutoTestItem_1040.Location = new System.Drawing.Point(317, 45);
+            this.cmbAutoTestItem_1040.Name = "cmbAutoTestItem_1040";
+            this.cmbAutoTestItem_1040.Size = new System.Drawing.Size(184, 25);
+            this.cmbAutoTestItem_1040.TabIndex = 81;
+            this.cmbAutoTestItem_1040.Text = "下拉框选择：测试项";
+            // 
+            // btnP1040RegCfg
+            // 
+            this.btnP1040RegCfg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnP1040RegCfg.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnP1040RegCfg.Location = new System.Drawing.Point(195, 78);
+            this.btnP1040RegCfg.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnP1040RegCfg.Name = "btnP1040RegCfg";
+            this.btnP1040RegCfg.Size = new System.Drawing.Size(61, 49);
+            this.btnP1040RegCfg.TabIndex = 58;
+            this.btnP1040RegCfg.Text = "配置 寄存器";
+            this.btnP1040RegCfg.UseVisualStyleBackColor = false;
+            this.btnP1040RegCfg.Click += new System.EventHandler(this.btnP1040RegCfg_Click);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.BackColor = System.Drawing.SystemColors.Control;
+            this.label17.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.Color.Black;
+            this.label17.Location = new System.Drawing.Point(15, 82);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(76, 20);
+            this.label17.TabIndex = 55;
+            this.label17.Text = "地址(Hex):";
+            // 
+            // tbP1040RegAddr
+            // 
+            this.tbP1040RegAddr.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.tbP1040RegAddr.Location = new System.Drawing.Point(92, 80);
+            this.tbP1040RegAddr.Name = "tbP1040RegAddr";
+            this.tbP1040RegAddr.Size = new System.Drawing.Size(100, 23);
+            this.tbP1040RegAddr.TabIndex = 54;
+            this.tbP1040RegAddr.Text = "17";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.BackColor = System.Drawing.SystemColors.Control;
+            this.label18.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.Color.Black;
+            this.label18.Location = new System.Drawing.Point(15, 103);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(76, 20);
+            this.label18.TabIndex = 53;
+            this.label18.Text = "配置(Hex):";
+            // 
+            // tbP1040RegValue
+            // 
+            this.tbP1040RegValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.tbP1040RegValue.Location = new System.Drawing.Point(92, 103);
+            this.tbP1040RegValue.Name = "tbP1040RegValue";
+            this.tbP1040RegValue.Size = new System.Drawing.Size(100, 23);
+            this.tbP1040RegValue.TabIndex = 52;
+            this.tbP1040RegValue.Text = "ABCD000F999D";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(762, 169);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(59, 17);
+            this.label11.TabIndex = 55;
+            this.label11.Text = "测试信息:";
+            // 
+            // tbTestMessage
+            // 
+            this.tbTestMessage.BackColor = System.Drawing.SystemColors.Control;
+            this.tbTestMessage.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tbTestMessage.ForeColor = System.Drawing.Color.Black;
+            this.tbTestMessage.Location = new System.Drawing.Point(822, 166);
+            this.tbTestMessage.Name = "tbTestMessage";
+            this.tbTestMessage.Size = new System.Drawing.Size(203, 23);
+            this.tbTestMessage.TabIndex = 54;
+            this.tbTestMessage.Text = "P1040_CHNCurr@AVDD";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(1041, 169);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(59, 17);
+            this.label12.TabIndex = 56;
+            this.label12.Text = "芯片编号:";
+            // 
+            // tbChipID
+            // 
+            this.tbChipID.BackColor = System.Drawing.SystemColors.Control;
+            this.tbChipID.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tbChipID.ForeColor = System.Drawing.Color.Black;
+            this.tbChipID.Location = new System.Drawing.Point(1097, 167);
+            this.tbChipID.Name = "tbChipID";
+            this.tbChipID.Size = new System.Drawing.Size(62, 23);
+            this.tbChipID.TabIndex = 57;
+            this.tbChipID.Text = "#001";
+            // 
+            // btnStopEn
+            // 
+            this.btnStopEn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnStopEn.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnStopEn.Location = new System.Drawing.Point(221, 557);
+            this.btnStopEn.Name = "btnStopEn";
+            this.btnStopEn.Size = new System.Drawing.Size(91, 36);
+            this.btnStopEn.TabIndex = 58;
+            this.btnStopEn.Text = "STOP";
+            this.btnStopEn.UseVisualStyleBackColor = false;
+            this.btnStopEn.Click += new System.EventHandler(this.btnStopEn_Click);
+            // 
+            // gbProjectTest
+            // 
+            this.gbProjectTest.Controls.Add(this.label33);
+            this.gbProjectTest.Controls.Add(this.label32);
+            this.gbProjectTest.Controls.Add(this.btnRunTest_1040);
+            this.gbProjectTest.Controls.Add(this.label31);
+            this.gbProjectTest.Controls.Add(this.label13);
+            this.gbProjectTest.Controls.Add(this.cmbProjectSel);
+            this.gbProjectTest.Controls.Add(this.label15);
+            this.gbProjectTest.Controls.Add(this.cmbAutoTestItem_1040);
+            this.gbProjectTest.Controls.Add(this.tpTestConfig);
+            this.gbProjectTest.Controls.Add(this.label14);
+            this.gbProjectTest.Controls.Add(this.btnP1040RegCfg);
+            this.gbProjectTest.Controls.Add(this.nudTestCnt);
+            this.gbProjectTest.Controls.Add(this.tbP1040RegValue);
+            this.gbProjectTest.Controls.Add(this.nudReadInstDelay);
+            this.gbProjectTest.Controls.Add(this.label18);
+            this.gbProjectTest.Controls.Add(this.tbP1040RegAddr);
+            this.gbProjectTest.Controls.Add(this.label17);
+            this.gbProjectTest.Controls.Add(this.btnOneKeyLed);
+            this.gbProjectTest.Controls.Add(this.cbLoadTable);
+            this.gbProjectTest.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.gbProjectTest.Location = new System.Drawing.Point(756, 196);
+            this.gbProjectTest.Name = "gbProjectTest";
+            this.gbProjectTest.Size = new System.Drawing.Size(509, 356);
+            this.gbProjectTest.TabIndex = 59;
+            this.gbProjectTest.TabStop = false;
+            this.gbProjectTest.Text = "测试项目";
             // 
             // label33
             // 
@@ -1774,16 +1750,40 @@ namespace AutoCtrl.CommonForm {
             this.label33.TabIndex = 100;
             this.label33.Text = "(先选择项目，再check刷新配置)";
             // 
-            // label34
+            // label32
             // 
-            this.label34.AutoSize = true;
-            this.label34.BackColor = System.Drawing.SystemColors.Window;
-            this.label34.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label34.Location = new System.Drawing.Point(388, 3);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(74, 17);
-            this.label34.TabIndex = 94;
-            this.label34.Text = "Trim 选择：";
+            this.label32.AutoSize = true;
+            this.label32.BackColor = System.Drawing.SystemColors.Control;
+            this.label32.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label32.Location = new System.Drawing.Point(16, 47);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(68, 20);
+            this.label32.TabIndex = 99;
+            this.label32.Text = "刷新配置:";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.BackColor = System.Drawing.SystemColors.Control;
+            this.label31.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Location = new System.Drawing.Point(16, 26);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(68, 20);
+            this.label31.TabIndex = 90;
+            this.label31.Text = "项目选择:";
+            // 
+            // cmbProjectSel
+            // 
+            this.cmbProjectSel.BackColor = System.Drawing.SystemColors.Control;
+            this.cmbProjectSel.FormattingEnabled = true;
+            this.cmbProjectSel.Items.AddRange(new object[] {
+            "P1040",
+            "P3268"});
+            this.cmbProjectSel.Location = new System.Drawing.Point(92, 25);
+            this.cmbProjectSel.Name = "cmbProjectSel";
+            this.cmbProjectSel.Size = new System.Drawing.Size(164, 25);
+            this.cmbProjectSel.TabIndex = 98;
+            this.cmbProjectSel.Text = "下拉框选择：项目";
             // 
             // SerialPortCommunicationForm
             // 
@@ -1827,8 +1827,6 @@ namespace AutoCtrl.CommonForm {
             this.tpTestConfig.ResumeLayout(false);
             this.tbpP1040Test.ResumeLayout(false);
             this.tbpP1040Test.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudTestCnt)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudReadInstDelay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudChipCnt_1040)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGccTrim_1040)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOscTrim_1040)).EndInit();
@@ -1836,12 +1834,14 @@ namespace AutoCtrl.CommonForm {
             ((System.ComponentModel.ISupportInitialize)(this.nudVbgCfg_1040)).EndInit();
             this.tbp3268Test.ResumeLayout(false);
             this.tbp3268Test.PerformLayout();
-            this.gbProjectTest.ResumeLayout(false);
-            this.gbProjectTest.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTestCnt)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudReadInstDelay)).EndInit();
+            this.gbProjectTest.ResumeLayout(false);
+            this.gbProjectTest.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
