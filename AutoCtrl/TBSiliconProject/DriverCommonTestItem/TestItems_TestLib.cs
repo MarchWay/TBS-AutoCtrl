@@ -23,6 +23,9 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
         public RichTextBox rtbDisPlay;
         public TextBox tbAtbResult;
         public double volt = 0;
+        public double vbgTarget = 1.200;
+        public int voltCase;
+        public string CommTitle = "ChipType\tChipCorner\tChipNum\tTemp\tVoltage\t";
 
         #region 0. 公共函数：仪器连接|获取项目名称|...
         /// <summary>
@@ -70,7 +73,7 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
         /// <param name="dChipComFunLib"></param>
         public void GetProjectName(DriverChipCommonFunctionLib dChipComFunLib)
         {
-            switch (dChipComFunLib.para_St.cmbProjectName.Text)
+            switch (dChipComFunLib.para_St.cbProjectItems.Text)
             {
                 case "P2218_V20X":
                     dChipComFunLib.para_St.atbScan = atbTable_2218_V20X;
@@ -164,14 +167,18 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
         public double VbgConfig(DriverChipCommonFunctionLib dChipComFunLib, USB_PortLib usbLib, double configValue)
         {
             int code = 10;
+            double volt = GetVbgVolt(dChipComFunLib, usbLib);
             string regCode = "10" + code.ToString("X2");
             dChipComFunLib.WriteReg(usbLib, dChipComFunLib.para_St.VbgTrim[3, 0], regCode);
             comFunLib.DelayTimeMs(300);
-            double volt = GetVbgVolt(dChipComFunLib, usbLib);
             while (Math.Abs(volt - configValue) > 0.008)
             {
-                if (dChipComFunLib.para_St.stop) break;
-                code = (volt - configValue) > 0 ? ++code : --code;
+                if (dChipComFunLib.para_St.stop)
+                {
+                    dChipComFunLib.para_St.stop = false;
+                    break;
+                }
+                code = (volt - configValue) > 0 ? --code : ++code;
                 if (code < 0 || code > 15)
                     break;
                 regCode = "10" + code.ToString("X2");
@@ -190,6 +197,50 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
             dChipComFunLib.dataList.Add(dChipComFunLib.para_St.cbProjectItems.Text);
             dChipComFunLib.dataList.Add(dChipComFunLib.para_St.cmbChipCorner.Text);
             dChipComFunLib.dataList.Add(dChipComFunLib.para_St.tbChipID.Text);
+            dChipComFunLib.dataList.Add(dChipComFunLib.para_St.cmbTempCaseSel.Text);
+            dChipComFunLib.dataList.Add(dChipComFunLib.para_St.cmbVoltCaseSel.Text);
+        }
+        /// <summary>
+        /// 控制不同电源通道上下电
+        /// </summary>
+        /// <param name="dChipComFunLib"></param>
+        public void PowerOnOffControl(DriverChipCommonFunctionLib dChipComFunLib)
+        {
+            int delayCount = 0;
+            string pwrType = dChipComFunLib.para_St.cbPwrType.Checked ? "KeySight" : "GuWei";
+            bool[] EnPwrCh = new bool[]{ dChipComFunLib.para_St.cbEnPwrCH1.Checked, dChipComFunLib.para_St.cbEnPwrCH2.Checked,
+                    dChipComFunLib.para_St.cbEnPwrCH3.Checked, dChipComFunLib.para_St.cbEnPwrCH4.Checked };
+            //电源初始化设置
+            if (dChipComFunLib.para_St.cbPowerSelEn.Checked)
+            {
+                for (int ch = 0; ch < EnPwrCh.Length; ch++)
+                {
+                    if (EnPwrCh[ch])
+                    {
+                        switch (pwrType)
+                        {
+                            case "GuWei":
+                                instCmdLib.GuWeiPowerOutputChEn(mbsPower, (InstCommandLib.POWER_CH_EN)(ch + 1), InstCommandLib.STATE_EN.OFF);
+                                comFunLib.DelayTimeMs(2000);
+                                instCmdLib.GuWeiPowerOutputChEn(mbsPower, (InstCommandLib.POWER_CH_EN)(ch + 1), InstCommandLib.STATE_EN.ON);
+                                break;
+                            case "KeySight":
+                                instCmdLib.KeyPowerOutPutChEn(mbsPower, (InstCommandLib.POWER_CH_EN)(ch + 1), InstCommandLib.STATE_EN.OFF);
+                                comFunLib.DelayTimeMs(2000);
+                                instCmdLib.KeyPowerOutPutChEn(mbsPower, (InstCommandLib.POWER_CH_EN)(ch + 1), InstCommandLib.STATE_EN.ON);
+                                break;
+                            default:
+                                break;
+                        }
+
+                    }
+                }
+                while (delayCount < 7)
+                {
+                    comFunLib.DelayTimeMs(1000);
+                    delayCount++;
+                }
+            }
         }
         /// <summary>
         /// 电源电压设置，pwrType——电源类型，pwrCH——电源通道，volt——设置电压值，exeModule——执行类型"设置电压"or"读取电压"
@@ -444,7 +495,6 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
         #endregion
         public void AtbNodeRegCfg(DriverChipCommonFunctionLib dChipComFunLib, USB_PortLib usbLib, int index)
         {
-            GetProjectName(dChipComFunLib);
             dChipComFunLib.para_St.addrOfst = 0;
             dChipComFunLib.para_St.tbregOptLength.Text = "06";
             dChipComFunLib.WriteReg(usbLib, dChipComFunLib.para_St.atbScan[index, 0], dChipComFunLib.para_St.atbScan[index, 1]);
@@ -478,8 +528,8 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
         }
         public void AtbAutoSweep(DriverChipCommonFunctionLib dChipComFunLib, USB_PortLib usbLib)
         {
-            string title = "ChipType\tChipCorner\tChipNum\tTOP_Atb(Addr)\tTOP_Atb(Cfg)\tATB_Ctrl(Addr)\tATB_Ctrl(Cfg)\tATB_Name\tValue\tunit";
-            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cmbProjectName.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
+            string title = CommTitle + "TOP_Atb(Addr)\tTOP_Atb(Cfg)\tATB_Ctrl(Addr)\tATB_Ctrl(Cfg)\tATB_Name\tValue\tunit";
+            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cbProjectItems.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
 
             double volt = 0;
             for (int i = 0; i < dChipComFunLib.para_St.cmbAtbNodeName.Items.Count; i++)
@@ -503,7 +553,12 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
                 dChipComFunLib.dataList.Clear();
                 rtbDisPlay.AppendText(dChipComFunLib.para_St.atbScan[i, 4] + "\t" + volt.ToString("F4") + "\t" + instCmdLib.var_st.dataUnit + "\n");   //显示实时测量信息
                 rtbDisPlay.ScrollToCaret();
-                if (dChipComFunLib.para_St.stop) break;
+                if (dChipComFunLib.para_St.stop)
+                {
+                    dChipComFunLib.para_St.stop = false;
+                    break;
+                }
+
             }
         }
         #endregion
@@ -525,8 +580,8 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
         };
         public void VbgAutoTrim(DriverChipCommonFunctionLib dChipComFunLib, USB_PortLib usbLib)
         {
-            string title = "ChipType\tChipCorner\tChipNum\tVbgCode\tValue(v)";
-            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cmbProjectName.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
+            string title = CommTitle + "VbgCode\tValue(v)";
+            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cbProjectItems.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
             rtbDisPlay.AppendText("Reg Addr" + "\t" + "Reg配置值" + "\t" + "Vbg电压值" + "\n");
 
             for (int i = 0; i < dChipComFunLib.para_St.VbgTrim.GetLength(0); i++)
@@ -552,7 +607,11 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
                 dChipComFunLib.dataList.Clear();
                 rtbDisPlay.AppendText(dChipComFunLib.para_St.VbgTrim[3, 0] + "\t" + vbgTrimCode + "\t" + volt.ToString("F4") + "\t" + instCmdLib.var_st.dataUnit + "\n");   //显示实时测量信息
                 rtbDisPlay.ScrollToCaret();
-                if (dChipComFunLib.para_St.stop) break;
+                if (dChipComFunLib.para_St.stop)
+                {
+                    dChipComFunLib.para_St.stop = false;
+                    break;
+                }
             }
         }
         #endregion
@@ -619,7 +678,7 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
             {
                 dChipComFunLib.WriteReg(usbLib, addr, i.ToString("X4"));
                 comFunLib.DelayTimeMs(1000);
-                dChipComFunLib.dataList.Add(dChipComFunLib.para_St.cmbProjectName.Text);
+                dChipComFunLib.dataList.Add(dChipComFunLib.para_St.cbProjectItems.Text);
                 dChipComFunLib.dataList.Add(dChipComFunLib.para_St.tbChipID.Text);
                 dChipComFunLib.dataList.Add(vbg.ToString("F4"));
                 dChipComFunLib.dataList.Add(cell == 1 || i > 0x1F0 ? "1" : "0");
@@ -634,24 +693,27 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
                 dChipComFunLib.dataList.Clear();
                 rtbDisPlay.AppendText(addr + "\t" + (i.ToString("x4")).ToUpper() + "\t" + volt.ToString("F4") + "\t" + instCmdLib.var_st.dataUnit + "\n");   //显示实时测量信息
                 rtbDisPlay.ScrollToCaret();
-                if (dChipComFunLib.para_St.stop) break;
+                if (dChipComFunLib.para_St.stop)
+                {
+                    dChipComFunLib.para_St.stop = false;
+                    break;
+                }
             }
         }
         public void PreDriver(DriverChipCommonFunctionLib dChipComFunLib, USB_PortLib usbLib)
         {
-            string title = "ChipType\tChipCorner\tChipNum\tVBG(V)\tCoarseReg\tCode\tFineReg\tCode\tVolt(V)";
-            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cmbProjectName.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
+            string title = CommTitle + "VBG(V)\tCoarseReg\tCode\tFineReg\tCode\tVolt(V)";
+            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cbProjectItems.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
             rtbDisPlay.AppendText("CoarseReg Addr" + "\t" + "Reg配置值" + "\t" + "FineReg Addr" + "\t" + "Reg配置值" + "\t" + "PreDrv电压值" + "\n");
 
             string regValue;
             bool tuneFlag = true;
             bool ResFlag = false;
             double volt = 0;
-            double vbg = VbgConfig(dChipComFunLib, usbLib, 1.2);
+            double vbg = VbgConfig(dChipComFunLib, usbLib, vbgTarget);
             //关闭通道输出、预驱动使能、ATB输出预驱动电压
             for (int i = 0; i < dChipComFunLib.para_St.preDrv.GetLength(0) - 2; i++)
             {
-                if (dChipComFunLib.para_St.stop) break;
                 dChipComFunLib.WriteReg(usbLib, dChipComFunLib.para_St.preDrv[i, 0], dChipComFunLib.para_St.preDrv[i, 1]);
                 comFunLib.DelayTimeMs(500);
             }
@@ -659,7 +721,7 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
             for (int i = 0; i < 64; i++)
             {
                 int tuneLevel = 1;
-                if (dChipComFunLib.para_St.cmbProjectName.Text.Contains("2218"))
+                if (dChipComFunLib.para_St.cbProjectItems.Text.Contains("2218"))
                 {
                     regValue = i.ToString("X3") + "0";
                     tuneLevel = i < 32 ? 1 : 0;
@@ -680,7 +742,7 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
                 ResultTitleSave(dChipComFunLib);
                 dChipComFunLib.dataList.Add(vbg.ToString("F4"));
                 dChipComFunLib.dataList.Add(dChipComFunLib.para_St.preDrv[4, 0]);
-                if (dChipComFunLib.para_St.cmbProjectName.Text.Contains("2318"))
+                if (dChipComFunLib.para_St.cbProjectItems.Text.Contains("2318"))
                 {
                     dChipComFunLib.dataList.Add(tuneFlag ? "0000" : "1000");
                 }
@@ -701,7 +763,11 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
                 dChipComFunLib.dataList.Clear();
                 rtbDisPlay.AppendText(dChipComFunLib.para_St.preDrv[4, 0] + "\t" + (tuneFlag ? (ResFlag ? regValue : "0000") : "1000") + "\t" + dChipComFunLib.para_St.preDrv[5, 0] + "\t" + regValue + "\t" + volt.ToString("F4") + "\t" + instCmdLib.var_st.dataUnit + "\n");   //显示实时测量信息
                 rtbDisPlay.ScrollToCaret();
-                if (dChipComFunLib.para_St.stop) break;
+                if (dChipComFunLib.para_St.stop)
+                {
+                    dChipComFunLib.para_St.stop = false;
+                    break;
+                }
             }
         }
         #endregion
@@ -731,15 +797,14 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
 
         public void GccIfixTrim(DriverChipCommonFunctionLib dChipComFunLib, USB_PortLib usbLib)
         {
-            string title = "ChipType\tChipCorner\tChipNum\tVBG(V)\tGccIfixCode\tValue(uA)";
-            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cmbProjectName.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
+            string title = CommTitle + "VBG(V)\tGccIfixCode\tValue(uA)";
+            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cbProjectItems.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
             rtbDisPlay.AppendText("Reg Addr" + "\t" + "Reg配置值" + "\t" + "GCCIfix电流值" + "\n");
 
             double Curr = 0;
-            double vbg = VbgConfig(dChipComFunLib, usbLib, 1.2);
+            double vbg = VbgConfig(dChipComFunLib, usbLib, vbgTarget);
             for (int i = 0; i < dChipComFunLib.para_St.GccIfix.GetLength(0); i++)
             {
-                if (dChipComFunLib.para_St.stop) break;
                 dChipComFunLib.WriteReg(usbLib, dChipComFunLib.para_St.GccIfix[i, 0], dChipComFunLib.para_St.GccIfix[i, 1]);
                 comFunLib.DelayTimeMs(500);
             }
@@ -761,7 +826,11 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
                 dChipComFunLib.dataList.Clear();
                 rtbDisPlay.AppendText(dChipComFunLib.para_St.GccIfix[2, 0] + "\t" + GccRegValue + "\t" + Curr.ToString("F4") + "\t" + instCmdLib.var_st.dataUnit + "\n");   //显示实时测量信息
                 rtbDisPlay.ScrollToCaret();
-                if (dChipComFunLib.para_St.stop) break;
+                if (dChipComFunLib.para_St.stop)
+                {
+                    dChipComFunLib.para_St.stop = false;
+                    break;
+                }
             }
         }
         #endregion
@@ -800,16 +869,15 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
         };
         public void DrvPAMTrim(DriverChipCommonFunctionLib dChipComFunLib, USB_PortLib usbLib)
         {
-            string title = "ChipType\tChipCorner\tChipNum\tVBG(V)\tGCCGain\tPAMAddr\tPAMCode\tValue(mA)";
-            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cmbProjectName.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
+            string title = CommTitle + "VBG(V)\tGCCGain\tPAMAddr\tPAMCode\tValue(mA)";
+            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cbProjectItems.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
             rtbDisPlay.AppendText("GCCout" + "\t" + "PAM_Reg Addr" + "\t" + "Reg配置值" + "\t" + "DrvPAM电流值" + "\n");
 
             int GainFlag = 0;
             double Curr = 0;
-            double vbg = VbgConfig(dChipComFunLib, usbLib, 1.2);
+            double vbg = VbgConfig(dChipComFunLib, usbLib, vbgTarget);
             for (int i = 0; i < dChipComFunLib.para_St.DrvPAM.GetLength(0); i++)
             {
-                if (dChipComFunLib.para_St.stop) break;
                 dChipComFunLib.WriteReg(usbLib, dChipComFunLib.para_St.DrvPAM[i, 0], dChipComFunLib.para_St.DrvPAM[i, 1]);
                 comFunLib.DelayTimeMs(500);
             }
@@ -829,15 +897,19 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
                     comFunLib.DelayTimeMs(500);
                     if (dChipComFunLib.para_St.cbMultiSelEn1.Checked)
                     {
-                        instCmdLib.SetMultiMeasMode(mbsMulti, InstCommandLib.READ_TYPE_EN.CURR, InstCommandLib.MEASURE_MODE_EN.DC);//设置万用表为电流模式
-                        instCmdLib.ReadMulti(mbsMulti, ref Curr);  //读取电流
+                        instCmdLib.SetMultiMeasMode(mbsMulti1, InstCommandLib.READ_TYPE_EN.CURR, InstCommandLib.MEASURE_MODE_EN.DC);//设置万用表为电流模式
+                        instCmdLib.ReadMulti(mbsMulti1, ref Curr);  //读取电流
                     }
                     dChipComFunLib.dataList.Add(Curr.ToString("F4"));
                     comFunLib.WriteDataToTxt(dChipComFunLib.dataList);
                     dChipComFunLib.dataList.Clear();
                     rtbDisPlay.AppendText(dChipComFunLib.para_St.GccGain[GainFlag, 0] + "\t" + dChipComFunLib.para_St.DrvPAM[4, 0] + "\t" + PAMregValue + "\t" + Curr.ToString("F4") + "\t" + instCmdLib.var_st.dataUnit + "\n");   //显示实时测量信息
                     rtbDisPlay.ScrollToCaret();
-                    if (dChipComFunLib.para_St.stop) break;
+                    if (dChipComFunLib.para_St.stop)
+                    {
+                        dChipComFunLib.para_St.stop = false;
+                        break;
+                    }
                 }
                 GainFlag++;
             }
@@ -875,23 +947,22 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
         {
             int LDOCase = 1;
             string regValue;
-            string title = "ChipType\tChipCorner\tChipNum\tVBG(V)\tLDO Name\tLDO_VREF_Trim Code\tValue(V)";
-            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cmbProjectName.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
+            string title = CommTitle + "VBG(V)\tLDO Name\tLDO_VREF_Trim Code\tValue(V)";
+            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cbProjectItems.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
             rtbDisPlay.AppendText("LDO Name：" + dChipComFunLib.para_St.Regulator[0, LDOCase] + "\n" + "Reg Addr" + "\t" + "Reg配置值" + "\t" + "LDO电压值" + "\n");
 
             double volt = 0;
-            double vbg = VbgConfig(dChipComFunLib, usbLib, 1.2);
+            double vbg = VbgConfig(dChipComFunLib, usbLib, vbgTarget);
 
             for (int i = 1; i < dChipComFunLib.para_St.Regulator.GetLength(0); i++)
             {
-                if (dChipComFunLib.para_St.stop) break;
                 dChipComFunLib.WriteReg(usbLib, dChipComFunLib.para_St.Regulator[i, 0], dChipComFunLib.para_St.Regulator[i, 1]);
                 comFunLib.DelayTimeMs(500);
             }
 
             for (int i = 0; i < 8; i++)
             {
-                if (dChipComFunLib.para_St.cmbProjectName.Text.Contains("2318"))
+                if (dChipComFunLib.para_St.cbProjectItems.Text.Contains("2318"))
                 {
                     regValue = dChipComFunLib.para_St.Regulator[5, 1].Substring(0, 2) + (8 + i).ToString("X1") + dChipComFunLib.para_St.Regulator[5, 1].Substring(3, 1);
                 }
@@ -914,7 +985,11 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
                 dChipComFunLib.dataList.Clear();
                 rtbDisPlay.AppendText(dChipComFunLib.para_St.Regulator[5, 0] + "\t" + regValue + "\t" + volt.ToString("F4") + "\t" + instCmdLib.var_st.dataUnit + "\n");   //显示实时测量信息
                 rtbDisPlay.ScrollToCaret();
-                if (dChipComFunLib.para_St.stop) break;
+                if (dChipComFunLib.para_St.stop)
+                {
+                    dChipComFunLib.para_St.stop = false;
+                    break;
+                }
             }
 
         }
@@ -925,8 +1000,8 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
 
         public void VbgVmin(DriverChipCommonFunctionLib dChipComFunLib, USB_PortLib usbLib)
         {
-            string title = "ChipType\tChipCorner\tChipNum\tSourceVolt(v)\tVbg(v)";
-            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cmbProjectName.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
+            string title = CommTitle + "SourceVolt(v)\tVbg(v)";
+            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cbProjectItems.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
             rtbDisPlay.AppendText("SourceVolt/V" + "\t" + "Vbg电压值" + "\n");
 
             double Vbg;
@@ -944,7 +1019,11 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
                 dChipComFunLib.dataList.Clear();
                 rtbDisPlay.AppendText(startVolt.ToString("F4") + "\t" + Vbg.ToString("F4") + "  " + instCmdLib.var_st.dataUnit + "\n");
                 rtbDisPlay.ScrollToCaret();
-                if (dChipComFunLib.para_St.stop) break;
+                if (dChipComFunLib.para_St.stop)
+                {
+                    dChipComFunLib.para_St.stop = false;
+                    break;
+                }
             }
             comFunLib.DelayTimeMs(500);
             PwrVoltSetOrRead(dChipComFunLib, 2, exCommand[0], initialVolt);
@@ -955,15 +1034,14 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
 
         public void BiasVmin(DriverChipCommonFunctionLib dChipComFunLib, USB_PortLib usbLib)
         {
-            string title = "ChipType\tChipCorner\tChipNum\tVbg(v)\tSourceVolt(v)\tBias400(uA)";
-            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cmbProjectName.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
+            string title = CommTitle + "Vbg(v)\tSourceVolt(v)\tBias400(uA)";
+            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cbProjectItems.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
             rtbDisPlay.AppendText("SourceVolt/V" + "\t" + "Bias400/uA" + "\n");
 
             double Curr = 0;
-            double vbg = VbgConfig(dChipComFunLib, usbLib, 1.2);
+            double vbg = VbgConfig(dChipComFunLib, usbLib, vbgTarget);
             for (int i = 0; i < dChipComFunLib.para_St.GccIfix.GetLength(0); i++)
             {
-                if (dChipComFunLib.para_St.stop) break;
                 dChipComFunLib.WriteReg(usbLib, dChipComFunLib.para_St.GccIfix[i, 0], dChipComFunLib.para_St.GccIfix[i, 1]);
                 comFunLib.DelayTimeMs(500);
             }
@@ -975,8 +1053,8 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
                 startVolt = PwrVoltSetOrRead(dChipComFunLib, 2, exCommand[1]);
                 if (dChipComFunLib.para_St.cbMultiSelEn1.Checked)
                 {
-                    instCmdLib.SetMultiMeasMode(mbsMulti, InstCommandLib.READ_TYPE_EN.CURR, InstCommandLib.MEASURE_MODE_EN.DC);
-                    instCmdLib.ReadMulti(mbsMulti, ref Curr);  //读取电流
+                    instCmdLib.SetMultiMeasMode(mbsMulti1, InstCommandLib.READ_TYPE_EN.CURR, InstCommandLib.MEASURE_MODE_EN.DC);
+                    instCmdLib.ReadMulti(mbsMulti1, ref Curr);  //读取电流
                 }
                 ResultTitleSave(dChipComFunLib);
                 dChipComFunLib.dataList.Add(vbg.ToString("F4"));
@@ -986,7 +1064,11 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
                 dChipComFunLib.dataList.Clear();
                 rtbDisPlay.AppendText(startVolt.ToString("F4") + "  " + "\t" + Curr.ToString("F4") + "  " + instCmdLib.var_st.dataUnit + "\n");
                 rtbDisPlay.ScrollToCaret();
-                if (dChipComFunLib.para_St.stop) break;
+                if (dChipComFunLib.para_St.stop)
+                {
+                    dChipComFunLib.para_St.stop = false;
+                    break;
+                }
             }
             comFunLib.DelayTimeMs(500);
             PwrVoltSetOrRead(dChipComFunLib, 2, exCommand[1], beginVolt);
@@ -997,13 +1079,13 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
 
         public void LDOVmin(DriverChipCommonFunctionLib dChipComFunLib, USB_PortLib usbLib)
         {
-            string title = "ChipType\tChipCorner\tChipNum\tVbg(v)\tSourceVolt(v)\tVldo(v)";
-            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cmbProjectName.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
+            string title = CommTitle + "Vbg(v)\tSourceVolt(v)\tVldo(v)";
+            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cbProjectItems.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
             rtbDisPlay.AppendText("SourceVolt/V" + "\t" + "Vbg/V" + "\t" + "Vldo/V" + "\n");
 
             double Vldo = 0;
             double initialVolt = PwrVoltSetOrRead(dChipComFunLib, 2, exCommand[1]);
-            VbgConfig(dChipComFunLib, usbLib, 1.2);
+            VbgConfig(dChipComFunLib, usbLib, vbgTarget);
 
             for (double startVolt = initialVolt; startVolt >= 2.0; startVolt -= 0.1)
             {
@@ -1013,7 +1095,6 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
                 double Vbg = GetVbgVolt(dChipComFunLib, usbLib);
                 for (int i = 1; i < dChipComFunLib.para_St.Regulator.GetLength(0); i++)
                 {
-                    if (dChipComFunLib.para_St.stop) break;
                     dChipComFunLib.WriteReg(usbLib, dChipComFunLib.para_St.Regulator[i, 0], dChipComFunLib.para_St.Regulator[i, 1]);
                     comFunLib.DelayTimeMs(200);
                 }
@@ -1030,7 +1111,11 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
                 dChipComFunLib.dataList.Clear();
                 rtbDisPlay.AppendText(startVolt.ToString("F4") + "\t" + Vbg.ToString("F4") + "\t" + Vldo.ToString("F4") + "  " + instCmdLib.var_st.dataUnit + "\n");
                 rtbDisPlay.ScrollToCaret();
-                if (dChipComFunLib.para_St.stop) break;
+                if (dChipComFunLib.para_St.stop)
+                {
+                    dChipComFunLib.para_St.stop = false;
+                    break;
+                }
             }
             comFunLib.DelayTimeMs(500);
             PwrVoltSetOrRead(dChipComFunLib, 2, exCommand[0], initialVolt);
@@ -1042,12 +1127,12 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
 
         public void LowKnee(DriverChipCommonFunctionLib dChipComFunLib, USB_PortLib usbLib)
         {
-            string title = "ChipType\tChipCorner\tChipNum\tVbg(v)\tSourceVolt(v)\tChannelCurr(mA)";
-            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cmbProjectName.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
+            string title = CommTitle + "Vbg(v)\tSourceVolt(v)\tChannelCurr(mA)";
+            comFunLib.CreatFileWriteTitle(dChipComFunLib.para_St.cbProjectItems.Text, dChipComFunLib.para_St.tbTestMessage.Text, dChipComFunLib.dataList, title);
             rtbDisPlay.AppendText("SourceVolt/V" + "\t" + "ChannelCurr(mA)" + "\n");
 
             double ChannelCurr = 0;
-            double Vbg = VbgConfig(dChipComFunLib, usbLib, 1.2);
+            double Vbg = VbgConfig(dChipComFunLib, usbLib, vbgTarget);
             double initialVolt = PwrVoltSetOrRead(dChipComFunLib, 2, exCommand[1]);
             for (double startVolt = initialVolt; startVolt >= 2.0; startVolt -= 0.1)
             {
@@ -1056,8 +1141,8 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
                 startVolt = PwrVoltSetOrRead(dChipComFunLib, 2, exCommand[1]);
                 if (dChipComFunLib.para_St.cbMultiSelEn1.Checked)
                 {
-                    instCmdLib.SetMultiMeasMode(mbsMulti, InstCommandLib.READ_TYPE_EN.CURR, InstCommandLib.MEASURE_MODE_EN.DC);
-                    instCmdLib.ReadMulti(mbsMulti, ref ChannelCurr);  //读取电流
+                    instCmdLib.SetMultiMeasMode(mbsMulti1, InstCommandLib.READ_TYPE_EN.CURR, InstCommandLib.MEASURE_MODE_EN.DC);
+                    instCmdLib.ReadMulti(mbsMulti1, ref ChannelCurr);  //读取电流
                 }
                 ResultTitleSave(dChipComFunLib);
                 dChipComFunLib.dataList.Add(Vbg.ToString("F4"));
@@ -1066,7 +1151,11 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
                 dChipComFunLib.dataList.Clear();
                 rtbDisPlay.AppendText(startVolt.ToString("F4") + "\t" + Vbg.ToString("F4") + "  " + instCmdLib.var_st.dataUnit + "\n");
                 rtbDisPlay.ScrollToCaret();
-                if (dChipComFunLib.para_St.stop) break;
+                if (dChipComFunLib.para_St.stop)
+                {
+                    dChipComFunLib.para_St.stop = false;
+                    break;
+                }
             }
             comFunLib.DelayTimeMs(500);
             PwrVoltSetOrRead(dChipComFunLib, 2, exCommand[0], initialVolt);
@@ -1087,41 +1176,7 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
         {
             GetInstHandle(dChipComFunLib);
             GetProjectName(dChipComFunLib);
-            int delayCount = 0;
-            string pwrType = dChipComFunLib.para_St.cbPwrType.Checked ? "KeySight" : "GuWei";
-            bool[] EnPwrCh = new bool[]{ dChipComFunLib.para_St.cbEnPwrCH1.Checked, dChipComFunLib.para_St.cbEnPwrCH2.Checked,
-                    dChipComFunLib.para_St.cbEnPwrCH3.Checked, dChipComFunLib.para_St.cbEnPwrCH4.Checked };
-            //电源初始化设置
-            if (dChipComFunLib.para_St.cbPowerSelEn.Checked)
-            {
-                for (int ch = 0; ch < EnPwrCh.Length; ch++)
-                {
-                    if (EnPwrCh[ch])
-                    {
-                        switch (pwrType)
-                        {
-                            case "GuWei":
-                                instCmdLib.GuWeiPowerOutputChEn(mbsPower, (InstCommandLib.POWER_CH_EN)(ch + 1), InstCommandLib.STATE_EN.OFF);
-                                comFunLib.DelayTimeMs(2000);
-                                instCmdLib.GuWeiPowerOutputChEn(mbsPower, (InstCommandLib.POWER_CH_EN)(ch + 1), InstCommandLib.STATE_EN.ON);
-                                break;
-                            case "KeySight":
-                                instCmdLib.KeyPowerOutPutChEn(mbsPower, (InstCommandLib.POWER_CH_EN)(ch + 1), InstCommandLib.STATE_EN.OFF);
-                                comFunLib.DelayTimeMs(2000);
-                                instCmdLib.KeyPowerOutPutChEn(mbsPower, (InstCommandLib.POWER_CH_EN)(ch + 1), InstCommandLib.STATE_EN.ON);
-                                break;
-                            default:
-                                break;
-                        }
-
-                    }
-                }
-                while (delayCount < 7)
-                {
-                    comFunLib.DelayTimeMs(1000);
-                    delayCount++;
-                }
-            }
+            PowerOnOffControl(dChipComFunLib);
 
             dChipComFunLib.para_St.addrOfst = 0;
             dChipComFunLib.para_St.tbregOptLength.Text = "06";

@@ -26,8 +26,6 @@ namespace AutoCtrl.TBSiliconProject.InterFaceCommonTestItem
             public CheckBox cbEnPwrCH4;
             public CheckBox cbPwrType;
             public TextBox tbregOptLength;
-            public TextBox tbDriverRegAddr;
-            public TextBox tbDriverRegValue;
             public TextBox tbChipID;
             public TextBox tbTestMessage;
             public TextBox tbInstPowerAddr;
@@ -39,6 +37,8 @@ namespace AutoCtrl.TBSiliconProject.InterFaceCommonTestItem
             public ComboBox cmbProjectName;
             public ComboBox cbProjectItems;
             public ComboBox cmbChipCorner;
+            public ComboBox cmbTempCaseSel;
+            public ComboBox cmbVoltCaseSel;
             public CheckBox cbEnChip0;
             public CheckBox cbEnChip1;
             public string[,] atbScan;
@@ -48,26 +48,22 @@ namespace AutoCtrl.TBSiliconProject.InterFaceCommonTestItem
             public string[,] DrvPAM;
             public string[,] GccGain;
             public string[,] Regulator;
+            public string[,] IbiasTrim;
+            public string[,] PowerConsume;
             public UInt32 addrActual;
             public UInt32 addrOfst;
             public string addr;
-            public int rgbCheck;
             public double vbg;
             public bool stop;
         }
-        /// <summary>
-        /// 不同的驱动芯片，寄存器位数：比如P2X18寄存器宽度为16bit(2 Byte);P3268的寄存器宽度为48bit(6 Byte)
-        /// </summary>
-        public enum DRIVER_REG_BYTE_LENGTH : int
-        {
-            LIST_DRIVER = 2,
-            ROW_LIST_DRIVER = 6,
-        }
+
         public Para_St para_St = new Para_St();
         public USB_PortLib.DEVICE_TYPE deviceType = USB_PortLib.DEVICE_TYPE.RECEIVE_CARD;
         public USB_PortLib.OPT_TYPE otpType = USB_PortLib.OPT_TYPE.WRITE;
 
-
+        /// <summary>
+        /// 接口芯片寄存器地址生成
+        /// </summary>
         uint[] initialAddr = { 0x02000220, 0x02000250 };
         public string InterChipRegAddrGen(int Base)
         {
@@ -75,14 +71,12 @@ namespace AutoCtrl.TBSiliconProject.InterFaceCommonTestItem
             para_St.addr = para_St.addrActual.ToString("X8");
             return para_St.addr;
         }
-
-        public void interChipWriteReg(USB_PortLib usbLib, string regAddr, string data)
-        {
-            usbLib.optRegLength = Convert.ToByte(para_St.tbregOptLength.Text.Trim(), 16);
-            usbLib.UsbRWCommonInfo(); //初始化USB相关参数
-            usbLib.DataPackageInit(regAddr, data, deviceType, otpType);
-            usbLib.UsbWriteReg();
-        }
+        /// <summary>
+        /// 接口芯片数据流生成
+        /// </summary>
+        /// <param name="length"></param>   寄存器长度
+        /// <param name="data"></param>
+        /// <returns></returns>
         public string InterDataGen(int length, string data)
         {
             para_St.rtbUsbWriteData.Clear();
@@ -95,6 +89,26 @@ namespace AutoCtrl.TBSiliconProject.InterFaceCommonTestItem
             }
             return dataStream;
         }
+        /// <summary>
+        /// 发送卡寄存器写
+        /// </summary>
+        /// <param name="usbLib"></param>
+        /// <param name="regAddr"></param>  发送卡原始地址
+        /// <param name="data"></param> 写数据
+        public void interChipWriteReg(USB_PortLib usbLib, string regAddr, string data)
+        {
+            usbLib.optRegLength = Convert.ToByte(para_St.tbregOptLength.Text.Trim(), 16);
+            usbLib.UsbRWCommonInfo(); //初始化USB相关参数
+            usbLib.DataPackageInit(regAddr, data, deviceType, otpType);
+            usbLib.UsbWriteReg();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usbLib"></param>
+        /// <param name="Base"></param> 芯片基地址
+        /// <param name="regAddr"></param>  芯片配置地址
+        /// <param name="regValue"></param> 寄存器配置值
         public void WriteReg(USB_PortLib usbLib, int Base, string regAddr, string regValue)
         {
             string dataStream = InterDataGen(4, "A6" + regValue + regAddr);

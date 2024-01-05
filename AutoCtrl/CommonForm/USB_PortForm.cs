@@ -46,9 +46,8 @@ namespace AutoCtrl.CommonForm
             usb.para_St.cmbOptType = cmbUsbOtpType;
             dChipComFunLib.para_St.cmbAtbNodeName = cmbAtbNodeName;
             inChipComFunLib.para_St.cmbAtbNodeName = cmbInterChipAtbName;
-            dChipComFunLib.para_St.cmbProjectName = cmbProjectName;
             dChipComFunLib.para_St.cbProjectItems = cbProjectItems;
-            inChipComFunLib.para_St.cbProjectItems = cbInterChipProjectItem;
+            inChipComFunLib.para_St.cbProjectItems = cbInterChipProjectItems;
             dChipComFunLib.para_St.cbRedChip = cbDriverRedChipEn;
             dChipComFunLib.para_St.cbGreenChip = cbDriverGreenChipEn;
             dChipComFunLib.para_St.cbBlueChip = cbDriverBlueChipEn;
@@ -58,6 +57,9 @@ namespace AutoCtrl.CommonForm
             dChipComFunLib.para_St.tbDriverRegAddr = tbDriverRegAddr;
             dChipComFunLib.para_St.tbregOptLength = inChipComFunLib.para_St.tbregOptLength = tbRegOptLength;
             dChipComFunLib.para_St.tbDriverRegValue = tbDriverRegValue;
+            testItems.vbgTarget = double.Parse(tbVbgSet.Text.Trim());
+            inChipTestItems.vbgTarget = double.Parse(tbInterChipVbgValue.Text.Trim());
+            dChipComFunLib.para_St.tbregOptLength = inChipComFunLib.para_St.tbregOptLength = tbRegOptLength;
             dChipComFunLib.para_St.tbChipID = inChipComFunLib.para_St.tbChipID = tbChipID;
             dChipComFunLib.para_St.cmbChipCorner = inChipComFunLib.para_St.cmbChipCorner = cmbChipCorner;
             dChipComFunLib.para_St.tbTestMessage = inChipComFunLib.para_St.tbTestMessage = tbTestMessage;
@@ -69,6 +71,8 @@ namespace AutoCtrl.CommonForm
             dChipComFunLib.para_St.cbEnPwrCH3 = inChipComFunLib.para_St.cbEnPwrCH3 = cbEnPwrCH3;
             dChipComFunLib.para_St.cbEnPwrCH4 = inChipComFunLib.para_St.cbEnPwrCH4 = cbEnPwrCH4;
             dChipComFunLib.para_St.cbPwrType = inChipComFunLib.para_St.cbPwrType = cbPwrType;
+            dChipComFunLib.para_St.cmbTempCaseSel = inChipComFunLib.para_St.cmbTempCaseSel = cmbTempCaseSel;
+            dChipComFunLib.para_St.cmbVoltCaseSel = inChipComFunLib.para_St.cmbVoltCaseSel = cmbVoltCaseSel;
             dChipComFunLib.para_St.stop = false;
             usb.optDelayMs = (int)nudOptDelayMs.Value;
             usb.netPortNum = (byte)nudNetPortNum.Value;
@@ -100,25 +104,21 @@ namespace AutoCtrl.CommonForm
             usbDeviceInitial();
             usb.GetUSBInfo();
         }
-
         private void cmbUsbDeviceInfoList_SelectedIndexChanged(object sender, EventArgs e)
         {
             usbDeviceInitial(!enable);
             usb.SelectUsbInfoDevice();
         }
-
         private void cmbUsbDevicePidList_SelectedIndexChanged(object sender, EventArgs e)
         {
             usbDeviceInitial(!enable);
             usb.SelectUsbPidDevice();
         }
-
         private void cmbUsbDeviceVidList_SelectedIndexChanged(object sender, EventArgs e)
         {
             usbDeviceInitial(!enable);
             usb.SelectUsbVidDevice();
         }
-
         private void btnOpenDevice_Click(object sender, EventArgs e)
         {
             usbDeviceInitial(!enable);
@@ -133,7 +133,6 @@ namespace AutoCtrl.CommonForm
                 gbUsbLookUp.Enabled = enable;
             }
         }
-
         private void btnCloseDevice_Click(object sender, EventArgs e)
         {
             usbDeviceInitial(!enable);
@@ -149,7 +148,7 @@ namespace AutoCtrl.CommonForm
             btnReadUsbDevice.Enabled = false;
             rtbUsbReadData.Clear();
             usbDeviceInitial(!enable);
-            if (cbProjectNameEn.Checked && tbDriverRegAddr.Enabled)
+            if (tbDriverRegAddr.Enabled)
             {
                 tbRegAddr.Text = dChipComFunLib.DriverChipRegAddrGen(tbDriverRegAddr.Text.Trim());
                 if (cbDriverRedChipEn.Checked && cbDriverGreenChipEn.Checked && cbDriverBlueChipEn.Checked)
@@ -189,7 +188,7 @@ namespace AutoCtrl.CommonForm
         {
             btnWriteUsbDevice.Enabled = false;
             usbDeviceInitial(!enable);
-            if (cbProjectNameEn.Checked && tbDriverRegAddr.Enabled)
+            if (tbDriverRegAddr.Enabled)
             {
                 tbRegAddr.Text = dChipComFunLib.DriverChipRegAddrGen(tbDriverRegAddr.Text.Trim());
                 if (cbDriverRedChipEn.Checked || cbDriverGreenChipEn.Checked || cbDriverBlueChipEn.Checked)
@@ -253,7 +252,7 @@ namespace AutoCtrl.CommonForm
         public void GetAtbTable()
         {
 
-            switch (cmbProjectName.Text)
+            switch (cbProjectItems.Text)
             {
                 case "P2218_V20X":
                     for (int i = 0; i < testItems.atbTable_2218_V20X.GetLength(0); i++)
@@ -295,8 +294,9 @@ namespace AutoCtrl.CommonForm
         }
         public void GetAtbNodeTable()
         {
-            switch (cbInterChipProjectItem.Text)
+            switch (cbInterChipProjectItems.Text)
             {
+                case "TBS614":
                 case "TBS614V102":
                     for (int i = 0; i < inChipTestItems.atbTable_TBS614.GetLength(0); i++)
                     {
@@ -308,17 +308,28 @@ namespace AutoCtrl.CommonForm
         }
         #endregion
 
-        private void cmbProjectName_SelectedIndexChanged(object sender, EventArgs e)
+        #region 4. CommForm
+        private void cbProjectItems_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cmbAtbNodeName.Items.Clear();
-            cmbAtbNodeName.Text = null;
-            GetAtbTable();
-        }
-        private void cbProjectNameEn_CheckedChanged(object sender, EventArgs e)
-        {
-            cmbProjectName.Enabled = !cbProjectNameEn.Checked;
-            tbDriverRegAddr.Enabled = tbDriverRegValue.Enabled = cbDriverRedChipEn.Enabled = cbDriverGreenChipEn.Enabled = cbDriverBlueChipEn.Enabled
-                = tbVbgSet.Enabled = cbProjectNameEn.Checked;
+            usbDeviceInitial(!enable);
+
+            if (tcTest.SelectedTab == tcTest.TabPages[0])
+            {
+                cmbAtbNodeName.Items.Clear();
+                cmbAtbNodeName.Text = null;
+                GetAtbTable();
+            }
+            if (tcTest.SelectedTab == tcTest.TabPages[1])
+            {
+                cmbInterChipAtbName.Items.Clear();
+                cmbInterChipAtbName.Text = null;
+                GetAtbNodeTable();
+            }
+            if (tcTest.SelectedTab == tcTest.TabPages[2])
+            {
+
+            }
+
         }
         private void cmbAtbNodeName_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -328,7 +339,7 @@ namespace AutoCtrl.CommonForm
             cmbAtbNodeName.BackColor = SystemColors.Control;
             cmbAtbNodeName.Enabled = enable;
         }
-        private void cbTestEn_CheckedChanged(object sender, EventArgs e)
+        private void cbMultiSelEn_CheckedChanged(object sender, EventArgs e)
         {
             string MultiTemp = "请输入万用表地址";
             string PwrTemp = "请输入电源地址";
@@ -362,49 +373,78 @@ namespace AutoCtrl.CommonForm
             }
 
         }
-        private void btnStart_Click(object sender, EventArgs e)
+        private void VoltCaseSet(string voltCase)
         {
-            rtbDispaly.Clear();
-            cmbProjectName.Text = cbProjectItems.Text;
-            testItems.rtbDisPlay = rtbDispaly;
-
-            PwrChSelInitial(0);
-            btnStart.Enabled = false;
-            btnStart.BackColor = Color.Green;
-            cbProjectItems.Enabled = false;
-            cbTestCase.Enabled = false;
-            Application.DoEvents();
-            usbDeviceInitial(!enable);
-            tbTestMessage.Text = cbProjectItems.Text + "_" + cbTestCase.Text;
-            testItems.AutoTest(dChipComFunLib, usb, cbTestCase.Text);
-            PwrChSelInitial(1);
-            btnStart.Enabled = true;
-            btnStart.BackColor = SystemColors.Control;
-            cbProjectItems.Enabled = true;
-            cbTestCase.Enabled = true;
-            Application.DoEvents();
-
+            switch (voltCase)
+            {
+                case "LV":
+                    testItems.voltCase = 0;
+                    inChipTestItems.voltCase = 0;
+                    break;
+                case "NV":
+                    testItems.voltCase = 1;
+                    inChipTestItems.voltCase = 1;
+                    break;
+                case "HV":
+                    testItems.voltCase = 2;
+                    inChipTestItems.voltCase = 2;
+                    break;
+                default:
+                    break;
+            }
+        }
+        private void regWriteEn()
+        {
+            string[] regValue = { "02", "02", "02", "01" };
+            inChipComFunLib.para_St.tbregOptLength.Text = "01";
+            inChipComFunLib.interChipWriteReg(usb, "0x02000229", "A6");
+            comFunLib.DelayTimeMs(300);
+            inChipComFunLib.interChipWriteReg(usb, "0x02000230", "01");
+            comFunLib.DelayTimeMs(100);
+            for (int i = 0; i < 4; i++)
+            {
+                string addr = "020003e" + i.ToString("X1");
+                inChipComFunLib.interChipWriteReg(usb, addr, regValue[i]);
+            }
         }
         private void btnStop_Click(object sender, EventArgs e)
         {
             dChipComFunLib.para_St.stop = true;
             inChipComFunLib.para_St.stop = true;
         }
+        private void cbEnChip0_CheckedChanged(object sender, EventArgs e)
+        {
+            cbEnChip1.Checked = cbEnChip0.Checked ? false : true;
+            inChipTestItems.chipLocSelect = cbEnChip0.Checked ? 0 : 1;
+        }
+        private void cbEnChip1_CheckedChanged(object sender, EventArgs e)
+        {
+            cbEnChip0.Checked = cbEnChip1.Checked ? false : true;
+            inChipTestItems.chipLocSelect = cbEnChip0.Checked ? 0 : 1;
+        }
         private void btnAtbRead_Click(object sender, EventArgs e)
         {
-            testItems.tbAtbResult = tbAtbResult;
-            testItems.AtbDebugTest(dChipComFunLib, usb);
-        }
-        private void btnInterChipAtbRead_Click(object sender, EventArgs e)
-        {
-            inChipComFunLib.para_St.tbregOptLength.Text = "01";
-            inChipComFunLib.interChipWriteReg(usb, "0x02000229", "A6");
-            comFunLib.DelayTimeMs(300);
-            inChipComFunLib.interChipWriteReg(usb, "0x02000230", "01");
-            comFunLib.DelayTimeMs(100);
+            if (tcTest.SelectedTab == tcTest.TabPages[0])
+            {
+                testItems.GetProjectName(dChipComFunLib);
+                testItems.tbAtbResult = tbAtbResult;
+                testItems.AtbDebugTest(dChipComFunLib, usb);
+            }
+            if (tcTest.SelectedTab == tcTest.TabPages[1])
+            {
+                if (Enflag)
+                {
+                    regWriteEn();
+                    Enflag = false;
+                }
+                inChipTestItems.GetProjectName(inChipComFunLib);
+                inChipTestItems.tbAtbResult = tbInterChipAtbResult;
+                inChipTestItems.AtbDebugTest(inChipComFunLib, usb);
+            }
+            if (tcTest.SelectedTab == tcTest.TabPages[2])
+            {
 
-            inChipTestItems.tbAtbResult = tbInterChipAtbResult;
-            inChipTestItems.AtbDebugTest(inChipComFunLib, usb);
+            }
         }
         private void btnRegWrite_Click(object sender, EventArgs e)
         {
@@ -419,14 +459,6 @@ namespace AutoCtrl.CommonForm
             btnRegWrite.BackColor = Color.PapayaWhip;
             Application.DoEvents();
         }
-        private void btnManualConfig_Click(object sender, EventArgs e)
-        {
-            dChipComFunLib.para_St.addrOfst = 0;
-            dChipComFunLib.para_St.tbregOptLength.Text = "06";
-
-            testItems.VbgConfig(dChipComFunLib, usb, double.Parse(tbVbgSet.Text.Trim()));
-        }
-
         private void btnInterChipRegWrite_Click(object sender, EventArgs e)
         {
             inChipComFunLib.para_St.addrOfst = 0;
@@ -436,11 +468,7 @@ namespace AutoCtrl.CommonForm
             Application.DoEvents();
             if (Enflag)
             {
-                inChipComFunLib.para_St.tbregOptLength.Text = "01";
-                inChipComFunLib.interChipWriteReg(usb, "0x02000229", "A6");
-                comFunLib.DelayTimeMs(300);
-                inChipComFunLib.interChipWriteReg(usb, "0x02000230", "01");
-                comFunLib.DelayTimeMs(100);
+                regWriteEn();
                 Enflag = false;
             }
             inChipComFunLib.para_St.tbregOptLength.Text = "04";
@@ -449,27 +477,60 @@ namespace AutoCtrl.CommonForm
             btnInterChipRegWrite.BackColor = Color.PapayaWhip;
             Application.DoEvents();
         }
-        private void cbInterChipProjectItem_SelectedIndexChanged(object sender, EventArgs e)
+        private void btnManualConfig_Click(object sender, EventArgs e)
         {
-            cmbInterChipAtbName.Enabled = !enable;
-            cmbInterChipAtbName.BackColor = Color.Gold;
-            usbDeviceInitial(!enable);
-            cmbInterChipAtbName.BackColor = SystemColors.Control;
-            cmbInterChipAtbName.Enabled = enable;
+            dChipComFunLib.para_St.addrOfst = 0;
+            
+            if (tcTest.SelectedTab ==tcTest.TabPages[0])
+            {
+                testItems.GetInstHandle(dChipComFunLib);
+                testItems.GetProjectName(dChipComFunLib);
+                dChipComFunLib.para_St.tbregOptLength.Text = "06";
+                testItems.VbgConfig(dChipComFunLib, usb, double.Parse(tbVbgSet.Text.Trim()));
+            }
+            if (tcTest.SelectedTab == tcTest.TabPages[1])
+            {
+                if (Enflag)
+                {
+                    regWriteEn();
+                    Enflag = false;
+                }
+                inChipTestItems.GetInstHandle(inChipComFunLib);
+                inChipTestItems.GetProjectName(inChipComFunLib);
+                inChipComFunLib.para_St.tbregOptLength.Text = "04";
+                inChipTestItems.VbgConfig(inChipComFunLib, usb, double.Parse(tbInterChipVbgValue.Text.Trim()));
+            }
+            if (tcTest.SelectedTab == tcTest.TabPages[2])
+            {
+                
+            }
 
-            cmbInterChipAtbName.Items.Clear();
-            cmbInterChipAtbName.Text = null;
-            GetAtbNodeTable();
         }
-        private void cbEnChip0_CheckedChanged(object sender, EventArgs e)
+        #endregion
+
+        #region 5. Start
+        private void btnStart_Click(object sender, EventArgs e)
         {
-            cbEnChip1.Checked = cbEnChip0.Checked ? false : true;
-            inChipTestItems.chipLocSelect = cbEnChip0.Checked ? 0 : 1;
-        }
-        private void cbEnChip1_CheckedChanged(object sender, EventArgs e)
-        {
-            cbEnChip0.Checked = cbEnChip1.Checked ? false : true;
-            inChipTestItems.chipLocSelect = cbEnChip0.Checked ? 0 : 1;
+            rtbDispaly.Clear();
+            testItems.rtbDisPlay = rtbDispaly;
+
+            PwrChSelInitial(0);
+            btnStart.Enabled = false;
+            btnStart.BackColor = Color.Green;
+            cbProjectItems.Enabled = false;
+            cbTestCase.Enabled = false;
+            Application.DoEvents();
+            usbDeviceInitial(!enable);
+            VoltCaseSet(dChipComFunLib.para_St.cmbVoltCaseSel.Text);
+            tbTestMessage.Text = cbProjectItems.Text + "_" + cbTestCase.Text;
+            testItems.AutoTest(dChipComFunLib, usb, cbTestCase.Text);
+            PwrChSelInitial(1);
+            btnStart.Enabled = true;
+            btnStart.BackColor = SystemColors.Control;
+            cbProjectItems.Enabled = true;
+            cbTestCase.Enabled = true;
+            Application.DoEvents();
+
         }
         private void btnInterChipStart_Click(object sender, EventArgs e)
         {
@@ -479,18 +540,20 @@ namespace AutoCtrl.CommonForm
             PwrChSelInitial(0);
             btnInterChipStart.Enabled = false;
             btnInterChipStart.BackColor = Color.Green;
-            cbInterChipProjectItem.Enabled = false;
+            cbInterChipProjectItems.Enabled = false;
             cbInterChipTestCase.Enabled = false;
             Application.DoEvents();
             usbDeviceInitial(!enable);
-            tbTestMessage.Text = cbInterChipProjectItem.Text + "_" + cbInterChipTestCase.Text;
+            VoltCaseSet(inChipComFunLib.para_St.cmbVoltCaseSel.Text);
+            tbTestMessage.Text = cbInterChipProjectItems.Text + "_" + cbInterChipTestCase.Text;
             inChipTestItems.AutoTest(inChipComFunLib, usb, cbInterChipTestCase.Text);
             PwrChSelInitial(1);
             btnInterChipStart.Enabled = true;
             btnInterChipStart.BackColor = SystemColors.Control;
-            btnInterChipStart.Enabled = true;
-            btnInterChipStart.Enabled = true;
+            cbInterChipProjectItems.Enabled = true;
+            cbInterChipTestCase.Enabled = true;
             Application.DoEvents();
         }
+        #endregion
     }
 }

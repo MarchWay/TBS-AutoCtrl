@@ -42,6 +42,8 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem {
             public ComboBox cmbProjectName;
             public ComboBox cbProjectItems;
             public ComboBox cmbChipCorner;
+            public ComboBox cmbTempCaseSel;
+            public ComboBox cmbVoltCaseSel;
             public string[,] atbScan;
             public string[,] VbgTrim;
             public string[,] GccIfix;

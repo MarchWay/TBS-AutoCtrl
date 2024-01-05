@@ -70,6 +70,11 @@ namespace AutoCtrl.CommonForm {
             this.btnOpenDevice = new System.Windows.Forms.Button();
             this.gbTestItem = new System.Windows.Forms.GroupBox();
             this.gbCommonPart = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cmbVoltCaseSel = new System.Windows.Forms.ComboBox();
+            this.lbTemp = new System.Windows.Forms.Label();
+            this.cmbTempCaseSel = new System.Windows.Forms.ComboBox();
+            this.lbVolt = new System.Windows.Forms.Label();
             this.cmbChipCorner = new System.Windows.Forms.ComboBox();
             this.lbChipCorner = new System.Windows.Forms.Label();
             this.lbNote = new System.Windows.Forms.Label();
@@ -96,6 +101,11 @@ namespace AutoCtrl.CommonForm {
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tcTest = new System.Windows.Forms.TabControl();
             this.tbpDriverIc = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.cbDriverRedChipEn = new System.Windows.Forms.CheckBox();
+            this.cbDriverGreenChipEn = new System.Windows.Forms.CheckBox();
+            this.cbDriverBlueChipEn = new System.Windows.Forms.CheckBox();
             this.gbRegConfig = new System.Windows.Forms.GroupBox();
             this.btnManualConfig = new System.Windows.Forms.Button();
             this.tbVbgSet = new System.Windows.Forms.TextBox();
@@ -115,14 +125,7 @@ namespace AutoCtrl.CommonForm {
             this.cbTestCase = new System.Windows.Forms.ComboBox();
             this.label29 = new System.Windows.Forms.Label();
             this.cbProjectItems = new System.Windows.Forms.ComboBox();
-            this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.cbDriverBlueChipEn = new System.Windows.Forms.CheckBox();
-            this.cbDriverGreenChipEn = new System.Windows.Forms.CheckBox();
-            this.cbDriverRedChipEn = new System.Windows.Forms.CheckBox();
-            this.cbProjectNameEn = new System.Windows.Forms.CheckBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.cmbProjectName = new System.Windows.Forms.ComboBox();
             this.cmbAtbNodeName = new System.Windows.Forms.ComboBox();
             this.tbpInterfaceIC = new System.Windows.Forms.TabPage();
             this.gbChipLocationSel = new System.Windows.Forms.GroupBox();
@@ -133,7 +136,7 @@ namespace AutoCtrl.CommonForm {
             this.label36 = new System.Windows.Forms.Label();
             this.cbInterChipTestCase = new System.Windows.Forms.ComboBox();
             this.label37 = new System.Windows.Forms.Label();
-            this.cbInterChipProjectItem = new System.Windows.Forms.ComboBox();
+            this.cbInterChipProjectItems = new System.Windows.Forms.ComboBox();
             this.rtbInterChipDisPlay = new System.Windows.Forms.RichTextBox();
             this.tbInterChipAtbResult = new System.Windows.Forms.TextBox();
             this.label34 = new System.Windows.Forms.Label();
@@ -160,9 +163,11 @@ namespace AutoCtrl.CommonForm {
             this.gbUsbLookUp.SuspendLayout();
             this.gbTestItem.SuspendLayout();
             this.gbCommonPart.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.gbPwrCHNSel.SuspendLayout();
             this.tcTest.SuspendLayout();
             this.tbpDriverIc.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.gbRegConfig.SuspendLayout();
             this.tbpInterfaceIC.SuspendLayout();
             this.gbChipLocationSel.SuspendLayout();
@@ -231,7 +236,7 @@ namespace AutoCtrl.CommonForm {
             this.gbUsbPortInfo.Controls.Add(this.btnOpenDevice);
             this.gbUsbPortInfo.Location = new System.Drawing.Point(5, 12);
             this.gbUsbPortInfo.Name = "gbUsbPortInfo";
-            this.gbUsbPortInfo.Size = new System.Drawing.Size(574, 593);
+            this.gbUsbPortInfo.Size = new System.Drawing.Size(574, 620);
             this.gbUsbPortInfo.TabIndex = 4;
             this.gbUsbPortInfo.TabStop = false;
             this.gbUsbPortInfo.Text = "USB设备操作";
@@ -347,7 +352,7 @@ namespace AutoCtrl.CommonForm {
             this.gbUsbOptStatePrint.Enabled = false;
             this.gbUsbOptStatePrint.Location = new System.Drawing.Point(6, 454);
             this.gbUsbOptStatePrint.Name = "gbUsbOptStatePrint";
-            this.gbUsbOptStatePrint.Size = new System.Drawing.Size(487, 140);
+            this.gbUsbOptStatePrint.Size = new System.Drawing.Size(487, 162);
             this.gbUsbOptStatePrint.TabIndex = 5;
             this.gbUsbOptStatePrint.TabStop = false;
             this.gbUsbOptStatePrint.Text = "USB状态/异常打印";
@@ -359,7 +364,7 @@ namespace AutoCtrl.CommonForm {
             this.rtbUsbErrInfo.Location = new System.Drawing.Point(4, 17);
             this.rtbUsbErrInfo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rtbUsbErrInfo.Name = "rtbUsbErrInfo";
-            this.rtbUsbErrInfo.Size = new System.Drawing.Size(481, 57);
+            this.rtbUsbErrInfo.Size = new System.Drawing.Size(481, 67);
             this.rtbUsbErrInfo.TabIndex = 14;
             this.rtbUsbErrInfo.Text = "显示USB操作---异常状态\n";
             // 
@@ -367,10 +372,10 @@ namespace AutoCtrl.CommonForm {
             // 
             this.rtbUsbOptState.BackColor = System.Drawing.SystemColors.Control;
             this.rtbUsbOptState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.rtbUsbOptState.Location = new System.Drawing.Point(4, 73);
+            this.rtbUsbOptState.Location = new System.Drawing.Point(4, 92);
             this.rtbUsbOptState.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rtbUsbOptState.Name = "rtbUsbOptState";
-            this.rtbUsbOptState.Size = new System.Drawing.Size(481, 65);
+            this.rtbUsbOptState.Size = new System.Drawing.Size(481, 70);
             this.rtbUsbOptState.TabIndex = 15;
             this.rtbUsbOptState.Text = "显示USB操作过程中的---无异常状态\n";
             // 
@@ -715,13 +720,14 @@ namespace AutoCtrl.CommonForm {
             this.gbTestItem.Controls.Add(this.tcTest);
             this.gbTestItem.Location = new System.Drawing.Point(585, 12);
             this.gbTestItem.Name = "gbTestItem";
-            this.gbTestItem.Size = new System.Drawing.Size(707, 593);
+            this.gbTestItem.Size = new System.Drawing.Size(707, 620);
             this.gbTestItem.TabIndex = 5;
             this.gbTestItem.TabStop = false;
             this.gbTestItem.Text = "接口/驱动/控制---自动化集";
             // 
             // gbCommonPart
             // 
+            this.gbCommonPart.Controls.Add(this.groupBox2);
             this.gbCommonPart.Controls.Add(this.cmbChipCorner);
             this.gbCommonPart.Controls.Add(this.lbChipCorner);
             this.gbCommonPart.Controls.Add(this.lbNote);
@@ -743,10 +749,71 @@ namespace AutoCtrl.CommonForm {
             this.gbCommonPart.Controls.Add(this.textBox1);
             this.gbCommonPart.Location = new System.Drawing.Point(10, 20);
             this.gbCommonPart.Name = "gbCommonPart";
-            this.gbCommonPart.Size = new System.Drawing.Size(691, 150);
+            this.gbCommonPart.Size = new System.Drawing.Size(691, 178);
             this.gbCommonPart.TabIndex = 1;
             this.gbCommonPart.TabStop = false;
             this.gbCommonPart.Text = "公共配置";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.cmbVoltCaseSel);
+            this.groupBox2.Controls.Add(this.lbTemp);
+            this.groupBox2.Controls.Add(this.cmbTempCaseSel);
+            this.groupBox2.Controls.Add(this.lbVolt);
+            this.groupBox2.Location = new System.Drawing.Point(379, 118);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(301, 52);
+            this.groupBox2.TabIndex = 77;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Volt-TempCaseSel";
+            // 
+            // cmbVoltCaseSel
+            // 
+            this.cmbVoltCaseSel.BackColor = System.Drawing.SystemColors.Control;
+            this.cmbVoltCaseSel.FormattingEnabled = true;
+            this.cmbVoltCaseSel.Items.AddRange(new object[] {
+            "LV",
+            "NV",
+            "HV"});
+            this.cmbVoltCaseSel.Location = new System.Drawing.Point(206, 23);
+            this.cmbVoltCaseSel.Name = "cmbVoltCaseSel";
+            this.cmbVoltCaseSel.Size = new System.Drawing.Size(76, 23);
+            this.cmbVoltCaseSel.TabIndex = 80;
+            this.cmbVoltCaseSel.Text = "NV";
+            // 
+            // lbTemp
+            // 
+            this.lbTemp.AutoSize = true;
+            this.lbTemp.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbTemp.Location = new System.Drawing.Point(161, 26);
+            this.lbTemp.Name = "lbTemp";
+            this.lbTemp.Size = new System.Drawing.Size(49, 15);
+            this.lbTemp.TabIndex = 81;
+            this.lbTemp.Text = "Volt：";
+            // 
+            // cmbTempCaseSel
+            // 
+            this.cmbTempCaseSel.BackColor = System.Drawing.SystemColors.Control;
+            this.cmbTempCaseSel.FormattingEnabled = true;
+            this.cmbTempCaseSel.Items.AddRange(new object[] {
+            "LT",
+            "NT",
+            "HT"});
+            this.cmbTempCaseSel.Location = new System.Drawing.Point(52, 23);
+            this.cmbTempCaseSel.Name = "cmbTempCaseSel";
+            this.cmbTempCaseSel.Size = new System.Drawing.Size(74, 23);
+            this.cmbTempCaseSel.TabIndex = 78;
+            this.cmbTempCaseSel.Text = "NT";
+            // 
+            // lbVolt
+            // 
+            this.lbVolt.AutoSize = true;
+            this.lbVolt.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbVolt.Location = new System.Drawing.Point(7, 26);
+            this.lbVolt.Name = "lbVolt";
+            this.lbVolt.Size = new System.Drawing.Size(49, 15);
+            this.lbVolt.TabIndex = 79;
+            this.lbVolt.Text = "Temp：";
             // 
             // cmbChipCorner
             // 
@@ -779,7 +846,8 @@ namespace AutoCtrl.CommonForm {
             // lbNote
             // 
             this.lbNote.AutoSize = true;
-            this.lbNote.Location = new System.Drawing.Point(376, 117);
+            this.lbNote.ForeColor = System.Drawing.Color.IndianRed;
+            this.lbNote.Location = new System.Drawing.Point(27, 155);
             this.lbNote.Name = "lbNote";
             this.lbNote.Size = new System.Drawing.Size(245, 15);
             this.lbNote.TabIndex = 73;
@@ -854,7 +922,7 @@ namespace AutoCtrl.CommonForm {
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(27, 118);
+            this.label32.Location = new System.Drawing.Point(27, 129);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(91, 15);
             this.label32.TabIndex = 70;
@@ -863,12 +931,12 @@ namespace AutoCtrl.CommonForm {
             // cbMultiSelEn1
             // 
             this.cbMultiSelEn1.AutoSize = true;
-            this.cbMultiSelEn1.Location = new System.Drawing.Point(337, 119);
+            this.cbMultiSelEn1.Location = new System.Drawing.Point(337, 130);
             this.cbMultiSelEn1.Name = "cbMultiSelEn1";
             this.cbMultiSelEn1.Size = new System.Drawing.Size(15, 14);
             this.cbMultiSelEn1.TabIndex = 69;
             this.cbMultiSelEn1.UseVisualStyleBackColor = true;
-            this.cbMultiSelEn1.CheckedChanged += new System.EventHandler(this.cbTestEn_CheckedChanged);
+            this.cbMultiSelEn1.CheckedChanged += new System.EventHandler(this.cbMultiSelEn_CheckedChanged);
             // 
             // tbInstMultiAddr1
             // 
@@ -876,7 +944,7 @@ namespace AutoCtrl.CommonForm {
             this.tbInstMultiAddr1.Enabled = false;
             this.tbInstMultiAddr1.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbInstMultiAddr1.ForeColor = System.Drawing.Color.Black;
-            this.tbInstMultiAddr1.Location = new System.Drawing.Point(131, 114);
+            this.tbInstMultiAddr1.Location = new System.Drawing.Point(131, 125);
             this.tbInstMultiAddr1.Name = "tbInstMultiAddr1";
             this.tbInstMultiAddr1.Size = new System.Drawing.Size(203, 21);
             this.tbInstMultiAddr1.TabIndex = 68;
@@ -887,12 +955,12 @@ namespace AutoCtrl.CommonForm {
             this.cbMultiSelEn.AutoSize = true;
             this.cbMultiSelEn.Checked = true;
             this.cbMultiSelEn.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbMultiSelEn.Location = new System.Drawing.Point(337, 97);
+            this.cbMultiSelEn.Location = new System.Drawing.Point(337, 103);
             this.cbMultiSelEn.Name = "cbMultiSelEn";
             this.cbMultiSelEn.Size = new System.Drawing.Size(15, 14);
             this.cbMultiSelEn.TabIndex = 67;
             this.cbMultiSelEn.UseVisualStyleBackColor = true;
-            this.cbMultiSelEn.CheckedChanged += new System.EventHandler(this.cbTestEn_CheckedChanged);
+            this.cbMultiSelEn.CheckedChanged += new System.EventHandler(this.cbMultiSelEn_CheckedChanged);
             // 
             // cbPowerSelEn
             // 
@@ -904,12 +972,12 @@ namespace AutoCtrl.CommonForm {
             this.cbPowerSelEn.Size = new System.Drawing.Size(15, 14);
             this.cbPowerSelEn.TabIndex = 66;
             this.cbPowerSelEn.UseVisualStyleBackColor = true;
-            this.cbPowerSelEn.CheckedChanged += new System.EventHandler(this.cbTestEn_CheckedChanged);
+            this.cbPowerSelEn.CheckedChanged += new System.EventHandler(this.cbMultiSelEn_CheckedChanged);
             // 
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(27, 94);
+            this.label28.Location = new System.Drawing.Point(27, 100);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(91, 15);
             this.label28.TabIndex = 65;
@@ -920,7 +988,7 @@ namespace AutoCtrl.CommonForm {
             this.tbInstMultiAddr.BackColor = System.Drawing.SystemColors.Control;
             this.tbInstMultiAddr.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbInstMultiAddr.ForeColor = System.Drawing.Color.Black;
-            this.tbInstMultiAddr.Location = new System.Drawing.Point(131, 92);
+            this.tbInstMultiAddr.Location = new System.Drawing.Point(131, 98);
             this.tbInstMultiAddr.Name = "tbInstMultiAddr";
             this.tbInstMultiAddr.Size = new System.Drawing.Size(203, 21);
             this.tbInstMultiAddr.TabIndex = 64;
@@ -1012,15 +1080,17 @@ namespace AutoCtrl.CommonForm {
             this.tcTest.Controls.Add(this.tbpDriverIc);
             this.tcTest.Controls.Add(this.tbpInterfaceIC);
             this.tcTest.Controls.Add(this.tbpControlIC);
-            this.tcTest.Location = new System.Drawing.Point(6, 172);
+            this.tcTest.Location = new System.Drawing.Point(6, 204);
             this.tcTest.Name = "tcTest";
             this.tcTest.SelectedIndex = 0;
             this.tcTest.Size = new System.Drawing.Size(707, 416);
             this.tcTest.TabIndex = 0;
+            this.tcTest.Tag = "";
             // 
             // tbpDriverIc
             // 
             this.tbpDriverIc.BackColor = System.Drawing.SystemColors.Control;
+            this.tbpDriverIc.Controls.Add(this.groupBox1);
             this.tbpDriverIc.Controls.Add(this.gbRegConfig);
             this.tbpDriverIc.Controls.Add(this.tbAtbResult);
             this.tbpDriverIc.Controls.Add(this.rtbDispaly);
@@ -1032,14 +1102,7 @@ namespace AutoCtrl.CommonForm {
             this.tbpDriverIc.Controls.Add(this.cbTestCase);
             this.tbpDriverIc.Controls.Add(this.label29);
             this.tbpDriverIc.Controls.Add(this.cbProjectItems);
-            this.tbpDriverIc.Controls.Add(this.label25);
             this.tbpDriverIc.Controls.Add(this.label24);
-            this.tbpDriverIc.Controls.Add(this.cbDriverBlueChipEn);
-            this.tbpDriverIc.Controls.Add(this.cbDriverGreenChipEn);
-            this.tbpDriverIc.Controls.Add(this.cbDriverRedChipEn);
-            this.tbpDriverIc.Controls.Add(this.cbProjectNameEn);
-            this.tbpDriverIc.Controls.Add(this.label19);
-            this.tbpDriverIc.Controls.Add(this.cmbProjectName);
             this.tbpDriverIc.Controls.Add(this.cmbAtbNodeName);
             this.tbpDriverIc.Location = new System.Drawing.Point(4, 24);
             this.tbpDriverIc.Name = "tbpDriverIc";
@@ -1047,6 +1110,64 @@ namespace AutoCtrl.CommonForm {
             this.tbpDriverIc.Size = new System.Drawing.Size(699, 388);
             this.tbpDriverIc.TabIndex = 0;
             this.tbpDriverIc.Text = "驱动";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label25);
+            this.groupBox1.Controls.Add(this.cbDriverRedChipEn);
+            this.groupBox1.Controls.Add(this.cbDriverGreenChipEn);
+            this.groupBox1.Controls.Add(this.cbDriverBlueChipEn);
+            this.groupBox1.Location = new System.Drawing.Point(6, 135);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(234, 41);
+            this.groupBox1.TabIndex = 78;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "ChipTypeSel";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(8, 19);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(70, 15);
+            this.label25.TabIndex = 32;
+            this.label25.Text = "配置选择:";
+            // 
+            // cbDriverRedChipEn
+            // 
+            this.cbDriverRedChipEn.AutoSize = true;
+            this.cbDriverRedChipEn.Checked = true;
+            this.cbDriverRedChipEn.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbDriverRedChipEn.Location = new System.Drawing.Point(86, 18);
+            this.cbDriverRedChipEn.Name = "cbDriverRedChipEn";
+            this.cbDriverRedChipEn.Size = new System.Drawing.Size(33, 19);
+            this.cbDriverRedChipEn.TabIndex = 25;
+            this.cbDriverRedChipEn.Text = "R";
+            this.cbDriverRedChipEn.UseVisualStyleBackColor = true;
+            // 
+            // cbDriverGreenChipEn
+            // 
+            this.cbDriverGreenChipEn.AutoSize = true;
+            this.cbDriverGreenChipEn.Checked = true;
+            this.cbDriverGreenChipEn.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbDriverGreenChipEn.Location = new System.Drawing.Point(119, 18);
+            this.cbDriverGreenChipEn.Name = "cbDriverGreenChipEn";
+            this.cbDriverGreenChipEn.Size = new System.Drawing.Size(33, 19);
+            this.cbDriverGreenChipEn.TabIndex = 26;
+            this.cbDriverGreenChipEn.Text = "G";
+            this.cbDriverGreenChipEn.UseVisualStyleBackColor = true;
+            // 
+            // cbDriverBlueChipEn
+            // 
+            this.cbDriverBlueChipEn.AutoSize = true;
+            this.cbDriverBlueChipEn.Checked = true;
+            this.cbDriverBlueChipEn.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbDriverBlueChipEn.Location = new System.Drawing.Point(154, 18);
+            this.cbDriverBlueChipEn.Name = "cbDriverBlueChipEn";
+            this.cbDriverBlueChipEn.Size = new System.Drawing.Size(33, 19);
+            this.cbDriverBlueChipEn.TabIndex = 27;
+            this.cbDriverBlueChipEn.Text = "B";
+            this.cbDriverBlueChipEn.UseVisualStyleBackColor = true;
             // 
             // gbRegConfig
             // 
@@ -1059,7 +1180,7 @@ namespace AutoCtrl.CommonForm {
             this.gbRegConfig.Controls.Add(this.tbDriverRegAddr);
             this.gbRegConfig.Controls.Add(this.label20);
             this.gbRegConfig.Controls.Add(this.label22);
-            this.gbRegConfig.Location = new System.Drawing.Point(23, 61);
+            this.gbRegConfig.Location = new System.Drawing.Point(6, 6);
             this.gbRegConfig.Name = "gbRegConfig";
             this.gbRegConfig.Size = new System.Drawing.Size(234, 125);
             this.gbRegConfig.TabIndex = 46;
@@ -1080,7 +1201,6 @@ namespace AutoCtrl.CommonForm {
             // tbVbgSet
             // 
             this.tbVbgSet.BackColor = System.Drawing.SystemColors.Control;
-            this.tbVbgSet.Enabled = false;
             this.tbVbgSet.Location = new System.Drawing.Point(54, 83);
             this.tbVbgSet.Name = "tbVbgSet";
             this.tbVbgSet.Size = new System.Drawing.Size(77, 21);
@@ -1100,7 +1220,6 @@ namespace AutoCtrl.CommonForm {
             // tbDriverRegValue
             // 
             this.tbDriverRegValue.BackColor = System.Drawing.SystemColors.Control;
-            this.tbDriverRegValue.Enabled = false;
             this.tbDriverRegValue.Location = new System.Drawing.Point(54, 45);
             this.tbDriverRegValue.Name = "tbDriverRegValue";
             this.tbDriverRegValue.Size = new System.Drawing.Size(77, 21);
@@ -1121,7 +1240,6 @@ namespace AutoCtrl.CommonForm {
             // tbDriverRegAddr
             // 
             this.tbDriverRegAddr.BackColor = System.Drawing.SystemColors.Control;
-            this.tbDriverRegAddr.Enabled = false;
             this.tbDriverRegAddr.Location = new System.Drawing.Point(54, 24);
             this.tbDriverRegAddr.Name = "tbDriverRegAddr";
             this.tbDriverRegAddr.Size = new System.Drawing.Size(77, 21);
@@ -1150,23 +1268,23 @@ namespace AutoCtrl.CommonForm {
             // 
             // tbAtbResult
             // 
-            this.tbAtbResult.Location = new System.Drawing.Point(353, 37);
+            this.tbAtbResult.Location = new System.Drawing.Point(455, 46);
             this.tbAtbResult.Name = "tbAtbResult";
             this.tbAtbResult.Size = new System.Drawing.Size(128, 21);
             this.tbAtbResult.TabIndex = 44;
             // 
             // rtbDispaly
             // 
-            this.rtbDispaly.Location = new System.Drawing.Point(287, 70);
+            this.rtbDispaly.Location = new System.Drawing.Point(287, 75);
             this.rtbDispaly.Name = "rtbDispaly";
-            this.rtbDispaly.Size = new System.Drawing.Size(410, 318);
+            this.rtbDispaly.Size = new System.Drawing.Size(410, 313);
             this.rtbDispaly.TabIndex = 40;
             this.rtbDispaly.Text = "";
             // 
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(291, 40);
+            this.label31.Location = new System.Drawing.Point(393, 49);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(56, 15);
             this.label31.TabIndex = 42;
@@ -1174,7 +1292,7 @@ namespace AutoCtrl.CommonForm {
             // 
             // btnAtbRead
             // 
-            this.btnAtbRead.Location = new System.Drawing.Point(509, 37);
+            this.btnAtbRead.Location = new System.Drawing.Point(611, 46);
             this.btnAtbRead.Name = "btnAtbRead";
             this.btnAtbRead.Size = new System.Drawing.Size(60, 23);
             this.btnAtbRead.TabIndex = 41;
@@ -1185,7 +1303,7 @@ namespace AutoCtrl.CommonForm {
             // btnStop
             // 
             this.btnStop.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStop.Location = new System.Drawing.Point(166, 305);
+            this.btnStop.Location = new System.Drawing.Point(149, 273);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(76, 35);
             this.btnStop.TabIndex = 39;
@@ -1196,7 +1314,7 @@ namespace AutoCtrl.CommonForm {
             // btnStart
             // 
             this.btnStart.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStart.Location = new System.Drawing.Point(34, 305);
+            this.btnStart.Location = new System.Drawing.Point(17, 273);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(76, 35);
             this.btnStart.TabIndex = 38;
@@ -1207,7 +1325,7 @@ namespace AutoCtrl.CommonForm {
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(48, 261);
+            this.label30.Location = new System.Drawing.Point(31, 229);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(70, 15);
             this.label30.TabIndex = 37;
@@ -1226,7 +1344,7 @@ namespace AutoCtrl.CommonForm {
             "VBG_Vmin",
             "Bias400u_Vmin",
             "Regulator_Vmin"});
-            this.cbTestCase.Location = new System.Drawing.Point(124, 258);
+            this.cbTestCase.Location = new System.Drawing.Point(107, 226);
             this.cbTestCase.Name = "cbTestCase";
             this.cbTestCase.Size = new System.Drawing.Size(133, 23);
             this.cbTestCase.TabIndex = 36;
@@ -1235,7 +1353,7 @@ namespace AutoCtrl.CommonForm {
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(20, 229);
+            this.label29.Location = new System.Drawing.Point(3, 197);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(98, 15);
             this.label29.TabIndex = 35;
@@ -1254,114 +1372,27 @@ namespace AutoCtrl.CommonForm {
             "P3268_V300",
             "P3288_V100",
             "P1287_V10X"});
-            this.cbProjectItems.Location = new System.Drawing.Point(124, 226);
+            this.cbProjectItems.Location = new System.Drawing.Point(107, 194);
             this.cbProjectItems.Name = "cbProjectItems";
             this.cbProjectItems.Size = new System.Drawing.Size(133, 23);
             this.cbProjectItems.TabIndex = 34;
             this.cbProjectItems.Text = "P2318R_V100";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(23, 37);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(70, 15);
-            this.label25.TabIndex = 32;
-            this.label25.Text = "配置选择:";
+            this.cbProjectItems.SelectedIndexChanged += new System.EventHandler(this.cbProjectItems_SelectedIndexChanged);
             // 
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(284, 9);
+            this.label24.Location = new System.Drawing.Point(386, 18);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(63, 15);
             this.label24.TabIndex = 31;
             this.label24.Text = "ATB选择:";
             // 
-            // cbDriverBlueChipEn
-            // 
-            this.cbDriverBlueChipEn.AutoSize = true;
-            this.cbDriverBlueChipEn.Checked = true;
-            this.cbDriverBlueChipEn.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbDriverBlueChipEn.Enabled = false;
-            this.cbDriverBlueChipEn.Location = new System.Drawing.Point(169, 36);
-            this.cbDriverBlueChipEn.Name = "cbDriverBlueChipEn";
-            this.cbDriverBlueChipEn.Size = new System.Drawing.Size(33, 19);
-            this.cbDriverBlueChipEn.TabIndex = 27;
-            this.cbDriverBlueChipEn.Text = "B";
-            this.cbDriverBlueChipEn.UseVisualStyleBackColor = true;
-            // 
-            // cbDriverGreenChipEn
-            // 
-            this.cbDriverGreenChipEn.AutoSize = true;
-            this.cbDriverGreenChipEn.Checked = true;
-            this.cbDriverGreenChipEn.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbDriverGreenChipEn.Enabled = false;
-            this.cbDriverGreenChipEn.Location = new System.Drawing.Point(134, 36);
-            this.cbDriverGreenChipEn.Name = "cbDriverGreenChipEn";
-            this.cbDriverGreenChipEn.Size = new System.Drawing.Size(33, 19);
-            this.cbDriverGreenChipEn.TabIndex = 26;
-            this.cbDriverGreenChipEn.Text = "G";
-            this.cbDriverGreenChipEn.UseVisualStyleBackColor = true;
-            // 
-            // cbDriverRedChipEn
-            // 
-            this.cbDriverRedChipEn.AutoSize = true;
-            this.cbDriverRedChipEn.Checked = true;
-            this.cbDriverRedChipEn.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbDriverRedChipEn.Enabled = false;
-            this.cbDriverRedChipEn.Location = new System.Drawing.Point(101, 36);
-            this.cbDriverRedChipEn.Name = "cbDriverRedChipEn";
-            this.cbDriverRedChipEn.Size = new System.Drawing.Size(33, 19);
-            this.cbDriverRedChipEn.TabIndex = 25;
-            this.cbDriverRedChipEn.Text = "R";
-            this.cbDriverRedChipEn.UseVisualStyleBackColor = true;
-            // 
-            // cbProjectNameEn
-            // 
-            this.cbProjectNameEn.AutoSize = true;
-            this.cbProjectNameEn.Location = new System.Drawing.Point(232, 10);
-            this.cbProjectNameEn.Name = "cbProjectNameEn";
-            this.cbProjectNameEn.Size = new System.Drawing.Size(40, 19);
-            this.cbProjectNameEn.TabIndex = 9;
-            this.cbProjectNameEn.Text = "En";
-            this.cbProjectNameEn.UseVisualStyleBackColor = true;
-            this.cbProjectNameEn.CheckedChanged += new System.EventHandler(this.cbProjectNameEn_CheckedChanged);
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(23, 10);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(70, 15);
-            this.label19.TabIndex = 8;
-            this.label19.Text = "项目选择:";
-            // 
-            // cmbProjectName
-            // 
-            this.cmbProjectName.FormattingEnabled = true;
-            this.cmbProjectName.Items.AddRange(new object[] {
-            "P2218_V20X",
-            "P2318_V100",
-            "P2318R_V100",
-            "P2218R_V100",
-            "P2216R_V100",
-            "P2316R_V100",
-            "P3268_V300",
-            "P3288_V100",
-            "P1287_V10X"});
-            this.cmbProjectName.Location = new System.Drawing.Point(96, 7);
-            this.cmbProjectName.Name = "cmbProjectName";
-            this.cmbProjectName.Size = new System.Drawing.Size(133, 23);
-            this.cmbProjectName.TabIndex = 7;
-            this.cmbProjectName.Text = "P2318R_V100";
-            this.cmbProjectName.SelectedIndexChanged += new System.EventHandler(this.cmbProjectName_SelectedIndexChanged);
-            // 
             // cmbAtbNodeName
             // 
             this.cmbAtbNodeName.BackColor = System.Drawing.SystemColors.Window;
             this.cmbAtbNodeName.FormattingEnabled = true;
-            this.cmbAtbNodeName.Location = new System.Drawing.Point(353, 7);
+            this.cmbAtbNodeName.Location = new System.Drawing.Point(455, 16);
             this.cmbAtbNodeName.Name = "cmbAtbNodeName";
             this.cmbAtbNodeName.Size = new System.Drawing.Size(216, 23);
             this.cmbAtbNodeName.TabIndex = 6;
@@ -1376,7 +1407,7 @@ namespace AutoCtrl.CommonForm {
             this.tbpInterfaceIC.Controls.Add(this.label36);
             this.tbpInterfaceIC.Controls.Add(this.cbInterChipTestCase);
             this.tbpInterfaceIC.Controls.Add(this.label37);
-            this.tbpInterfaceIC.Controls.Add(this.cbInterChipProjectItem);
+            this.tbpInterfaceIC.Controls.Add(this.cbInterChipProjectItems);
             this.tbpInterfaceIC.Controls.Add(this.rtbInterChipDisPlay);
             this.tbpInterfaceIC.Controls.Add(this.tbInterChipAtbResult);
             this.tbpInterfaceIC.Controls.Add(this.label34);
@@ -1463,7 +1494,9 @@ namespace AutoCtrl.CommonForm {
             this.cbInterChipTestCase.Items.AddRange(new object[] {
             "ATB_Scan",
             "VREF_Trim",
-            "Regulator_Trim"});
+            "Regulator_Trim",
+            "IBIAS100u_Trim",
+            "PowerDissipation"});
             this.cbInterChipTestCase.Location = new System.Drawing.Point(107, 225);
             this.cbInterChipTestCase.Name = "cbInterChipTestCase";
             this.cbInterChipTestCase.Size = new System.Drawing.Size(133, 23);
@@ -1479,31 +1512,31 @@ namespace AutoCtrl.CommonForm {
             this.label37.TabIndex = 55;
             this.label37.Text = "ProjectItems:";
             // 
-            // cbInterChipProjectItem
+            // cbInterChipProjectItems
             // 
-            this.cbInterChipProjectItem.FormattingEnabled = true;
-            this.cbInterChipProjectItem.Items.AddRange(new object[] {
+            this.cbInterChipProjectItems.FormattingEnabled = true;
+            this.cbInterChipProjectItems.Items.AddRange(new object[] {
             "TBS614",
             "TBS614V102",
             "TBS615"});
-            this.cbInterChipProjectItem.Location = new System.Drawing.Point(107, 193);
-            this.cbInterChipProjectItem.Name = "cbInterChipProjectItem";
-            this.cbInterChipProjectItem.Size = new System.Drawing.Size(133, 23);
-            this.cbInterChipProjectItem.TabIndex = 54;
-            this.cbInterChipProjectItem.Text = "TBS614V102";
-            this.cbInterChipProjectItem.SelectedIndexChanged += new System.EventHandler(this.cbInterChipProjectItem_SelectedIndexChanged);
+            this.cbInterChipProjectItems.Location = new System.Drawing.Point(107, 193);
+            this.cbInterChipProjectItems.Name = "cbInterChipProjectItems";
+            this.cbInterChipProjectItems.Size = new System.Drawing.Size(133, 23);
+            this.cbInterChipProjectItems.TabIndex = 54;
+            this.cbInterChipProjectItems.Text = "TBS614V102";
+            this.cbInterChipProjectItems.SelectedIndexChanged += new System.EventHandler(this.cbProjectItems_SelectedIndexChanged);
             // 
             // rtbInterChipDisPlay
             // 
-            this.rtbInterChipDisPlay.Location = new System.Drawing.Point(287, 89);
+            this.rtbInterChipDisPlay.Location = new System.Drawing.Point(287, 75);
             this.rtbInterChipDisPlay.Name = "rtbInterChipDisPlay";
-            this.rtbInterChipDisPlay.Size = new System.Drawing.Size(410, 287);
+            this.rtbInterChipDisPlay.Size = new System.Drawing.Size(410, 313);
             this.rtbInterChipDisPlay.TabIndex = 53;
             this.rtbInterChipDisPlay.Text = "";
             // 
             // tbInterChipAtbResult
             // 
-            this.tbInterChipAtbResult.Location = new System.Drawing.Point(441, 43);
+            this.tbInterChipAtbResult.Location = new System.Drawing.Point(455, 46);
             this.tbInterChipAtbResult.Name = "tbInterChipAtbResult";
             this.tbInterChipAtbResult.Size = new System.Drawing.Size(128, 21);
             this.tbInterChipAtbResult.TabIndex = 52;
@@ -1511,7 +1544,7 @@ namespace AutoCtrl.CommonForm {
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(379, 46);
+            this.label34.Location = new System.Drawing.Point(393, 49);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(56, 15);
             this.label34.TabIndex = 51;
@@ -1519,18 +1552,18 @@ namespace AutoCtrl.CommonForm {
             // 
             // btnInterChipAtbRead
             // 
-            this.btnInterChipAtbRead.Location = new System.Drawing.Point(597, 43);
+            this.btnInterChipAtbRead.Location = new System.Drawing.Point(611, 46);
             this.btnInterChipAtbRead.Name = "btnInterChipAtbRead";
             this.btnInterChipAtbRead.Size = new System.Drawing.Size(60, 23);
             this.btnInterChipAtbRead.TabIndex = 50;
             this.btnInterChipAtbRead.Text = "Read";
             this.btnInterChipAtbRead.UseVisualStyleBackColor = true;
-            this.btnInterChipAtbRead.Click += new System.EventHandler(this.btnInterChipAtbRead_Click);
+            this.btnInterChipAtbRead.Click += new System.EventHandler(this.btnAtbRead_Click);
             // 
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(372, 15);
+            this.label35.Location = new System.Drawing.Point(386, 18);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(63, 15);
             this.label35.TabIndex = 49;
@@ -1540,7 +1573,7 @@ namespace AutoCtrl.CommonForm {
             // 
             this.cmbInterChipAtbName.BackColor = System.Drawing.SystemColors.Window;
             this.cmbInterChipAtbName.FormattingEnabled = true;
-            this.cmbInterChipAtbName.Location = new System.Drawing.Point(441, 13);
+            this.cmbInterChipAtbName.Location = new System.Drawing.Point(455, 16);
             this.cmbInterChipAtbName.Name = "cmbInterChipAtbName";
             this.cmbInterChipAtbName.Size = new System.Drawing.Size(216, 23);
             this.cmbInterChipAtbName.TabIndex = 48;
@@ -1573,6 +1606,7 @@ namespace AutoCtrl.CommonForm {
             this.btnInterChipVbgConfig.TabIndex = 50;
             this.btnInterChipVbgConfig.Text = "Config";
             this.btnInterChipVbgConfig.UseVisualStyleBackColor = false;
+            this.btnInterChipVbgConfig.Click += new System.EventHandler(this.btnManualConfig_Click);
             // 
             // tbInterChipVbgValue
             // 
@@ -1656,7 +1690,7 @@ namespace AutoCtrl.CommonForm {
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1304, 609);
+            this.ClientSize = new System.Drawing.Size(1304, 633);
             this.Controls.Add(this.gbTestItem);
             this.Controls.Add(this.gbUsbPortInfo);
             this.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1679,11 +1713,15 @@ namespace AutoCtrl.CommonForm {
             this.gbTestItem.ResumeLayout(false);
             this.gbCommonPart.ResumeLayout(false);
             this.gbCommonPart.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.gbPwrCHNSel.ResumeLayout(false);
             this.gbPwrCHNSel.PerformLayout();
             this.tcTest.ResumeLayout(false);
             this.tbpDriverIc.ResumeLayout(false);
             this.tbpDriverIc.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.gbRegConfig.ResumeLayout(false);
             this.gbRegConfig.PerformLayout();
             this.tbpInterfaceIC.ResumeLayout(false);
@@ -1794,9 +1832,6 @@ namespace AutoCtrl.CommonForm {
         private System.Windows.Forms.CheckBox cbDriverBlueChipEn;
         private System.Windows.Forms.CheckBox cbDriverGreenChipEn;
         private System.Windows.Forms.CheckBox cbDriverRedChipEn;
-        private System.Windows.Forms.CheckBox cbProjectNameEn;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.ComboBox cmbProjectName;
         private System.Windows.Forms.ComboBox cmbAtbNodeName;
         private System.Windows.Forms.TabPage tbpInterfaceIC;
         private System.Windows.Forms.TabPage tbpControlIC;
@@ -1805,7 +1840,7 @@ namespace AutoCtrl.CommonForm {
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.ComboBox cbInterChipTestCase;
         private System.Windows.Forms.Label label37;
-        private System.Windows.Forms.ComboBox cbInterChipProjectItem;
+        private System.Windows.Forms.ComboBox cbInterChipProjectItems;
         private System.Windows.Forms.RichTextBox rtbInterChipDisPlay;
         private System.Windows.Forms.TextBox tbInterChipAtbResult;
         private System.Windows.Forms.Label label34;
@@ -1824,5 +1859,11 @@ namespace AutoCtrl.CommonForm {
         private System.Windows.Forms.GroupBox gbChipLocationSel;
         private System.Windows.Forms.CheckBox cbEnChip0;
         private System.Windows.Forms.CheckBox cbEnChip1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ComboBox cmbVoltCaseSel;
+        private System.Windows.Forms.Label lbTemp;
+        private System.Windows.Forms.ComboBox cmbTempCaseSel;
+        private System.Windows.Forms.Label lbVolt;
     }
 }
