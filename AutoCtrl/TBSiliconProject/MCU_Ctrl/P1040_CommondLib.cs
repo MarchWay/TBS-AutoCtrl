@@ -49,6 +49,7 @@ namespace AutoCtrl.TBSiliconProject.MCU_Ctrl {
         public CommonFunctionLib comFunLib = new CommonFunctionLib();
         public InstCommandLib instCmdLib = new InstCommandLib();
         public InstCommonCtrlLib instCtrlLib = new InstCommonCtrlLib();
+        public DriveChCurrVoltTestLib chCurrVoltCmd = new DriveChCurrVoltTestLib();
         public string dataStream = "";
         public int cnt;
         public List<string> dataList = new List<string>();
@@ -58,8 +59,8 @@ namespace AutoCtrl.TBSiliconProject.MCU_Ctrl {
             public ComboBox cmbFastCmd;
             public ComboBox cmbOscDivCmd;
             public ComboBox cmbAutoTestItem;
-            public TextBox tbP1040_RegAddr;
-            public TextBox tbP1040_ValueCfg;
+            public TextBox tbRegAddr;
+            public TextBox tbValueCfg;
             public RadioButton rbKeyPwrEn;
             public RadioButton rbGppPwrEn;
             public RadioButton rbItechPwrEn;

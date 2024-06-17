@@ -79,15 +79,12 @@ namespace AutoCtrl.CommonForm {
             this.label16 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.tbCh4OffDelay = new System.Windows.Forms.TextBox();
             this.tbCh3OffDelay = new System.Windows.Forms.TextBox();
             this.tbCh2OffDelay = new System.Windows.Forms.TextBox();
             this.tbCh1OffDelay = new System.Windows.Forms.TextBox();
-            this.tbCh4OnDelay = new System.Windows.Forms.TextBox();
             this.tbCh3OnDelay = new System.Windows.Forms.TextBox();
             this.tbCh2OnDelay = new System.Windows.Forms.TextBox();
             this.tbCh1OnDelay = new System.Windows.Forms.TextBox();
@@ -107,6 +104,10 @@ namespace AutoCtrl.CommonForm {
             this.tbLowVolt = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.tbpPwrSlewRate = new System.Windows.Forms.TabPage();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
             this.btnPowerSrOnOff = new System.Windows.Forms.Button();
             this.label33 = new System.Windows.Forms.Label();
             this.tbCh4OverShoot = new System.Windows.Forms.TextBox();
@@ -284,10 +285,6 @@ namespace AutoCtrl.CommonForm {
             this.cbPower0En = new System.Windows.Forms.CheckBox();
             this.lbPowerAddr = new System.Windows.Forms.Label();
             this.lbMultiAddr = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label35 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.label37 = new System.Windows.Forms.Label();
             this.gbInstCtrl.SuspendLayout();
             this.tbpInstrumentCtrl.SuspendLayout();
             this.tbpInstrumentDebug.SuspendLayout();
@@ -902,15 +899,12 @@ namespace AutoCtrl.CommonForm {
             this.tbpPowerSequence.Controls.Add(this.label16);
             this.tbpPowerSequence.Controls.Add(this.label14);
             this.tbpPowerSequence.Controls.Add(this.label13);
-            this.tbpPowerSequence.Controls.Add(this.label12);
             this.tbpPowerSequence.Controls.Add(this.label11);
             this.tbpPowerSequence.Controls.Add(this.label10);
             this.tbpPowerSequence.Controls.Add(this.label9);
-            this.tbpPowerSequence.Controls.Add(this.tbCh4OffDelay);
             this.tbpPowerSequence.Controls.Add(this.tbCh3OffDelay);
             this.tbpPowerSequence.Controls.Add(this.tbCh2OffDelay);
             this.tbpPowerSequence.Controls.Add(this.tbCh1OffDelay);
-            this.tbpPowerSequence.Controls.Add(this.tbCh4OnDelay);
             this.tbpPowerSequence.Controls.Add(this.tbCh3OnDelay);
             this.tbpPowerSequence.Controls.Add(this.tbCh2OnDelay);
             this.tbpPowerSequence.Controls.Add(this.tbCh1OnDelay);
@@ -939,7 +933,7 @@ namespace AutoCtrl.CommonForm {
             this.btnPwrSequenceStart.ForeColor = System.Drawing.Color.Blue;
             this.btnPwrSequenceStart.Location = new System.Drawing.Point(255, 44);
             this.btnPwrSequenceStart.Name = "btnPwrSequenceStart";
-            this.btnPwrSequenceStart.Size = new System.Drawing.Size(77, 66);
+            this.btnPwrSequenceStart.Size = new System.Drawing.Size(77, 52);
             this.btnPwrSequenceStart.TabIndex = 76;
             this.btnPwrSequenceStart.Text = "Power Run";
             this.btnPwrSequenceStart.UseVisualStyleBackColor = true;
@@ -954,7 +948,7 @@ namespace AutoCtrl.CommonForm {
             this.btnSetPowerSquence.TabIndex = 75;
             this.btnSetPowerSquence.Text = "Set";
             this.btnSetPowerSquence.UseVisualStyleBackColor = false;
-            this.btnSetPowerSquence.Click += new System.EventHandler(this.btnSetPowerSquence_Click);
+            this.btnSetPowerSquence.Click += new System.EventHandler(this.btnSetKeyPowerSquence_Click);
             // 
             // label16
             // 
@@ -985,15 +979,6 @@ namespace AutoCtrl.CommonForm {
             this.label13.TabIndex = 50;
             this.label13.Text = "CH3:";
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(5, 100);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(38, 14);
-            this.label12.TabIndex = 49;
-            this.label12.Text = "CH4:";
-            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -1020,16 +1005,6 @@ namespace AutoCtrl.CommonForm {
             this.label9.Size = new System.Drawing.Size(26, 14);
             this.label9.TabIndex = 46;
             this.label9.Text = "ON";
-            // 
-            // tbCh4OffDelay
-            // 
-            this.tbCh4OffDelay.BackColor = System.Drawing.SystemColors.Control;
-            this.tbCh4OffDelay.ForeColor = System.Drawing.Color.Black;
-            this.tbCh4OffDelay.Location = new System.Drawing.Point(95, 96);
-            this.tbCh4OffDelay.Name = "tbCh4OffDelay";
-            this.tbCh4OffDelay.Size = new System.Drawing.Size(50, 22);
-            this.tbCh4OffDelay.TabIndex = 40;
-            this.tbCh4OffDelay.Text = "0.000";
             // 
             // tbCh3OffDelay
             // 
@@ -1060,16 +1035,6 @@ namespace AutoCtrl.CommonForm {
             this.tbCh1OffDelay.Size = new System.Drawing.Size(50, 22);
             this.tbCh1OffDelay.TabIndex = 37;
             this.tbCh1OffDelay.Text = "0.000";
-            // 
-            // tbCh4OnDelay
-            // 
-            this.tbCh4OnDelay.BackColor = System.Drawing.SystemColors.Control;
-            this.tbCh4OnDelay.ForeColor = System.Drawing.Color.Black;
-            this.tbCh4OnDelay.Location = new System.Drawing.Point(45, 96);
-            this.tbCh4OnDelay.Name = "tbCh4OnDelay";
-            this.tbCh4OnDelay.Size = new System.Drawing.Size(50, 22);
-            this.tbCh4OnDelay.TabIndex = 36;
-            this.tbCh4OnDelay.Text = "0.000";
             // 
             // tbCh3OnDelay
             // 
@@ -1312,6 +1277,50 @@ namespace AutoCtrl.CommonForm {
             this.tbpPwrSlewRate.TabIndex = 4;
             this.tbpPwrSlewRate.Text = "电源斜率";
             this.tbpPwrSlewRate.UseVisualStyleBackColor = true;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("楷体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label37.ForeColor = System.Drawing.Color.Fuchsia;
+            this.label37.Location = new System.Drawing.Point(304, 46);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(125, 12);
+            this.label37.TabIndex = 81;
+            this.label37.Text = "F-Step: falling step";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("楷体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label36.ForeColor = System.Drawing.Color.Fuchsia;
+            this.label36.Location = new System.Drawing.Point(304, 31);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(119, 12);
+            this.label36.TabIndex = 80;
+            this.label36.Text = "R-Step: rising step";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Font = new System.Drawing.Font("楷体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label35.ForeColor = System.Drawing.Color.Fuchsia;
+            this.label35.Location = new System.Drawing.Point(304, 17);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(155, 12);
+            this.label35.TabIndex = 79;
+            this.label35.Text = "填写举例：3.3/0.5/0.2/0.2";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("楷体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label32.ForeColor = System.Drawing.Color.Red;
+            this.label32.Location = new System.Drawing.Point(82, 5);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(155, 12);
+            this.label32.TabIndex = 78;
+            this.label32.Text = "注意：所有的单位均为（V）";
             // 
             // btnPowerSrOnOff
             // 
@@ -3385,50 +3394,6 @@ namespace AutoCtrl.CommonForm {
             this.lbMultiAddr.TabIndex = 19;
             this.lbMultiAddr.Text = "M0 Addr:";
             // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Font = new System.Drawing.Font("楷体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label32.ForeColor = System.Drawing.Color.Red;
-            this.label32.Location = new System.Drawing.Point(82, 5);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(155, 12);
-            this.label32.TabIndex = 78;
-            this.label32.Text = "注意：所有的单位均为（V）";
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Font = new System.Drawing.Font("楷体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label35.ForeColor = System.Drawing.Color.Fuchsia;
-            this.label35.Location = new System.Drawing.Point(304, 17);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(155, 12);
-            this.label35.TabIndex = 79;
-            this.label35.Text = "填写举例：3.3/0.5/0.2/0.2";
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Font = new System.Drawing.Font("楷体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label36.ForeColor = System.Drawing.Color.Fuchsia;
-            this.label36.Location = new System.Drawing.Point(304, 31);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(119, 12);
-            this.label36.TabIndex = 80;
-            this.label36.Text = "R-Step: rising step";
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Font = new System.Drawing.Font("楷体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label37.ForeColor = System.Drawing.Color.Fuchsia;
-            this.label37.Location = new System.Drawing.Point(304, 46);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(125, 12);
-            this.label37.TabIndex = 81;
-            this.label37.Text = "F-Step: falling step";
-            // 
             // InstrumentLinkForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
@@ -3701,15 +3666,12 @@ namespace AutoCtrl.CommonForm {
         private System.Windows.Forms.TabPage tbpPowerSequence;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox tbCh4OffDelay;
         private System.Windows.Forms.TextBox tbCh3OffDelay;
         private System.Windows.Forms.TextBox tbCh2OffDelay;
         private System.Windows.Forms.TextBox tbCh1OffDelay;
-        private System.Windows.Forms.TextBox tbCh4OnDelay;
         private System.Windows.Forms.TextBox tbCh3OnDelay;
         private System.Windows.Forms.TextBox tbCh2OnDelay;
         private System.Windows.Forms.TextBox tbCh1OnDelay;

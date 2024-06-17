@@ -332,7 +332,7 @@ namespace AutoCtrl.CommonForm {
         }
         private void PowerMultiOperation(int chIndex, double volt) {
             if (enKeyPower) {
-                instCmdLib.SetVoltAndCurr(instCmnLib.mbsPowerKey, (InstCommandLib.POWER_CH_EN)chIndex, volt);
+                instCmdLib.SetKeyVoltAndCurr(instCmnLib.mbsPowerKey, (InstCommandLib.POWER_CH_EN)chIndex, volt);
                 comFunLib.DelayTimeMs(delay);
                 instCmdLib.ReadKeyPower(instCmnLib.mbsPowerKey, (InstCommandLib.POWER_CH_EN)chIndex, InstCommandLib.READ_TYPE_EN.VOLT, ref readVolt[0]);
             }
@@ -479,7 +479,7 @@ namespace AutoCtrl.CommonForm {
             };
             for (int ch = 0; ch < chEn.Length; ch++) {
                 if (chEn[ch]) {
-                    instCmdLib.SetVoltAndCurr(instCmnLib.mbsPower0, (InstCommandLib.POWER_CH_EN)(ch + 1), setData[ch, 0], setData[ch, 1]);
+                    instCmdLib.SetKeyVoltAndCurr(instCmnLib.mbsPower0, (InstCommandLib.POWER_CH_EN)(ch + 1), setData[ch, 0], setData[ch, 1]);
                 }
             }
             btnSetKeyPower.BackColor = Color.PaleGreen;
@@ -923,8 +923,10 @@ namespace AutoCtrl.CommonForm {
             if (enKeyPower) {
                 instCmdLib.ReadKeyPower(instCmnLib.mbsPower0, InstCommandLib.POWER_CH_EN.CH1, InstCommandLib.READ_TYPE_EN.VOLT, ref volt[0]);
                 instCmdLib.ReadKeyPower(instCmnLib.mbsPower0, InstCommandLib.POWER_CH_EN.CH2, InstCommandLib.READ_TYPE_EN.VOLT, ref volt[1]);
+                instCmdLib.ReadKeyPower(instCmnLib.mbsPower0, InstCommandLib.POWER_CH_EN.CH3, InstCommandLib.READ_TYPE_EN.VOLT, ref volt[2]);
                 instCmdLib.ReadKeyPower(instCmnLib.mbsPower0, InstCommandLib.POWER_CH_EN.CH1, InstCommandLib.READ_TYPE_EN.CURR, ref curr[0]);
                 instCmdLib.ReadKeyPower(instCmnLib.mbsPower0, InstCommandLib.POWER_CH_EN.CH2, InstCommandLib.READ_TYPE_EN.CURR, ref curr[1]);
+                instCmdLib.ReadKeyPower(instCmnLib.mbsPower0, InstCommandLib.POWER_CH_EN.CH3, InstCommandLib.READ_TYPE_EN.CURR, ref curr[2]);
             }
         }
         private void PrintLogPwrMonitor(bool pwrOnoff, int cnt) {
@@ -979,19 +981,19 @@ namespace AutoCtrl.CommonForm {
             btnPowerOnOffCycle.BackColor = SystemColors.Control;
             btnPowerOnOffCycle.Enabled = true;
         }
-        private void btnSetPowerSquence_Click(object sender, EventArgs e) {
+        private void btnSetKeyPowerSquence_Click(object sender, EventArgs e) {
             double[] pwrOnSequence = new double[] {
-                double.Parse(tbCh1OnDelay.Text.Trim()), double.Parse(tbCh2OnDelay.Text.Trim()), double.Parse(tbCh3OnDelay.Text.Trim()), double.Parse(tbCh4OnDelay.Text.Trim())
+                double.Parse(tbCh1OnDelay.Text.Trim()), double.Parse(tbCh2OnDelay.Text.Trim()), double.Parse(tbCh3OnDelay.Text.Trim())
             };
             double[] pwrOffSequence = new double[] {
-                double.Parse(tbCh1OffDelay.Text.Trim()), double.Parse(tbCh2OffDelay.Text.Trim()), double.Parse(tbCh3OffDelay.Text.Trim()), double.Parse(tbCh4OffDelay.Text.Trim())
+                double.Parse(tbCh1OffDelay.Text.Trim()), double.Parse(tbCh2OffDelay.Text.Trim()), double.Parse(tbCh3OffDelay.Text.Trim())
             };
-            double[,] squence = new double[2, 4] {
-                { pwrOnSequence[0], pwrOnSequence[1], pwrOnSequence[2], pwrOnSequence[3], },
-                { pwrOffSequence[0], pwrOffSequence[1], pwrOffSequence[2], pwrOffSequence[3], }
+            double[,] squence = new double[2, 3] {
+                { pwrOnSequence[0], pwrOnSequence[1], pwrOnSequence[2] },
+                { pwrOffSequence[0], pwrOffSequence[1], pwrOffSequence[2]}
             };
-            for (int ch = 0; ch < 4; ch++) {
-                instCmdLib.SetOutputOnOffDelay(instCmnLib.mbsPower0, (InstCommandLib.POWER_CH_EN)(ch + 1), squence[0, ch], squence[1, ch]);
+            for (int ch = 0; ch < 3; ch++) {
+                instCmdLib.SetKeyOutputOnOffDelay(instCmnLib.mbsPower0, (InstCommandLib.POWER_CH_EN)(ch + 1), squence[0, ch], squence[1, ch]);
             }
             //需要增加勾选封锁机制;
         }
@@ -999,23 +1001,28 @@ namespace AutoCtrl.CommonForm {
         private void btnPwrSequenceStart_Click(object sender, EventArgs e) {
             btnPwrSequenceStart.Enabled = false;
             btnPwrSequenceStart.BackColor = Color.Gold;
-            PowerParaInit();
+            //PowerParaInit();
+            stopEn = false;
             if (!stopEn) {
-                btnSetPowerSquence_Click(sender, e);
-                for (int cnt = 0; cnt < nudCycleNum.Value; cnt++) {
-                    if (stopEn) { break; }
-                    PrintLogPwrMonitor(POWER_ON, cnt);
-                    PrintLogPwrMonitor(POWER_OFF, cnt);
+                if (cbPowerAllOnOff.Checked) {
+                    btnSetKeyPowerSquence_Click(sender, e);
+                    for (int cnt = 0; cnt < nudCycleNum.Value; cnt++) {
+                        if (stopEn) { break; }
+                        PrintLogPwrMonitor(POWER_ON, cnt);
+                        PrintLogPwrMonitor(POWER_OFF, cnt);
+                    }
+                }
+                else {
+                    MessageBox.Show("1.此功能仅限于KeySight电源\n2.请勾选AllOnOff选框");
                 }
             }
             btnPwrSequenceStart.Enabled = true;
             btnPwrSequenceStart.BackColor = SystemColors.Control;
-
             //是否需要添加 写结果的操作；
         }
         public void SetPowerVolt(int CH, double volt, double interal) {
             if (enKeyPower) {
-                instCmdLib.SetVoltAndCurr(instCmnLib.mbsPower0, (InstCommandLib.POWER_CH_EN)CH, volt);
+                instCmdLib.SetKeyVoltAndCurr(instCmnLib.mbsPower0, (InstCommandLib.POWER_CH_EN)CH, volt);
             }
             else if (enItechPower) {
                 instCmdLib.SetItechPowerVoltCurr(instCmnLib.mbsPower0, (InstCommandLib.POWER_CH_EN)CH, volt);

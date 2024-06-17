@@ -221,33 +221,33 @@ namespace AutoCtrl.InstCommandCtrl {
                 case POWER_CTRL_EN.READ_KEY_POWER_DATA:
                     return ReadKeyPower(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.readType, ref var_st.readData);
                 case POWER_CTRL_EN.SET_INIT_VOLT_LIMIT_CURR:
-                    return SetVoltAndCurr(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.setVolt, var_st.limitCurr);
+                    return SetKeyVoltAndCurr(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.setVolt, var_st.limitCurr);
                 case POWER_CTRL_EN.SET_SLEW_RATE:
-                    return SetVoltSlewRate(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.slewRateMode, var_st.slewRateRatio);
+                    return SetKeyVoltSlewRate(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.slewRateMode, var_st.slewRateRatio);
                 case POWER_CTRL_EN.OUTPUT_COUPLING:
-                    return SetOutputCouple(instCmnlLib.mbsPowerKey, var_st.outCoupleAll, var_st.power_ch);
+                    return SetKeyOutputCouple(instCmnlLib.mbsPowerKey, var_st.outCoupleAll, var_st.power_ch);
                 case POWER_CTRL_EN.OUTPUT_LINK_MODE:
-                    return SetOutLinkMode(instCmnlLib.mbsPowerKey, var_st.outputLinkMode);
+                    return SetKeyOutLinkMode(instCmnlLib.mbsPowerKey, var_st.outputLinkMode);
                 case POWER_CTRL_EN.OUTPUT_ON_OFF_DELAY:
-                    return SetOutputOnOffDelay(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.onDelay, var_st.offDelay);
+                    return SetKeyOutputOnOffDelay(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.onDelay, var_st.offDelay);
                 case POWER_CTRL_EN.SET_TRACING_MODE:
-                    return SetTraceMode(instCmnlLib.mbsPowerKey, var_st.state);
+                    return SetKeyTraceMode(instCmnlLib.mbsPowerKey, var_st.state);
                 case POWER_CTRL_EN.CLEAR_PROTECT:
-                    return ClearProtect(instCmnlLib.mbsPowerKey, var_st.power_ch);
+                    return ClearKeyProtect(instCmnlLib.mbsPowerKey, var_st.power_ch);
                 case POWER_CTRL_EN.RECOVER_MAX_SLEW_RATE:
-                    return RecoverMaxSlewRate(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.slewRateMode);
+                    return RecoverKeyMaxSlewRate(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.slewRateMode);
                 case POWER_CTRL_EN.ENABLE_OCP:
-                    return SetEnOCP(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.state);
+                    return SetKeyEnOCP(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.state);
                 case POWER_CTRL_EN.ENABLE_OVP:
-                    return SetEnOVP(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.state);
+                    return SetKeyEnOVP(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.state);
                 case POWER_CTRL_EN.SET_DELAY_MODE_OCP:
-                    return SetDelayModeOCP(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.ocpDelayMode);
+                    return SetKeyDelayModeOCP(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.ocpDelayMode);
                 case POWER_CTRL_EN.SET_DELAY_TIME_OCP:
-                    return SetDelayTimeOCP(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.delayOCP);
+                    return SetKeyDelayTimeOCP(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.delayOCP);
                 case POWER_CTRL_EN.SET_LEVEL_OVP:
-                    return SetLevelOVP(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.levelOVP);
+                    return SetKeyLevelOVP(instCmnlLib.mbsPowerKey, var_st.power_ch, var_st.levelOVP);
                 case POWER_CTRL_EN.LOCK_PANEL_MODE:
-                    return SetPanelLock(instCmnlLib.mbsPowerKey, var_st.panelLock);
+                    return SetKeyPanelLock(instCmnlLib.mbsPowerKey, var_st.panelLock);
                 default:
                     break;
             }
@@ -333,7 +333,7 @@ namespace AutoCtrl.InstCommandCtrl {
         /// <param name="mbs"></param>
         /// <param name="power_ch"></param>
         /// <returns></returns>
-        public bool SetVoltAndCurr(MessageBasedSession mbs, POWER_CH_EN power_ch, double volt, double curr = 1.000) {
+        public bool SetKeyVoltAndCurr(MessageBasedSession mbs, POWER_CH_EN power_ch, double volt, double curr = 1.000) {
             try {
                 return instCmnlLib.Write(mbs, ":APPL " + power_ch + "," + volt + "," + curr + "\n");
                        //& instCmnlLib.WaitOpc(mbs);
@@ -352,7 +352,7 @@ namespace AutoCtrl.InstCommandCtrl {
         /// <param name="slewMode"></param>
         /// <param name="slewRate"></param>
         /// <returns></returns>
-        public bool SetVoltSlewRate(MessageBasedSession mbs, POWER_CH_EN power_ch, SLEW_RATE_EN slewMode, double slewRate) {
+        public bool SetKeyVoltSlewRate(MessageBasedSession mbs, POWER_CH_EN power_ch, SLEW_RATE_EN slewMode, double slewRate) {
             try {
                 return instCmnlLib.Write(mbs, "VOLT:SLEW:" + slewMode + " " + slewRate + "," + Channel(power_ch) + "\n")
                        & instCmnlLib.WaitOpc(mbs);
@@ -370,7 +370,7 @@ namespace AutoCtrl.InstCommandCtrl {
         /// <param name="power_ch"></param>
         /// <param name="slewMode"></param>
         /// <returns></returns>
-        public bool RecoverMaxSlewRate(MessageBasedSession mbs, POWER_CH_EN power_ch, SLEW_RATE_EN slewMode) {
+        public bool RecoverKeyMaxSlewRate(MessageBasedSession mbs, POWER_CH_EN power_ch, SLEW_RATE_EN slewMode) {
             try {
                 return instCmnlLib.Write(mbs, "VOLT:SLEW:" + slewMode + " MAX," + Channel(power_ch) + "\n")   //默认启用最大Slew Rate
                        & instCmnlLib.WaitOpc(mbs);
@@ -388,7 +388,7 @@ namespace AutoCtrl.InstCommandCtrl {
         /// <param name="power_ch"></param>
         /// <param name="enOCP"></param>
         /// <returns></returns>
-        public bool SetEnOCP(MessageBasedSession mbs, POWER_CH_EN power_ch, STATE_EN state) {
+        public bool SetKeyEnOCP(MessageBasedSession mbs, POWER_CH_EN power_ch, STATE_EN state) {
             try {
                 return instCmnlLib.Write(mbs, ":CURR:PROT:STAT " + state + Channel(power_ch) + "\n")
                        & instCmnlLib.WaitOpc(mbs);
@@ -407,7 +407,7 @@ namespace AutoCtrl.InstCommandCtrl {
         /// <param name="power_ch"></param>
         /// <param name="enOVP"></param>
         /// <returns></returns>
-        public bool SetEnOVP(MessageBasedSession mbs, POWER_CH_EN power_ch, STATE_EN state) {
+        public bool SetKeyEnOVP(MessageBasedSession mbs, POWER_CH_EN power_ch, STATE_EN state) {
             try {
                 return instCmnlLib.Write(mbs, ":VOLT:PROT:STAT " + state + Channel(power_ch) + "\n")
                        & instCmnlLib.WaitOpc(mbs);
@@ -425,7 +425,7 @@ namespace AutoCtrl.InstCommandCtrl {
         /// <param name="power_ch"></param>
         /// <param name="level"></param>
         /// <returns></returns>
-        public bool SetLevelOVP(MessageBasedSession mbs, POWER_CH_EN power_ch, double level = 66) {
+        public bool SetKeyLevelOVP(MessageBasedSession mbs, POWER_CH_EN power_ch, double level = 66) {
             try {
                 return instCmnlLib.Write(mbs, ":VOLT:PROT " + level + "," + Channel(power_ch) + "\n")
                        & instCmnlLib.WaitOpc(mbs);
@@ -443,7 +443,7 @@ namespace AutoCtrl.InstCommandCtrl {
         /// <param name="power_ch"></param>
         /// <param name="delayMode"></param>
         /// <returns></returns>
-        public bool SetDelayModeOCP(MessageBasedSession mbs, POWER_CH_EN power_ch, OCP_DELAY_MODE delayMode) {
+        public bool SetKeyDelayModeOCP(MessageBasedSession mbs, POWER_CH_EN power_ch, OCP_DELAY_MODE delayMode) {
             try {
                 return instCmnlLib.Write(mbs, ":CURR:PROT:DEL:STAR " + delayMode + "," + Channel(power_ch) + "\n")
                        & instCmnlLib.WaitOpc(mbs);
@@ -461,7 +461,7 @@ namespace AutoCtrl.InstCommandCtrl {
         /// <param name="power_ch"></param>
         /// <param name="delay"></param>
         /// <returns></returns>
-        public bool SetDelayTimeOCP(MessageBasedSession mbs, POWER_CH_EN power_ch, double delay = 0.050) {
+        public bool SetKeyDelayTimeOCP(MessageBasedSession mbs, POWER_CH_EN power_ch, double delay = 0.050) {
             try {
                 return instCmnlLib.Write(mbs, ":CURR:PROT:DEL " + delay + "," + Channel(power_ch) + "\n")
                        & instCmnlLib.WaitOpc(mbs);
@@ -478,7 +478,7 @@ namespace AutoCtrl.InstCommandCtrl {
         /// <param name="mbs"></param>
         /// <param name="power_ch"></param>
         /// <returns></returns>
-        public bool ClearProtect(MessageBasedSession mbs, POWER_CH_EN power_ch) {
+        public bool ClearKeyProtect(MessageBasedSession mbs, POWER_CH_EN power_ch) {
             try {
                 return instCmnlLib.Write(mbs, ":OUTP:PROT:CLE " + Channel(power_ch) + "\n")
                        & instCmnlLib.WaitOpc(mbs);
@@ -497,7 +497,7 @@ namespace AutoCtrl.InstCommandCtrl {
         /// <param name="onDelay"></param>
         /// <param name="offDelay"></param>
         /// <returns></returns>
-        public bool SetOutputOnOffDelay(MessageBasedSession mbs, POWER_CH_EN power_ch, double onDelay, double offDelay) {
+        public bool SetKeyOutputOnOffDelay(MessageBasedSession mbs, POWER_CH_EN power_ch, double onDelay, double offDelay) {
             try {
                 return instCmnlLib.Write(mbs, ":OUTP:DEL:RISE " + onDelay + "," + Channel(power_ch) + "\n")
                        & instCmnlLib.Write(mbs, ":OUTP:DEL:FALL " + offDelay + "," + Channel(power_ch) + "\n")
@@ -515,7 +515,7 @@ namespace AutoCtrl.InstCommandCtrl {
         /// <param name="mbs"></param>
         /// <param name="state"></param>
         /// <returns></returns>
-        public bool SetTraceMode(MessageBasedSession mbs, STATE_EN state) {
+        public bool SetKeyTraceMode(MessageBasedSession mbs, STATE_EN state) {
             try {
                 return instCmnlLib.Write(mbs, ":OUTP:TRAC " + state + "\n")
                        & instCmnlLib.WaitOpc(mbs);
@@ -531,7 +531,7 @@ namespace AutoCtrl.InstCommandCtrl {
         /// </summary>
         /// <param name="mbs"></param>
         /// <returns></returns>
-        public bool SetOutputCouple(MessageBasedSession mbs, bool all, POWER_CH_EN power_ch) {
+        public bool SetKeyOutputCouple(MessageBasedSession mbs, bool all, POWER_CH_EN power_ch) {
             try {
                 if (all) {
                     return instCmnlLib.Write(mbs, ":OUTP:COUP:CHAN CH1,CH2" + "\n")
@@ -554,10 +554,10 @@ namespace AutoCtrl.InstCommandCtrl {
         /// <param name="mbs"></param>
         /// <param name="mode"></param>
         /// <returns></returns>
-        public bool SetOutLinkMode(MessageBasedSession mbs, OUTPUT_LINK_EN mode) {
+        public bool SetKeyOutLinkMode(MessageBasedSession mbs, OUTPUT_LINK_EN mode) {
             try {
                 if (mode == OUTPUT_LINK_EN.INDEPEND) {
-                    return SetTraceMode(mbs, STATE_EN.OFF);
+                    return SetKeyTraceMode(mbs, STATE_EN.OFF);
                 }
                 if (mode == OUTPUT_LINK_EN.PARallel) {
                     return instCmnlLib.Write(mbs, "OUTP:PAIR PAR" + "\n");
@@ -566,7 +566,7 @@ namespace AutoCtrl.InstCommandCtrl {
                     return instCmnlLib.Write(mbs, ":OUTP:PAIR SER" + "\n");
                 }
                 if (mode == OUTPUT_LINK_EN.TRACKING) {
-                    return SetTraceMode(mbs, STATE_EN.ON);
+                    return SetKeyTraceMode(mbs, STATE_EN.ON);
                 }
                 instCmnlLib.WaitOpc(mbs);
             }
@@ -583,7 +583,7 @@ namespace AutoCtrl.InstCommandCtrl {
         /// <param name="mbs"></param>
         /// <param name="panelLock"></param>
         /// <returns></returns>
-        public bool SetPanelLock(MessageBasedSession mbs, LOCK_PANEL_EN panelLock) {
+        public bool SetKeyPanelLock(MessageBasedSession mbs, LOCK_PANEL_EN panelLock) {
             try {
                 return instCmnlLib.Write(mbs, ":SYST:" + panelLock + "\n")
                        & instCmnlLib.WaitOpc(mbs);

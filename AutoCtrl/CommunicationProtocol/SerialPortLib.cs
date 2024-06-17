@@ -34,10 +34,10 @@ namespace AutoCtrl.CommunicationProtocol {
         public Para_St para_st = new Para_St();
         public void DisplayFunction(string str) {
             if (para_st.timeViewEn) {
-                para_st.rtbRx.AppendText("[" + System.DateTime.Now.ToString("HH:mm:ss") + "][TX]◁▶:" + str.ToString() + "\n");
+                para_st.rtbRx.AppendText("[" + System.DateTime.Now.ToString("HH:mm:ss") + "][TX]:" + str.ToString() + "\n");
             }
             else {
-                para_st.rtbRx.AppendText("[TX]◁▶:" + str + "\n");
+                para_st.rtbRx.AppendText("[TX]:" + str + "\n");
             }
             para_st.rtbRx.ScrollToCaret();
         }
@@ -109,10 +109,10 @@ namespace AutoCtrl.CommunicationProtocol {
             }
             try {
                 if (para_st.timeViewEn) {
-                    para_st.rtbRx.AppendText("[" + System.DateTime.Now.ToString("HH:mm:ss") + "][RX]◀▷:" + para_st.sb.ToString() + "\n");
+                    para_st.rtbRx.AppendText("[" + System.DateTime.Now.ToString("HH:mm:ss") + "][RX]:" + para_st.sb.ToString() + "\n");
                 }
                 else {
-                    para_st.rtbRx.AppendText("[RX]◀▷:" + para_st.sb.ToString() + "\n");
+                    para_st.rtbRx.AppendText("[RX]:" + para_st.sb.ToString() + "\n");
                 }
                 para_st.rtbRx.ScrollToCaret();
                 para_st.lbRxCnt.Text = para_st.rxCnt.ToString();

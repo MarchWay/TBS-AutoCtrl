@@ -252,33 +252,26 @@ namespace AutoCtrl.TBSiliconProject.DriverCommonTestItem
         /// <param name="exeModule"></param>
         /// <returns></returns>
         string[] exCommand = new string[] { "Set", "Read" };
-        public double PwrVoltSetOrRead(DriverChipCommonFunctionLib dChipComFunLib, int pwrCH, string exeModule, double volt = 3.8)
-        {
+        public double PwrVoltSetOrRead(DriverChipCommonFunctionLib dChipComFunLib, int pwrCH, string exeModule, double volt = 3.8) {
             string pwrType = dChipComFunLib.para_St.cbPwrType.Checked ? "KeySight" : "GuWei";
             bool[] EnPwrCh = new bool[]{ dChipComFunLib.para_St.cbEnPwrCH1.Checked, dChipComFunLib.para_St.cbEnPwrCH2.Checked,
                     dChipComFunLib.para_St.cbEnPwrCH3.Checked, dChipComFunLib.para_St.cbEnPwrCH4.Checked };
 
-            if (EnPwrCh[pwrCH - 1])
-            {
-                switch (pwrType)
-                {
+            if (EnPwrCh[pwrCH - 1]) {
+                switch (pwrType) {
                     case "GuWei":
-                        if (exeModule == "Set")
-                        {
+                        if (exeModule == "Set") {
                             instCmdLib.SetGuWeiPowerVolt(mbsPower, (InstCommandLib.POWER_CH_EN)pwrCH, volt);
                         }
-                        else
-                        {
+                        else {
                             instCmdLib.ReadGuWeiPowerCh(mbsPower, (InstCommandLib.POWER_CH_EN)pwrCH, InstCommandLib.READ_TYPE_EN.VOLT, ref volt);
                         }
                         break;
                     case "KeySight":
-                        if (exeModule == "Set")
-                        {
-                            instCmdLib.SetVoltAndCurr(mbsPower, (InstCommandLib.POWER_CH_EN)pwrCH, volt, 2.00);
+                        if (exeModule == "Set") {
+                            instCmdLib.SetKeyVoltAndCurr(mbsPower, (InstCommandLib.POWER_CH_EN)pwrCH, volt, 2.00);
                         }
-                        else
-                        {
+                        else {
                             instCmdLib.ReadKeyPower(mbsPower, (InstCommandLib.POWER_CH_EN)pwrCH, InstCommandLib.READ_TYPE_EN.VOLT, ref volt);
                         }
                         break;

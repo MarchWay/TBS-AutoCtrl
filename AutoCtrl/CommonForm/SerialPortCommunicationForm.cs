@@ -27,6 +27,7 @@ namespace AutoCtrl.CommonForm {
         public CommonFunctionLib comFunLib = new CommonFunctionLib();
         public P3268_CommondLib p3268cmd = new P3268_CommondLib();
         public P1040_CommondLib p1040cmd = new P1040_CommondLib();
+        public DriveChCurrVoltTestLib chCurrVoltCmd = new DriveChCurrVoltTestLib();
         private Para_St para_St = new Para_St();
         public List<string> list = new List<string>();
 
@@ -69,15 +70,34 @@ namespace AutoCtrl.CommonForm {
             serPortLib.para_st.sb = sb;
             //------------ P1040 参数初始化 ----------------------------
             p1040cmd.p1040_para_st.stop = false;
-            p1040cmd.p1040_para_st.chipCnt = ((int)nudChipCnt_1040.Value - 1).ToString("X2");
+            p1040cmd.p1040_para_st.chipCnt = ((int)nudChipCnt.Value - 1).ToString("X2");
             p1040cmd.p1040_para_st.cmbCmdType = cmbCmdType;
-            p1040cmd.p1040_para_st.cmbAutoTestItem = cmbAutoTestItem_1040;
-            p1040cmd.p1040_para_st.cmbAtbTable = cmbAtbSel_1040;
-            p1040cmd.p1040_para_st.cmbFastCmd = cmbFastCmd_1040;
-            p1040cmd.p1040_para_st.cmbOscDivCmd = cmbOscDivCmd_1040;
-            p1040cmd.p1040_para_st.tbP1040_RegAddr = tbP1040RegAddr;
-            p1040cmd.p1040_para_st.tbP1040_ValueCfg = tbP1040RegValue;
-            p1040cmd.p1040_para_st.nudGccCode = nudGccTrim_1040;
+            p1040cmd.p1040_para_st.cmbAutoTestItem = cmbAutoTestItem;
+            p1040cmd.p1040_para_st.cmbAtbTable = cmbAtbSel;
+            p1040cmd.p1040_para_st.cmbFastCmd = cmbFastCmd;
+            p1040cmd.p1040_para_st.cmbOscDivCmd = cmbOscDivCmd;
+            p1040cmd.p1040_para_st.tbRegAddr = tbRegAddr;
+            p1040cmd.p1040_para_st.tbValueCfg = tbRegValue;
+            p1040cmd.p1040_para_st.nudGccCode = nudGccTrim;
+            p1040cmd.p1040_para_st.rbKeyPwrEn = rbPwrKeyEn;
+            p1040cmd.p1040_para_st.rbGppPwrEn = rbPwrGppEn;
+            p1040cmd.p1040_para_st.rbItechPwrEn = rbPwrItechEn;
+            p1040cmd.p1040_para_st.cbPowerEn = cbEnPower;
+            p1040cmd.p1040_para_st.cbMulti0En = cbEnMulti0;
+            p1040cmd.p1040_para_st.cbMulti1En = cbEnMulti1;
+            p1040cmd.p1040_para_st.nudReadInstDelay = nudReadInstDelay;
+            p1040cmd.p1040_para_st.testCnt = (int)nudTestCnt.Value;
+            p1040cmd.p1040_para_st.pwrCh = new bool[] { cbCh1En.Checked, cbCh2En.Checked, cbCh3En.Checked, cbCh4En.Checked };
+            p1040cmd.p1040_para_st.stop = false;
+            p1040cmd.p1040_para_st.chipCnt = ((int)nudChipCnt.Value - 1).ToString("X2");
+            p1040cmd.p1040_para_st.cmbCmdType = cmbCmdType;
+            p1040cmd.p1040_para_st.cmbAutoTestItem = cmbAutoTestItem;
+            p1040cmd.p1040_para_st.cmbAtbTable = cmbAtbSel;
+            p1040cmd.p1040_para_st.cmbFastCmd = cmbFastCmd;
+            p1040cmd.p1040_para_st.cmbOscDivCmd = cmbOscDivCmd;
+            p1040cmd.p1040_para_st.tbRegAddr = tbRegAddr;
+            p1040cmd.p1040_para_st.tbValueCfg = tbRegValue;
+            p1040cmd.p1040_para_st.nudGccCode = nudGccTrim;
             p1040cmd.p1040_para_st.rbKeyPwrEn = rbPwrKeyEn;
             p1040cmd.p1040_para_st.rbGppPwrEn = rbPwrGppEn;
             p1040cmd.p1040_para_st.rbItechPwrEn = rbPwrItechEn;
@@ -88,6 +108,48 @@ namespace AutoCtrl.CommonForm {
             p1040cmd.p1040_para_st.testCnt = (int)nudTestCnt.Value;
             p1040cmd.p1040_para_st.pwrCh = new bool[] { cbCh1En.Checked, cbCh2En.Checked, cbCh3En.Checked, cbCh4En.Checked };
             //------------ P3268V300 参数初始化 ------------------------
+            p3268cmd.p3268_para_st.stop = false;
+            p3268cmd.p3268_para_st.chipCnt = ((int)nudChipCnt.Value - 1).ToString("X2");
+            p3268cmd.p3268_para_st.cmbCmdType = cmbCmdType;
+            p3268cmd.p3268_para_st.cmbAutoTestItem = cmbAutoTestItem;
+            p3268cmd.p3268_para_st.cmbAtbTable = cmbAtbSel;
+            p3268cmd.p3268_para_st.cmbFastCmd = cmbFastCmd;
+            p3268cmd.p3268_para_st.cmbDisplayCmd = cmbOscDivCmd;
+            p3268cmd.p3268_para_st.tbRegAddr = tbRegAddr;
+            p3268cmd.p3268_para_st.tbValueCfg = tbRegValue;
+            p3268cmd.p3268_para_st.nudGccCode = nudGccTrim;
+            p3268cmd.p3268_para_st.rbKeyPwrEn = rbPwrKeyEn;
+            p3268cmd.p3268_para_st.rbGppPwrEn = rbPwrGppEn;
+            p3268cmd.p3268_para_st.rbItechPwrEn = rbPwrItechEn;
+            p3268cmd.p3268_para_st.cbPowerEn = cbEnPower;
+            p3268cmd.p3268_para_st.cbMulti0En = cbEnMulti0;
+            p3268cmd.p3268_para_st.cbMulti1En = cbEnMulti1;
+            p3268cmd.p3268_para_st.nudReadInstDelay = nudReadInstDelay;
+            p3268cmd.p3268_para_st.testCnt = (int)nudTestCnt.Value;
+            p3268cmd.p3268_para_st.pwrCh = new bool[] { cbCh1En.Checked, cbCh2En.Checked, cbCh3En.Checked, cbCh4En.Checked };
+            p3268cmd.p3268_para_st.stop = false;
+            p3268cmd.p3268_para_st.chipCnt = ((int)nudChipCnt.Value - 1).ToString("X2");
+            p3268cmd.p3268_para_st.cmbCmdType = cmbCmdType;
+            p3268cmd.p3268_para_st.cmbAutoTestItem = cmbAutoTestItem;
+            p3268cmd.p3268_para_st.cmbAtbTable = cmbAtbSel;
+            p3268cmd.p3268_para_st.cmbFastCmd = cmbFastCmd;
+            p3268cmd.p3268_para_st.cmbDisplayCmd = cmbOscDivCmd;
+            p3268cmd.p3268_para_st.tbRegAddr = tbRegAddr;
+            p3268cmd.p3268_para_st.tbValueCfg = tbRegValue;
+            p3268cmd.p3268_para_st.nudGccCode = nudGccTrim;
+            p3268cmd.p3268_para_st.rbKeyPwrEn = rbPwrKeyEn;
+            p3268cmd.p3268_para_st.rbGppPwrEn = rbPwrGppEn;
+            p3268cmd.p3268_para_st.rbItechPwrEn = rbPwrItechEn;
+            p3268cmd.p3268_para_st.cbPowerEn = cbEnPower;
+            p3268cmd.p3268_para_st.cbMulti0En = cbEnMulti0;
+            p3268cmd.p3268_para_st.cbMulti1En = cbEnMulti1;
+            p3268cmd.p3268_para_st.nudReadInstDelay = nudReadInstDelay;
+            p3268cmd.p3268_para_st.rtbLog = rtbSend;
+            p3268cmd.p3268_para_st.testCnt = (int)nudTestCnt.Value;
+            p3268cmd.p3268_para_st.pwrCh = new bool[] { cbCh1En.Checked, cbCh2En.Checked, cbCh3En.Checked, cbCh4En.Checked };
+            //-------------------通道电流测试，参数初始化---------------------------
+
+
         }
         private void PannelEnable(bool enable) {
             gbReceiveSet.Enabled = enable;
@@ -197,6 +259,8 @@ namespace AutoCtrl.CommonForm {
         }
         private void btnStopEn_Click(object sender, EventArgs e) {
             p1040cmd.p1040_para_st.stop = true;
+            p3268cmd.p3268_para_st.stop = true;
+            chCurrVoltCmd.chn_para_st.stop = true;
         }
         #endregion
 
@@ -205,6 +269,28 @@ namespace AutoCtrl.CommonForm {
             cmbInstrumentPower.Enabled = cbEnPower.Checked;
             cmbInstrumentMulti0.Enabled = cbEnMulti0.Checked;
             cmbInstrumentMulti1.Enabled = cbEnMulti1.Checked;
+        }
+        private void cmbProjectSel_SelectedIndexChanged(object sender, EventArgs e) {
+            if (cmbProjectSel.SelectedItem.ToString().Contains("1040")) {
+                tbRegAddr.Text = "17";
+                tbRegValue.Text = "0001";
+                nudChipCnt.Value = 4;
+                cbOscTrimEn.Enabled = true;
+                //cmbOscDivCmd.Enabled = true;
+                tbpProjectTest.Text = "P1040 Test";
+                tbTestMessage.Text = "P1040_xxx";
+                label22.Text = "OSC分频:";
+            }
+            if (cmbProjectSel.SelectedItem.ToString().Contains("3268")) {
+                tbRegAddr.Text = "1A";
+                tbRegValue.Text = "000000000001";
+                nudChipCnt.Value = 3;
+                tbpProjectTest.Text = "P3268 Test";
+                tbTestMessage.Text = "P3268_xxx";
+                label22.Text = "显示颜色:";
+                cbOscTrimEn.Enabled = false;
+                //cmbOscDivCmd.Enabled = false;
+            }
         }
         #endregion
 
@@ -304,10 +390,10 @@ namespace AutoCtrl.CommonForm {
             try {
                 Invoke((EventHandler)delegate {
                     if (cbReceiveTimeDisplay.Checked) {
-                        rtbReceive.AppendText("[" + System.DateTime.Now.ToString("HH:mm:ss") + "][RX]◀▷:" + sb.ToString() + "\n");
+                        rtbReceive.AppendText("[" + System.DateTime.Now.ToString("HH:mm:ss") + "][RX]◁:" + sb.ToString() + "\n");
                     }
                     else {
-                        rtbReceive.AppendText("[RX]◀▷:" + sb.ToString() + "\n");
+                        rtbReceive.AppendText("[RX]◁:" + sb.ToString() + "\n");
                     }
                     rtbReceive.ScrollToCaret();
                     lbRxCnt.Text = para_St.rxCnt.ToString();
@@ -358,16 +444,22 @@ namespace AutoCtrl.CommonForm {
 
         #region 一、P3268V300 测试集成
 
+
         #endregion
 
         #region 二、P1040V100 测试集成
-        private void btnP1040RegCfg_Click(object sender, EventArgs e) {
+        private void btnRegCfg_Click(object sender, EventArgs e) {
             ParaTransfer();
-            btnP1040RegCfg.Enabled = false;
-            btnP1040RegCfg.BackColor = Color.Gold;
-            p1040cmd.WriteReg(serPortLib, tbP1040RegAddr.Text.Trim(), tbP1040RegValue.Text.Trim());
-            btnP1040RegCfg.BackColor = SystemColors.Control;
-            btnP1040RegCfg.Enabled = true;
+            btnRegCfg.Enabled = false;
+            btnRegCfg.BackColor = Color.Gold;
+            switch (cmbProjectSel.Text) {
+                case "P1040":
+                    p1040cmd.WriteReg(serPortLib, tbRegAddr.Text.Trim(), tbRegValue.Text.Trim()); break;
+                case "P3268":
+                    p3268cmd.WriteReg(serPortLib, tbRegAddr.Text.Trim(), tbRegValue.Text.Trim()); break;
+            }
+            btnRegCfg.BackColor = SystemColors.Control;
+            btnRegCfg.Enabled = true;
         }
         private void cbLoadTable_CheckedChanged(object sender, EventArgs e) {
             if (cbLoadTable.Checked) {
@@ -379,7 +471,7 @@ namespace AutoCtrl.CommonForm {
                         case "P1040":
                             p1040cmd.loadTable(); break;
                         case "P3268":
-                            p1040cmd.loadTable(); break;
+                            p3268cmd.loadTable(); break;
                         default:
                             break;
                     }
@@ -397,73 +489,136 @@ namespace AutoCtrl.CommonForm {
             }
         }
         private void trimEn_CheckChanged(object sender, EventArgs e) {
-            nudChipCnt_1040.Enabled = cbChipCnt.Checked;
-            nudVbgCfg_1040.Enabled = cbVbgTrimEn.Checked;
-            nudLdoCfg_1040.Enabled = cbLdoTrimEn.Checked;
-            nudGccTrim_1040.Enabled = cbGccTrimEn.Checked;
-            nudOscTrim_1040.Enabled = cbOscTrimEn.Checked;
+            nudChipCnt.Enabled = cbChipCnt.Checked;
+            nudVbgCfg.Enabled = cbVbgTrimEn.Checked;
+            nudLdoCfg.Enabled = cbLdoTrimEn.Checked;
+            nudGccTrim.Enabled = cbGccTrimEn.Checked;
+            nudOscTrim.Enabled = cbOscTrimEn.Checked;
         }
-        private void cmbAtbSel_1040_SelectedIndexChanged(object sender, EventArgs e) {
+        private void cmbAtbSel_SelectedIndexChanged(object sender, EventArgs e) {
             ParaTransfer();
-            p1040cmd.AtbDebug(serPortLib);
+            switch (cmbProjectSel.SelectedItem.ToString()) {
+                case "P1040":
+                    p1040cmd.AtbDebug(serPortLib); break;
+                case "P3268":
+                    p3268cmd.AtbDebug(serPortLib); break;
+                case "P3288":
+                    //p1040cmd.AtbDebug(serPortLib); break;
+                default: break;
+            }
         }
-        private void nudVbgCfg_1040_ValueChanged(object sender, EventArgs e) {
+        private void nudVbgCfg_ValueChanged(object sender, EventArgs e) {
             ParaTransfer();
-            int data = (int)nudVbgCfg_1040.Value;
-            p1040cmd.TrimCode(serPortLib, 0, data.ToString("X4"));
+            int data = (int)nudVbgCfg.Value;
+            switch (cmbProjectSel.SelectedItem.ToString()) {
+                case "P1040":
+                    p1040cmd.TrimCode(serPortLib, 0, data.ToString("X4")); break;
+                case "P3268":
+                    p3268cmd.TrimCode(serPortLib, 0, data.ToString("X4")); break;
+                case "P3288":
+                    //p1040cmd.TrimCode(serPortLib, 0, data.ToString("X4")); break;
+                default: break;
+            }
         }
 
-        private void nudLdoCfg_1040_ValueChanged(object sender, EventArgs e) {
+        private void nudLdoCfg_ValueChanged(object sender, EventArgs e) {
             ParaTransfer();
-            int data = (int)nudLdoCfg_1040.Value;
-            int temp = 0x0145 + 8 * data;  //不能改变默认值;
-            p1040cmd.TrimCode(serPortLib, 1, temp.ToString("X4"));
+            int data = (int)nudLdoCfg.Value;
+            switch (cmbProjectSel.SelectedItem.ToString()) {
+                case "P1040":
+                    int temp0 = 0x0145 + 8 * data;  //不能改变默认值;
+                    p1040cmd.TrimCode(serPortLib, 1, temp0.ToString("X4")); break;
+                case "P3268":
+                    int temp1 = 0x0145 + 8 * data;  //不能改变默认值;
+                    p1040cmd.TrimCode(serPortLib, 1, temp1.ToString("X4")); break;
+                case "P3288":
+                    //int temp2 = 0x0145 + 8 * data;  //不能改变默认值;
+                    //p1040cmd.TrimCode(serPortLib, 1, temp2.ToString("X4")); break;
+                default: break;
+            }
         }
-        private void nudGccTrim_1040_ValueChanged(object sender, EventArgs e) {
+        private void nudGccTrim_ValueChanged(object sender, EventArgs e) {
             ParaTransfer();
-            int data = (int)nudGccTrim_1040.Value;
-            int temp = 0x7F00 + data;     //不能改变OSC默认值;
-            p1040cmd.TrimCode(serPortLib, 2, temp.ToString("X4")); 
+            int data = (int)nudGccTrim.Value;
+            switch (cmbProjectSel.SelectedItem.ToString()) {
+                case "P1040":
+                    int temp0 = 0x7F00 + data;     //不能改变OSC默认值;
+                    p1040cmd.TrimCode(serPortLib, 2, temp0.ToString("X4"));break;
+                case "P3268":
+                    int temp1 = 0x0145 + 8 * data;  //不能改变默认值;
+                    p1040cmd.TrimCode(serPortLib, 1, temp1.ToString("X4")); break;
+                case "P3288":
+                    //int temp2 = 0x0145 + 8 * data;  //不能改变默认值;
+                    //p1040cmd.TrimCode(serPortLib, 1, temp2.ToString("X4")); break;
+                default: break;
+            }
         }
-        private void nudOscTrim_1040_ValueChanged(object sender, EventArgs e) {
+        private void nudOscTrim_ValueChanged(object sender, EventArgs e) {
             ParaTransfer();
-            int data = (int)nudOscTrim_1040.Value;
-            int temp = (int)nudGccTrim_1040.Value + 0x100 * data;  //不能改GCC的Trim，同一个地址0x20
+            int data = (int)nudOscTrim.Value;
+            int temp = (int)nudGccTrim.Value + 0x100 * data;  //不能改GCC的Trim，同一个地址0x20
             p1040cmd.TrimCode(serPortLib, 3, temp.ToString("X4")); 
         }
         private void cmbFastCmd_SelectedIndexChanged(object sender, EventArgs e) {
             ParaTransfer();
-            p1040cmd.FastCmdCfg(serPortLib, cmbFastCmd_1040.SelectedIndex);
+            switch (cmbProjectSel.SelectedItem.ToString()) {
+                case "P1040":
+                    p1040cmd.FastCmdCfg(serPortLib, cmbFastCmd.SelectedIndex); break;
+                case "P3268":
+                    p3268cmd.FastCmdCfg(serPortLib, cmbFastCmd.SelectedIndex); ; break;
+                case "P3288":
+                    p1040cmd.OneKeyLed(serPortLib, instCtrlLib.mbsPower, ((int)nudChipCnt.Value - 1).ToString("X2")); break;
+            }
         }
         private void cmbOscDiv_SelectedIndexChanged(object sender, EventArgs e) {
             ParaTransfer();
-            p1040cmd.OscDivCfg(serPortLib, cmbOscDivCmd_1040.SelectedIndex);
+            switch (cmbProjectSel.SelectedItem.ToString()) {
+                case "P1040":
+                    p1040cmd.OscDivCfg(serPortLib, cmbOscDivCmd.SelectedIndex); break;
+                case "P3268":
+                    p3268cmd.DisplayColourCfg(serPortLib, cmbOscDivCmd.SelectedIndex); break;
+
+        	}
         }
         private void btnOneKeyLed_Click(object sender, EventArgs e) {
             ParaTransfer();
             btnOneKeyLed.Enabled = false;
             btnOneKeyLed.BackColor = Color.Gold;
-            p1040cmd.OneKeyLed(serPortLib, instCtrlLib.mbsPower,((int)nudChipCnt_1040.Value - 1).ToString("X2"));
+            switch (cmbProjectSel.SelectedItem.ToString()) {
+                case "P1040":
+                    p1040cmd.OneKeyLed(serPortLib, instCtrlLib.mbsPower, ((int)nudChipCnt.Value - 1).ToString("X2")); break;
+                case "P3268":
+                    p3268cmd.OneKeyLed(serPortLib, instCtrlLib.mbsPower); break;
+                case "P3288":break;
+            }
             btnOneKeyLed.BackColor = SystemColors.Control;
             btnOneKeyLed.Enabled = true;
-
         }
-        private void btnRunTest_1040_Click(object sender, EventArgs e) {
+        private void btnRunTest_Click(object sender, EventArgs e) {
             ParaTransfer();
-            btnRunTest_1040.Enabled = false;
+            btnRunTest.Enabled = false;
             tpTestConfig.Enabled = false;
-            btnRunTest_1040.BackColor = Color.Gold;
-            if (cmbAutoTestItem_1040.SelectedIndex != -1) {  //-1代表：测试选择均是错误的
-                p1040cmd.RunTest(serPortLib, instCtrlLib.mbsMulti0, cmbAutoTestItem_1040.SelectedIndex);
+            btnRunTest.BackColor = Color.Gold;
+            if (cmbAutoTestItem.SelectedIndex != -1) {  //-1代表：测试选择均是错误的
+                switch (cmbProjectSel.SelectedItem.ToString()) {
+                    case "P1040":
+                        p1040cmd.RunTest(serPortLib, instCtrlLib.mbsMulti0, cmbAutoTestItem.SelectedIndex); break;
+                    case "P3268":
+                        p3268cmd.RunTest(serPortLib, instCtrlLib.mbsPower, instCtrlLib.mbsMulti0, cmbAutoTestItem.SelectedIndex); break;
+                    default:break;
+                }
             }
             else {
                 MessageBox.Show("error ：请下拉菜单选择测试项");
             }
-            btnRunTest_1040.BackColor = SystemColors.Control;
+            btnRunTest.BackColor = SystemColors.Control;
             tpTestConfig.Enabled = true;
-            btnRunTest_1040.Enabled = true;
+            btnRunTest.Enabled = true;
         }
         #endregion
 
+        #region 三、Driver 通道电流一致性测试
+
+        #endregion
     }
 }

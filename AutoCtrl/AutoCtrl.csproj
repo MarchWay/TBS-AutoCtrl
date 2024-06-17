@@ -171,6 +171,7 @@
     <Compile Include="TBSiliconProject\DriverCommonTestItem\TestItems_TestLib.cs" />
     <Compile Include="TBSiliconProject\InterfaceCommonTestItem\InterChipCommLib.cs" />
     <Compile Include="TBSiliconProject\InterfaceCommonTestItem\InterChip_TestLib.cs" />
+    <Compile Include="TBSiliconProject\MCU_Ctrl\DriveChCurrVoltTestLib.cs" />
     <Compile Include="TBSiliconProject\MCU_Ctrl\P1040_CommondLib.cs" />
     <Compile Include="TBSiliconProject\MCU_Ctrl\P3268_CommondLib.cs" />
     <Compile Include="TBSiliconProject\TCON_UART\UartCommonlib.cs" />
